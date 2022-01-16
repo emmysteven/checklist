@@ -1,4 +1,4 @@
-namespace Restaurant.Domain.Common;
+namespace Checklist.Domain.Common;
 
 public abstract class AuditableEntity
 {
