@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>Restaurant.Application</RootNamespace>
-        <AssemblyName>Restaurant.Application</AssemblyName>
+        <RootNamespace>Checklist.Application</RootNamespace>
+        <AssemblyName>Checklist.Application</AssemblyName>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
