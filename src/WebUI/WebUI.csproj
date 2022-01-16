@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <RootNamespace>Restaurant.WebUI</RootNamespace>
-        <AssemblyName>Restaurant.WebUI</AssemblyName>
+        <RootNamespace>Checklist.WebUI</RootNamespace>
+        <AssemblyName>Checklist.WebUI</AssemblyName>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
