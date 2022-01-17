@@ -5,10 +5,10 @@ namespace Checklist.Domain.Events;
 
 public class ActionItemDeletedEvent: DomainEvent
 {
-    public ActionItemDeletedEvent(Check check)
+    public ActionItemDeletedEvent(Item item)
     {
-        Check = check;
+        Item = item;
     }
 
-    public Check Check { get; }
+    public Item Item { get; }
 }

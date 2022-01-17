@@ -5,10 +5,10 @@ namespace Checklist.Domain.Events;
 
 public class ActionItemCompletedEvent: DomainEvent
 {
-    public ActionItemCompletedEvent(Check check)
+    public ActionItemCompletedEvent(Item item)
     {
-        Check = check;
+        Item = item;
     }
 
-    public Check Check { get; }
+    public Item Item { get; }
 }

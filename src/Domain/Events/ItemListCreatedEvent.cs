@@ -4,10 +4,10 @@ namespace Checklist.Domain.Events;
 
 public class ActionItemCreatedEvent
 {
-    public ActionItemCreatedEvent(Check check)
+    public ActionItemCreatedEvent(Item item)
     {
-        Check = check;
+        Item = item;
     }
 
-    public Check Check { get; }
+    public Item Item { get; }
 }
