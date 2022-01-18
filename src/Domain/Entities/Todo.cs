@@ -3,7 +3,7 @@ using Checklist.Domain.Events;
 
 namespace Checklist.Domain.Entities;
 
-public class Step: AuditableEntity, IHasDomainEvent
+public class Todo: AuditableEntity, IHasDomainEvent
 {
     public string Name { get; set; }
     
@@ -16,14 +16,14 @@ public class Step: AuditableEntity, IHasDomainEvent
         {
             if (value && _done == false)
             {
-                DomainEvents.Add(new StepListCompletedEvent(this));
+                DomainEvents.Add(new TodoListCompletedEvent(this));
             }
     
             _done = value;
         }
     }
     
-    public StepList StepList { get; set; } = null!;
+    public TodoList TodoList { get; set; } = null!;
 
     public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
 }
