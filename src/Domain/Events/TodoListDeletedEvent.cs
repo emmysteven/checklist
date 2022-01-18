@@ -5,10 +5,10 @@ namespace Checklist.Domain.Events;
 
 public class StepListDeletedEvent: DomainEvent
 {
-    public StepListDeletedEvent(Step step)
+    public StepListDeletedEvent(Todo todo)
     {
-        Step = step;
+        Todo = todo;
     }
 
-    public Step Step { get; }
+    public Todo Todo { get; }
 }
