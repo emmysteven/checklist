@@ -26,6 +26,26 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+
+    "Development": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api",
+      "applicationUrl": "https://+:3000;http://+:3001",
+      "environmentVariables": {
+        "Environment": "dev"
+      }
+    },
+
+    "Production": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api",
+      "applicationUrl": "https://localhost:3000;http://localhost:3001",
+      "environmentVariables": {
+        "Environment": "prod"
+      }
     }
   }
 }

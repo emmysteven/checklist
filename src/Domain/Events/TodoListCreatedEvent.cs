@@ -4,10 +4,10 @@ namespace Checklist.Domain.Events;
 
 public class StepListCreatedEvent
 {
-    public StepListCreatedEvent(Step step)
+    public StepListCreatedEvent(Todo todo)
     {
-        Step = step;
+        Todo = todo;
     }
 
-    public Step Step { get; }
+    public Todo Todo { get; }
 }
