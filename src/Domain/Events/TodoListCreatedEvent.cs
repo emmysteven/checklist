@@ -2,9 +2,9 @@ using Checklist.Domain.Entities;
 
 namespace Checklist.Domain.Events;
 
-public class StepListCreatedEvent
+public class TodoListCreatedEvent
 {
-    public StepListCreatedEvent(Todo todo)
+    public TodoListCreatedEvent(Todo todo)
     {
         Todo = todo;
     }
