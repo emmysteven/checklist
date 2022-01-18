@@ -3,9 +3,9 @@ using Checklist.Domain.Entities;
 
 namespace Checklist.Domain.Events;
 
-public class StepListDeletedEvent: DomainEvent
+public class TodoListDeletedEvent: DomainEvent
 {
-    public StepListDeletedEvent(Todo todo)
+    public TodoListDeletedEvent(Todo todo)
     {
         Todo = todo;
     }
