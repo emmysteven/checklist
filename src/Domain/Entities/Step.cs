@@ -3,9 +3,9 @@ using Checklist.Domain.Events;
 
 namespace Checklist.Domain.Entities;
 
-public class Shop: AuditableEntity, IHasDomainEvent
+public class Step: AuditableEntity, IHasDomainEvent
 {
-    public string Process { get; set; }
+    public string Name { get; set; }
     
     public int ListId { get; set; }
     private bool _done;
@@ -16,14 +16,14 @@ public class Shop: AuditableEntity, IHasDomainEvent
         {
             if (value && _done == false)
             {
-                DomainEvents.Add(new ItemListCompletedEvent(this));
+                DomainEvents.Add(new StepListCompletedEvent(this));
             }
     
             _done = value;
         }
     }
     
-    public ItemList ItemList { get; set; } = null!;
+    public StepList StepList { get; set; } = null!;
 
     public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
 }
