@@ -8,12 +8,11 @@ namespace Checklist.WebUI.Controllers;
 public abstract class BaseController : ControllerBase
 {
     private readonly ILogger<BaseController> _logger;
-    private IMediator _mediator;
-
+    private ISender? _mediator;
     protected BaseController(ILogger<BaseController> logger)
     {
         _logger = logger;
     }
+    protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
 
-    protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 }
