@@ -1,8 +1,28 @@
+using Checklist.Application;
+using Checklist.Application.Common.Interfaces;
+using Checklist.Infrastructure;
+using Checklist.WebUI.Services;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 // Add services to the container.
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(configuration);
+builder.Services.AddControllers().AddNewtonsoftJson();
 
-builder.Services.AddControllers();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddCors();
+builder.Services.AddRouting(options => {
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = true;
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -14,12 +34,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
