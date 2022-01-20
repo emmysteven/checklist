@@ -347,9 +347,11 @@ healthchecksdb
 *.db
 *.db-shm
 *.db-wal
-WebUI/appsettings.json
+
+src/WebUI/appsettings.json
 .vscode/
 VSIXCore/
-/src/WebUI/wwwroot/
+src/WebUI/wwwroot/
+src/Infrastructure/Migrations/
 .eslintcache
 Restaurant.sln.DotSettings.user
