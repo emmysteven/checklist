@@ -18,7 +18,7 @@ public class TodoController : BaseController
             PageSize = filter.PageSize,
             PageNumber = filter.PageNumber
         });
-        var checks = query.Data.Select(x => new GetAllTodoVm
+        var checks = query.Data!.Select(x => new GetAllTodoVm
         {
             Id = x.Id,
             Name = x.Name,
