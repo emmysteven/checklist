@@ -7,7 +7,7 @@ using MediatR;
 namespace Checklist.Application.UseCases.Todos.Commands;
 public class CreateTodoCommand : IRequest<Response<int>>
 {
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }
     
 public class CreateTodoHandler : IRequestHandler<CreateTodoCommand, Response<int>>
