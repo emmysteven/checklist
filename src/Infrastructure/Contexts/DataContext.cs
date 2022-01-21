@@ -15,14 +15,13 @@ public class DataContext : DbContext
         ICurrentUserService currentUser,
         IDateService date) : base(options)
     {
-        Database.EnsureCreated();
         _date = date;
         _currentUser = currentUser;
     }
 
-    public virtual DbSet<Todo> Todos { get; set; }
+    public virtual DbSet<Todo>? Todos { get; set; }
     // public virtual DbSet<Check> Todos => Set<Check>();
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<User>? Users { get; set; }
     // public virtual DbSet<Booking> Bookings { get; set; }
         
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -48,5 +47,9 @@ public class DataContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+        // modelBuilder.Entity<DomainEvent>(builder => {
+        //     builder.HasNoKey();
+        //     // builder.ToTable("MY_ENTITY");
+        // });
     }
 }

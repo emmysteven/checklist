@@ -19,7 +19,7 @@ public class CacheService : ICacheService
             return await Task.FromResult(JsonConvert.DeserializeObject(cached, 
                 new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects }));
 
-        return await Task.FromResult<object>(null);
+        return await Task.FromResult<object>(null!);
     }
 
     public async Task SetAsync(string key, object value, TimeSpan expirationTimeFromNow)

@@ -15,7 +15,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
 
     public async Task<T> GetByIdAsync(int id)
     {
-        return await _context.Set<T>().FindAsync(id);
+        return (await _context.Set<T>().FindAsync(id))!;
     }
 
     public async Task<List<T>> GetAllAsync()
@@ -35,7 +35,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
 
     public async Task<T> FindAsync(Expression<Func<T, bool>> predicate)
     {
-        return await _context.Set<T>().FirstOrDefaultAsync(predicate);
+        return (await _context.Set<T>().FirstOrDefaultAsync(predicate))!;
     }
 
     public async Task<T> CreateAsync(T entity)
