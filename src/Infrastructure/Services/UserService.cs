@@ -58,7 +58,7 @@ public class UserService : IUserService
         return _mapper.Map<Response<AuthResponse>>(user);
     }
 
-    public async Task<Response<string>> RegisterAsync(RegisterRequest request, string origin)
+    public async Task<Response<string?>> RegisterAsync(RegisterRequest request, string origin)
     {
         var isEmailUnique = await _userRepository.FindAsync(x => x.Email == request.Email);
         if (isEmailUnique != null) throw new ApiException($"This Email '{request.Email}' is already taken.");
@@ -77,7 +77,7 @@ public class UserService : IUserService
 
         await _userRepository.CreateAsync(user);
         await SendVerificationEmail(user, origin);
-        return new Response<string>(request.FirstName,
+        return new Response<string?>(request.FirstName,
             "User registered, please open your email to complete registration");
     }
 
@@ -105,19 +105,19 @@ public class UserService : IUserService
         };
     }
 
-    public async Task<Response<string>> VerifyEmailAsync(int id, string token)
+    public async Task<Response<string?>> VerifyEmailAsync(int id, string token)
     {
         var user = await _userRepository.FindAsync(x => x.Id == id);
         Console.WriteLine(user.IsVerified);
 
         if (user == null) throw new ApiException("Verification failed");
-        if (user.IsVerified) return new Response<string>("This account is already verified.");
+        if (user.IsVerified) return new Response<string?>("This account is already verified.");
 
         user.Verified = DateTime.UtcNow;
         user.VerificationToken = null;
 
         await _userRepository.UpdateAsync(user);
-        return new Response<string>(user.FirstName, $"Account Confirmed for {user.Email}.");
+        return new Response<string?>(user.FirstName, $"Account Confirmed for {user.Email}.");
     }
 
     public async Task ForgotPasswordAsync(ForgotPasswordRequest request, string origin)
@@ -135,7 +135,7 @@ public class UserService : IUserService
         SendPasswordResetEmail(user, origin);
     }
 
-    public async Task<Response<string>> ResetPasswordAsync(ResetPasswordRequest request)
+    public async Task<Response<string?>> ResetPasswordAsync(ResetPasswordRequest request)
     {
         var user = await _userRepository.FindAsync(x =>
             x.ResetToken == request.Token &&
@@ -150,7 +150,7 @@ public class UserService : IUserService
         user.ResetTokenExpires = null;
 
         await _userRepository.UpdateAsync(user);
-        return new Response<string>(user.Email, "Password Resetted.");
+        return new Response<string?>(user.Email, "Password Resetted.");
     }
 
     private string GenerateJwt(AuthRequest request)
@@ -161,15 +161,15 @@ public class UserService : IUserService
         var claims = new[]
         {
             new Claim("Id", user.Result.Id.ToString()),
-            new Claim("FirstName", user.Result.FirstName),
-            new Claim("LastName", user.Result.LastName),
-            new Claim("Email", user.Result.Email),
+            new Claim("FirstName", user.Result.FirstName!),
+            new Claim("LastName", user.Result.LastName!),
+            new Claim("Email", user.Result.Email!),
             new Claim("Role", user.Result.Role.ToString()),
             new Claim("IsVerified", user.Result.IsVerified.ToString())
             // new Claim("ip", ipAddress)
         };
             
-        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key!));
         var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
         var jwtSecurityToken = new JwtSecurityToken(
@@ -203,7 +203,7 @@ public class UserService : IUserService
     //     return (refreshToken, user);
     // }
 
-    private string RandomTokenString()
+    private string? RandomTokenString()
     {
         using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
         var randomBytes = new byte[40];
