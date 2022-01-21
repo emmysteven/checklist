@@ -79,20 +79,20 @@ public class UserController : ControllerBase
     //     return Ok(await Mediator.Send(new DeleteUserCommand(query)));
     // }
         
-    private void SetTokenCookie(string token)
+    private void SetTokenCookie(string? token)
     {
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,
             Expires = DateTime.UtcNow.AddHours(7)
         };
-        Response.Cookies.Append("refreshToken", token, cookieOptions);
+        Response.Cookies.Append("refreshToken", token!, cookieOptions);
     }
 
     private string GenerateIpAddress()
     {
         if (Request.Headers.ContainsKey("X-Forwarded-For"))
             return Request.Headers["X-Forwarded-For"];
-        return HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+        return HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString()!;
     }
 }
