@@ -9,7 +9,7 @@ namespace Checklist.Application.UseCases.Todos.Commands;
 public class UpdateTodoCommand : IRequest<Todo>
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }
     
 public class UpdateTodoHandler : IRequestHandler<UpdateTodoCommand, Todo>
