@@ -5,7 +5,19 @@ using Checklist.WebUI.Services;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
+var env = Environment.GetEnvironmentVariable("Environment") ?? "prod";
+var configuration = builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{env}.json", optional: false, reloadOnChange: true)
+    .AddEnvironmentVariables()
+    .AddCommandLine(args)
+    .Build();
+
+builder.Host.UseSerilog((context, services, config) => config
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext());
 
 // Add services to the container.
 builder.Services.AddApplication();
@@ -13,7 +25,6 @@ builder.Services.AddInfrastructure(configuration);
 builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddHttpContextAccessor();
 
