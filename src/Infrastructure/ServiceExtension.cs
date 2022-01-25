@@ -37,11 +37,11 @@ public static class ServiceExtension
 
         services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
         services.AddTransient<ITodoRepository, TodoRepository>();
+        services.AddTransient<IItemRepository, ItemRepository>();
         services.AddTransient<IUserRepository, UserRepository>();
 
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IEmailService, EmailService>();
-        // services.AddTransient<IFileService, FileService>();
         services.AddTransient<IDateService, DateService>();
 
         services.Configure<JWTSettings>(config.GetSection("JWTSettings"));
