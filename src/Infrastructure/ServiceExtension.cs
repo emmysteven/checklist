@@ -50,18 +50,6 @@ public static class ServiceExtension
         services.AddSingleton(x => x.GetRequiredService<IOptions<JWTSettings>>().Value);
         services.AddSingleton(x => x.GetRequiredService<IOptions<MailSettings>>().Value);
 
-        // services.AddAuthentication(x =>
-        // {
-        //     x.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        //     x.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        // })
-        // .AddCookie(x =>
-        // {
-        //     x.Cookie.HttpOnly = true;
-        //     x.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-        //     x.Cookie.SameSite = SameSiteMode.Lax;
-        // });
-
         services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
