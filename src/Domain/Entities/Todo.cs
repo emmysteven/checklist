@@ -1,11 +1,10 @@
 using Checklist.Domain.Common;
-using Checklist.Domain.Events;
 
 namespace Checklist.Domain.Entities;
 
 public class Todo: AuditableEntity//, IHasDomainEvent
 {
-    public string? Name { get; set; }
+    public string Name { get; set; }
     
     // public int ListId { get; set; }
     // private bool _done;
@@ -22,8 +21,8 @@ public class Todo: AuditableEntity//, IHasDomainEvent
     //         _done = value;
     //     }
     // }
-    
-    public TodoList TodoList { get; set; } = null!;
+    public IList<Item> items { get; private set; } = new List<Item>();
+
 
     // public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
 }
