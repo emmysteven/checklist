@@ -39,7 +39,6 @@ public class TodoController : BaseController
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateTodoCommand command)
     {
-        Log.Information("TestName: " + command.Name);
         return Ok(await Mediator.Send(command));
     }
 
