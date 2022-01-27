@@ -2,6 +2,7 @@ using Checklist.Application.UseCases.Todos.Commands;
 using Checklist.Application.UseCases.Todos.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace Checklist.WebUI.Controllers;
 
@@ -10,7 +11,7 @@ public class TodoController : BaseController
 {
     public TodoController(ILogger<TodoController> logger) : base(logger) { }
         
-    [HttpGet, AllowAnonymous]
+    [HttpGet]
     public async Task<IActionResult> Get([FromQuery] GetAllTodoParameter filter)
     {
         var query = await Mediator.Send(new GetAllTodoQuery
@@ -36,8 +37,9 @@ public class TodoController : BaseController
 
     // POST api/<controller>
     [HttpPost]
-    public async Task<IActionResult> Create([FromForm] CreateTodoCommand command)
+    public async Task<IActionResult> Create([FromBody] CreateTodoCommand command)
     {
+        Log.Information("TestName: " + command.Name);
         return Ok(await Mediator.Send(command));
     }
 
