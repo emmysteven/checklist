@@ -71,7 +71,7 @@ public class UserService : IUserService
         var isFirstAccount = await _userRepository.CountAsync() == 0;
 
         user.Role = isFirstAccount ? Roles.Maker : Roles.Checker;
-        user.VerificationToken = RandomTokenString();
+        user.VerificationToken = RandomTokenString()!;
         // user.Created = DateTime.UtcNow;
         user.Password = BC.HashPassword(request.Password);
 
@@ -114,7 +114,7 @@ public class UserService : IUserService
         if (user.IsVerified) return new Response<string?>("This account is already verified.");
 
         user.Verified = DateTime.UtcNow;
-        user.VerificationToken = null;
+        user.VerificationToken = null!;
 
         await _userRepository.UpdateAsync(user);
         return new Response<string?>(user.FirstName, $"Account Confirmed for {user.Email}.");
@@ -128,7 +128,7 @@ public class UserService : IUserService
         if (user == null) return;
 
         // create reset token that expires after 1 day
-        user.ResetToken = RandomTokenString();
+        user.ResetToken = RandomTokenString()!;
         user.ResetTokenExpires = DateTime.UtcNow.AddDays(24);
 
         await _userRepository.UpdateAsync(user);
@@ -146,7 +146,7 @@ public class UserService : IUserService
         // update password and remove reset token
         user.Password = BC.HashPassword(request.Password);
         user.PasswordReset = DateTime.UtcNow;
-        user.ResetToken = null;
+        user.ResetToken = null!;
         user.ResetTokenExpires = null;
 
         await _userRepository.UpdateAsync(user);
@@ -205,9 +205,9 @@ public class UserService : IUserService
 
     private string? RandomTokenString()
     {
-        using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
+        var rng = RandomNumberGenerator.Create();
         var randomBytes = new byte[40];
-        rngCryptoServiceProvider.GetBytes(randomBytes);
+        rng.GetBytes(randomBytes);
         // convert random bytes to hex string
         return BitConverter.ToString(randomBytes).Replace("-", "");
     }
