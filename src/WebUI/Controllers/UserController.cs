@@ -28,6 +28,11 @@ public class UserController : ControllerBase
     //     var query = await Mediator.Send(new GetUserByIdQuery(id));
     //     return Ok(query);
     // }
+    [HttpGet]
+    public async Task<IActionResult> Get()
+    {
+        return Ok(await _userService.GetAllAsync());
+    }
 
     // POST api/<controller>
     [HttpPost("register")]
