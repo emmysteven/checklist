@@ -65,7 +65,7 @@ This project is well documented along with the steps taken to build this solutio
 ## Technologies
 - .NET 6
 - REST Standards
-- .NET 5 Libraries
+- .NET 6 Libraries
 
 
 
