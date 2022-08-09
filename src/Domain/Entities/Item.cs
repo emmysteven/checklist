@@ -4,9 +4,8 @@ namespace Checklist.Domain.Entities;
 
 public class Item : AuditableEntity
 {
-    public string? Name { get; set; }
+    public int? TodoId { get; set; }
+    public Todo Todos { get; set; } = null!;
     public string? StartTime { get; set; }
     public string? EndTime { get; set; }
-    // public int ListId { get; set; }
-    public Todo todo { get; set; } = null!;
 }
