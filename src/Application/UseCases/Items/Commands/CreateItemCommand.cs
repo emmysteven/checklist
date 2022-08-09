@@ -7,7 +7,7 @@ using MediatR;
 namespace Checklist.Application.UseCases.Items.Commands;
 public class CreateItemCommand : IRequest<Response<int>>
 {
-    public string? Name { get; set; }
+    public int TodoId { get; set; }
     public string? StartTime { get; set; }
     public string? EndTime { get; set; }
 }

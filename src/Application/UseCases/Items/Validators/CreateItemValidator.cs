@@ -12,11 +12,10 @@ public class CreateItemValidator : AbstractValidator<CreateItemCommand>
     {
         _itemRepository = itemRepository;
 
-        RuleFor(t => t.Name)
+        RuleFor(t => t.TodoId)
             .Cascade(CascadeMode.Stop)
             .NotEmpty().WithMessage("{PropertyName} can not be empty")
-            .NotNull()
-            .Length(3, 50).WithMessage("{PropertyName} must be between 4 to 50 characters");
+            .NotNull();
     }
     
 }
