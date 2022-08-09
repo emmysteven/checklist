@@ -1,5 +1,6 @@
 using AutoMapper;
 using Checklist.Application.DTOs.Account;
+using Checklist.Application.UseCases.Items.Commands;
 using Checklist.Application.UseCases.Todos.Commands;
 using Checklist.Application.UseCases.Todos.Queries;
 using Checklist.Domain.Entities;
@@ -12,6 +13,9 @@ public class GeneralMapping : Profile
     {
         CreateMap<CreateTodoCommand, Todo>();
         CreateMap<UpdateTodoCommand, Todo>();
+        
+        CreateMap<CreateItemCommand, Item>();
+        CreateMap<UpdateItemCommand, Item>();
             
         CreateMap<RegisterRequest, User>();
         
