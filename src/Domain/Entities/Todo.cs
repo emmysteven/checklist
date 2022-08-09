@@ -21,7 +21,7 @@ public class Todo: AuditableEntity//, IHasDomainEvent
     //         _done = value;
     //     }
     // }
-    // public IList<Item> items { get; private set; } = new List<Item>();
+    public IList<Item> Items { get; private set; } = new List<Item>();
 
 
     // public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
