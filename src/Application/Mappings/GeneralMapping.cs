@@ -24,6 +24,6 @@ public class GeneralMapping : Profile
         CreateMap<Todo, GetAllTodoVm>().ReverseMap();
         
         CreateMap<GetAllItemQuery, GetAllItemParameter>();
-        CreateMap<Todo, GetAllItemVm>().ReverseMap();
+        CreateMap<Item, GetAllItemVm>().ReverseMap();
     }
 }
