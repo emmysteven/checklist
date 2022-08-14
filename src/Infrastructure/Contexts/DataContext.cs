@@ -22,7 +22,7 @@ public class DataContext : DbContext
     public virtual DbSet<Todo>? Todos { get; set; }
     // public virtual DbSet<Check> Todos => Set<Check>();
     public virtual DbSet<User>? Users { get; set; }
-    // public virtual DbSet<Booking> Bookings { get; set; }
+    public virtual DbSet<Item>? Items { get; set; } 
         
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
