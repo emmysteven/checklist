@@ -5,6 +5,7 @@ using Checklist.Application.UseCases.Items.Queries;
 using Checklist.Application.UseCases.Todos.Commands;
 using Checklist.Application.UseCases.Todos.Queries;
 using Checklist.Domain.Entities;
+using TodoVm = Checklist.Application.UseCases.Todos.Queries.TodoVm;
 
 namespace Checklist.Application.Mappings;
 
@@ -20,10 +21,10 @@ public class GeneralMapping : Profile
             
         CreateMap<RegisterRequest, User>();
         
-        CreateMap<GetAllTodoQuery, GetAllTodoParameter>();
-        CreateMap<Todo, GetAllTodoVm>().ReverseMap();
+        CreateMap<GetTodoQuery, GetTodoParameter>();
+        CreateMap<Todo, TodoVm>().ReverseMap();
         
-        CreateMap<GetAllItemQuery, GetAllItemParameter>();
-        CreateMap<Item, GetAllItemVm>().ReverseMap();
+        CreateMap<GetItemsQuery, GetItemsParameter>();
+        CreateMap<Item, ItemVm>().ReverseMap();
     }
 }
