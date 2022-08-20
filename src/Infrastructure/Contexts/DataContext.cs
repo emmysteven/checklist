@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Checklist.Infrastructure.Contexts;
 
-public class DataContext : DbContext
+public class DataContext : DbContext, IDataContext
 {
     private readonly IDateService _date;
     private readonly ICurrentUserService _currentUser;
@@ -19,10 +19,9 @@ public class DataContext : DbContext
         _currentUser = currentUser;
     }
 
-    public virtual DbSet<Todo>? Todos { get; set; }
-    // public virtual DbSet<Check> Todos => Set<Check>();
-    public virtual DbSet<User>? Users { get; set; }
-    public virtual DbSet<Item>? Items { get; set; } 
+    public virtual DbSet<Todo> Todos => Set<Todo>();
+    public virtual DbSet<Item> Items => Set<Item>();
+    public virtual DbSet<User> Users => Set<User>();
         
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
