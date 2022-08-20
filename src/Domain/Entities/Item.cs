@@ -6,8 +6,8 @@ public class Item : AuditableEntity
 {
     public int TodoId { get; set; }
     public Todo Todo { get; set; } = null!;
-    public string StartTime { get; set; } = String.Empty;
-    public string EndTime { get; set; } = String.Empty;
+    public string StartTime { get; set; } = string.Empty;
+    public string EndTime { get; set; } = string.Empty;
     
     // private bool _done;
     // public bool Done
