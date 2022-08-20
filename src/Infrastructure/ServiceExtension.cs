@@ -2,7 +2,6 @@ using System.Text;
 using Checklist.Application.Common.Interfaces;
 using Checklist.Application.Settings;
 using Checklist.Infrastructure.Contexts;
-using Checklist.Infrastructure.Repositories;
 using Checklist.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -34,11 +33,6 @@ public static class ServiceExtension
 
         // services.AddHangfire(x => x.UseSqlServerStorage(config.GetConnectionString("db")));
         // services.AddHangfireServer();
-
-        services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-        services.AddTransient<ITodoRepository, TodoRepository>();
-        services.AddTransient<IItemRepository, ItemRepository>();
-        services.AddTransient<IUserRepository, UserRepository>();
 
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IEmailService, EmailService>();
