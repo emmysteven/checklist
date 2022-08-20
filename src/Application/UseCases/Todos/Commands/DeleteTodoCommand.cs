@@ -1,30 +1,31 @@
+using Checklist.Application.Common.Exceptions;
 using Checklist.Application.Common.Interfaces;
 using Checklist.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Checklist.Application.UseCases.Todos.Commands;
-
-public class DeleteTodoCommand : IRequest<Todo>
+public record DeleteTodoCommand(int Id) : IRequest;
+public class DeleteTodoHandler : IRequestHandler<DeleteTodoCommand>
 {
-    public DeleteTodoCommand(Todo todo)
+    private readonly IDataContext _context;
+
+    public DeleteTodoHandler(IDataContext context)
     {
-        Todo = todo;
+        _context = context;
     }
-
-    public Todo Todo { get; }
-}
-    
-public class DeleteTodoHandler : IRequestHandler<DeleteTodoCommand, Todo>
-{
-    private readonly ITodoRepository _todoRepository;
-
-    public DeleteTodoHandler(ITodoRepository todoRepository)
+    public async Task<Unit> Handle(DeleteTodoCommand request, CancellationToken cancellationToken)
     {
-        _todoRepository = todoRepository;
-    }
-
-    public async Task<Todo> Handle(DeleteTodoCommand request, CancellationToken cancellationToken)
-    {
-        return await _todoRepository.DeleteAsync(request.Todo);
+        var todo = await _context.Todos
+            .Where(x => x.Id == request.Id)
+            .SingleOrDefaultAsync(cancellationToken);
+        
+        if (todo == null)
+        {
+            throw new NotFoundException(nameof(Todo), request.Id);
+        }
+        _context.Todos.Remove(todo);
+        await _context.SaveChangesAsync(cancellationToken);
+        return Unit.Value;
     }
 }

@@ -17,16 +17,16 @@ public class GetTodoByIdQuery : IRequest<Todo>
 
 public class GetTodoByIdHandler : IRequestHandler<GetTodoByIdQuery, Todo>
 {
-    private readonly ITodoRepository _todoRepository;
+    private readonly IDataContext _context;
 
-    public GetTodoByIdHandler(ITodoRepository todoRepository)
+    public GetTodoByIdHandler(IDataContext context)
     {
-        _todoRepository = todoRepository;
+        _context = context;
     }
 
     public async Task<Todo> Handle(GetTodoByIdQuery request, CancellationToken cancellationToken)
     {
-        var todo = await _todoRepository.GetByIdAsync(request.Id);
+        var todo = await _context.Todos.FindAsync(request.Id);
         if (todo == null) throw new ApiException($"Todo Not Found.");
         return todo;
     }

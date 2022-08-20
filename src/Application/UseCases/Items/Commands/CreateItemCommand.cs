@@ -11,22 +11,24 @@ public class CreateItemCommand : IRequest<Response<int>>
     public string? StartTime { get; set; }
     public string? EndTime { get; set; }
 }
-    
+
 public class CreateItemHandler : IRequestHandler<CreateItemCommand, Response<int>>
 {
+    private readonly IDataContext _context;
     private readonly IMapper _mapper;
-    private readonly IItemRepository _itemRepository;
 
-    public CreateItemHandler(IMapper mapper, IItemRepository itemRepository)
+    public CreateItemHandler(IDataContext context, IMapper mapper)
     {
+        _context = context;
         _mapper = mapper;
-        _itemRepository = itemRepository;
     }
 
     public async Task<Response<int>> Handle(CreateItemCommand request, CancellationToken cancellationToken)
     {
         var item = _mapper.Map<Item>(request);
-        await _itemRepository.CreateAsync(item);
+        _context.Items.Add(item);
+        
+        await _context.SaveChangesAsync(cancellationToken);
         return new Response<int>(item.Id);
     }
 }

@@ -6,11 +6,11 @@ namespace Checklist.Application.UseCases.Todos.Validators;
 
 public class CreateTodoValidator : AbstractValidator<CreateTodoCommand>
 {
-    private readonly ITodoRepository _todoRepository;
+    private readonly IDataContext _context;
 
-    public CreateTodoValidator(ITodoRepository todoRepository)
+    public CreateTodoValidator(IDataContext context)
     {
-        _todoRepository = todoRepository;
+        _context = context;
 
         RuleFor(t => t.Name)
             .Cascade(CascadeMode.Stop)

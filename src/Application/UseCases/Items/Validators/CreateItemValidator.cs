@@ -6,11 +6,11 @@ namespace Checklist.Application.UseCases.Items.Validators;
 
 public class CreateItemValidator : AbstractValidator<CreateItemCommand>
 {
-    private readonly IItemRepository _itemRepository;
+    private readonly IDataContext _context;
 
-    public CreateItemValidator(IItemRepository itemRepository)
+    public CreateItemValidator(IDataContext context)
     {
-        _itemRepository = itemRepository;
+        _context = context;
 
         RuleFor(t => t.TodoId)
             .Cascade(CascadeMode.Stop)

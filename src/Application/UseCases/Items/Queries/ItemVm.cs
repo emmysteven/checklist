@@ -3,7 +3,7 @@ using Checklist.Domain.Entities;
 
 namespace Checklist.Application.UseCases.Items.Queries;
 
-public class ItemsVm : IMapFrom<Item>
+public class ItemVm : IMapFrom<Item>
 {
     public int Id { get; set; }
     public int TodoId { get; set; }

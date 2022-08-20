@@ -17,17 +17,17 @@ public class GetItemByIdQuery : IRequest<Item>
 
 public class GetStepByIdHandler : IRequestHandler<GetItemByIdQuery, Item>
 {
-    private readonly IItemRepository _itemRepository;
+    private readonly IDataContext _context;
 
-    public GetStepByIdHandler(IItemRepository itemRepository)
+    public GetStepByIdHandler(IDataContext context)
     {
-        _itemRepository = itemRepository;
+        _context = context;
     }
 
     public async Task<Item> Handle(GetItemByIdQuery request, CancellationToken cancellationToken)
     {
-        var step = await _itemRepository.GetByIdAsync(request.Id);
-        if (step == null) throw new ApiException($"Step Not Found.");
-        return step;
+        var item = await _context.Items.FindAsync(request.Id);
+        if (item == null) throw new ApiException("Item Not Found.");
+        return item;
     }
 }

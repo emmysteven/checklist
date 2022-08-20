@@ -6,29 +6,38 @@ using MediatR;
 
 namespace Checklist.Application.UseCases.Todos.Commands;
 
-public class UpdateTodoCommand : IRequest<Todo>
+public record UpdateTodoCommand : IRequest
 {
     public int Id { get; set; }
     public string? Name { get; set; }
 }
     
-public class UpdateTodoHandler : IRequestHandler<UpdateTodoCommand, Todo>
+public class UpdateTodoHandler : IRequestHandler<UpdateTodoCommand>
 {
+    private readonly IDataContext _context;
     private readonly IMapper _mapper;
-    private readonly ITodoRepository _todoRepository;
 
-    public UpdateTodoHandler(ITodoRepository todoRepository, IMapper mapper)
+    public UpdateTodoHandler(IDataContext context, IMapper mapper)
     {
-        _todoRepository = todoRepository;
+        _context = context;
         _mapper = mapper;
     }
 
-    public async Task<Todo> Handle(UpdateTodoCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateTodoCommand request, CancellationToken cancellationToken)
     {
-        var isTodo = await _todoRepository.GetByIdAsync(request.Id);
-        if (isTodo == null) throw new ApiException("Todo Not Found.");
-        var todo = _mapper.Map<Todo>(request);
+        var todo = await _context.Todos
+            .FindAsync(new object[] { request.Id }, cancellationToken);
+        
+        if (todo == null)
+        {
+            throw new NotFoundException(nameof(Items), request.Id);
+        }
+        
+        todo = _mapper.Map<Todo>(request);
+        return Unit.Value;
+        // if (isTodo == null) throw new ApiException("Todo Not Found.");
+        // var todo = _mapper.Map<Todo>(request);
 
-        return await _todoRepository.UpdateAsync(todo);
+        // return await _todoRepository.UpdateAsync(todo);
     }
 }

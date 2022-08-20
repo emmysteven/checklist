@@ -1,32 +1,36 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Checklist.Application.Common.Interfaces;
 using Checklist.Application.Common.Wrappers;
+using Checklist.Application.Mappings;
 using MediatR;
 
 namespace Checklist.Application.UseCases.Items.Queries;
 
-public class GetAllItemQuery : IRequest<PagedResponse<IEnumerable<ItemsVm>>>
+public record GetItemsQuery : IRequest<PaginateResponse<ItemVm>>
 {
-    public int PageNumber { get; set; }
-    public int PageSize { get; set; }
+    public int TodoId { get; init; }
+    public int PageNumber { get; init; } = 1;
+    public int PageSize { get; init; } = 10;
 }
-    
-public class GetAllItemHandler : IRequestHandler<GetAllItemQuery, PagedResponse<IEnumerable<ItemsVm>>>
+
+public class GetItemsHandler : IRequestHandler<GetItemsQuery, PaginateResponse<ItemVm>>
 {
-    private readonly IAppDbContext _context;
+    private readonly IDataContext _context;
     private readonly IMapper _mapper;
 
-    public GetAllItemHandler(IAppDbContext context, IMapper mapper)
+    public GetItemsHandler(IDataContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public async Task<PagedResponse<IEnumerable<ItemsVm>>> Handle(GetAllItemQuery request, CancellationToken cancellationToken)
+    public async Task<PaginateResponse<ItemVm>> Handle(GetItemsQuery request, CancellationToken cancellationToken)
     {
-        var filter = _mapper.Map<GetAllItemParameter>(request);
-        var item = await _context.Items.GetPagedResponseAsync(filter.PageNumber, filter.PageSize);
-        var itemViewModel = _mapper.Map<IEnumerable<ItemsVm>>(item);
-        return new PagedResponse<IEnumerable<ItemsVm>>(itemViewModel, filter.PageNumber, filter.PageSize); 
+        return await _context.Items
+            .Where(x => x.TodoId == request.TodoId)
+            .OrderBy(x => x.TodoId)
+            .ProjectTo<ItemVm>(_mapper.ConfigurationProvider)
+            .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

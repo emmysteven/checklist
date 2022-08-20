@@ -1,32 +1,40 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Checklist.Application.Common.Interfaces;
 using Checklist.Application.Common.Wrappers;
+using Checklist.Application.Mappings;
 using MediatR;
 
 namespace Checklist.Application.UseCases.Todos.Queries;
 
-public class GetAllTodoQuery : IRequest<PaginateResponse<IEnumerable<GetAllTodoVm>>>
+public record GetTodoQuery : IRequest<PaginateResponse<TodoVm>>
 {
+    public int Id { get; init; }
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
 }
     
-public class GetAllTodoHandler : IRequestHandler<GetAllTodoQuery, PaginateResponse<IEnumerable<GetAllTodoVm>>>
+public class GetAllTodoHandler : IRequestHandler<GetTodoQuery, PaginateResponse<TodoVm>>
 {
-    private readonly ITodoRepository _todoRepository;
+    private readonly IDataContext _context;
     private readonly IMapper _mapper;
 
-    public GetAllTodoHandler(ITodoRepository todoRepository, IMapper mapper)
+    public GetAllTodoHandler(IDataContext context, IMapper mapper)
     {
-        _todoRepository = todoRepository;
+        _context = context;
         _mapper = mapper;
     }
 
-    public async Task<PaginateResponse<IEnumerable<GetAllTodoVm>>> Handle(GetAllTodoQuery request, CancellationToken cancellationToken)
+    public async Task<PaginateResponse<TodoVm>> Handle(GetTodoQuery request, CancellationToken cancellationToken)
     {
-        var filter = _mapper.Map<GetAllTodoParameter>(request);
-        var todo = await _todoRepository.GetPagedResponseAsync(filter.PageNumber, filter.PageSize);
-        var todoViewModel = _mapper.Map<IEnumerable<GetAllTodoVm>>(todo);
-        return new PaginateResponse<IEnumerable<GetAllTodoVm>>(todoViewModel, filter.PageNumber, filter.PageSize); 
+        return await _context.Todos
+            .Where(x => x.Id == request.Id)
+            .OrderBy(x => x.Id)
+            .ProjectTo<TodoVm>(_mapper.ConfigurationProvider)
+            .PaginatedListAsync(request.PageNumber, request.PageSize);
+        // var filter = _mapper.Map<GetTodoParameter>(request);
+        // var todo = await _context.Todos.FindAsync(filter.PageNumber, filter.PageSize);
+        // var todoViewModel = _mapper.Map<IEnumerable<TodoVm>>(todo);
+        // return new PaginateResponse<IEnumerable<TodoVm>>(todoViewModel, filter.PageNumber, filter.PageSize); 
     }
 }
