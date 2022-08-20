@@ -12,19 +12,13 @@ public class TodoController : BaseController
     public TodoController(ILogger<TodoController> logger) : base(logger) { }
         
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] GetAllTodoParameter filter)
+    public async Task<IActionResult> Get([FromQuery] GetTodoParameter filter)
     {
-        var query = await Mediator.Send(new GetAllTodoQuery
+        var query = await Mediator.Send(new GetTodoQuery
         {
             PageSize = filter.PageSize,
             PageNumber = filter.PageNumber
         });
-        var checks = query.Data!.Select(x => new GetAllTodoVm
-        {
-            Id = x.Id,
-            Name = x.Name,
-        });
-        query.Data = checks;
         return Ok(query);
     }
 
@@ -54,7 +48,7 @@ public class TodoController : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var query = await Mediator.Send(new GetTodoByIdQuery(id));
-        return Ok(await Mediator.Send(new DeleteTodoCommand(query)));
+        await Mediator.Send(new DeleteTodoCommand(id));
+        return NoContent();
     }
 }

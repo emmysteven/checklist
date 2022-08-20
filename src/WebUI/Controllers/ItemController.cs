@@ -11,20 +11,15 @@ public class ItemController : BaseController
     public ItemController(ILogger<ItemController> logger) : base(logger) { }
         
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] GetAllItemParameter filter)
+    public async Task<IActionResult> Get([FromQuery] GetItemsParameter filter)
     {
-        var query = await Mediator.Send(new GetAllItemQuery
+        // var name = await Mediator.Send(new GetTodoByIdQuery(1));
+         var query = await Mediator.Send(new GetItemsQuery
         {
             PageSize = filter.PageSize,
             PageNumber = filter.PageNumber
         });
-        var checks = query.Data!.Select(x => new GetAllItemVm
-        {
-            Id = x.Id,
-            Name = x.Name,
-        });
-        query.Data = checks;
-        return Ok(query);
+         return Ok(query);
     }
 
     [HttpGet("{id}"), AllowAnonymous]
@@ -53,7 +48,7 @@ public class ItemController : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var query = await Mediator.Send(new GetItemByIdQuery(id));
-        return Ok(await Mediator.Send(new DeleteItemCommand(query)));
+        await Mediator.Send(new DeleteItemCommand(id));
+        return NoContent();
     }
 }
