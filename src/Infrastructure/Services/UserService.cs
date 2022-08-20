@@ -12,6 +12,8 @@ using Checklist.Application.Settings;
 using Checklist.Domain.Common;
 using Checklist.Domain.Entities;
 using Checklist.Domain.Enums;
+using Checklist.Infrastructure.Contexts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using BC = BCrypt.Net.BCrypt;
 
@@ -23,16 +25,16 @@ public class UserService : IUserService
     private readonly MailSettings _mailSettings;
     private readonly JWTSettings _jwtSettings;
     private readonly IMapper _mapper;
-    private readonly IUserRepository _userRepository;
+    private readonly DataContext _context;
 
     public UserService(
-        IUserRepository userRepository,
+        DataContext context,
         IMapper mapper,
         JWTSettings jwtSettings,
         IEmailService emailService,
         MailSettings mailSettings)
     {
-        _userRepository = userRepository;
+        _context = context;
         _mapper = mapper;
         _jwtSettings = jwtSettings;
         _emailService = emailService;
@@ -41,14 +43,14 @@ public class UserService : IUserService
         
     private async Task<User> GetUser(int id)
     {
-        var user = await _userRepository.FindAsync(x => x.Id == id);
+        var user = await _context.Users.FindAsync(id);
         if (user == null) throw new KeyNotFoundException("Account not found");
         return user;
     }
         
     public async Task<IEnumerable<AuthResponse>> GetAllAsync()
     {
-        var users = await _userRepository.GetAllAsync();
+        var users = await _context.Users.FindAsync();
         return _mapper.Map<IEnumerable<AuthResponse>>(users);
     }
 
@@ -60,22 +62,22 @@ public class UserService : IUserService
 
     public async Task<Response<string?>> RegisterAsync(RegisterRequest request, string origin)
     {
-        var isEmailUnique = await _userRepository.FindAsync(x => x.Email == request.Email);
+        var isEmailUnique = await _context.Users.FindAsync(request.Email);
         if (isEmailUnique != null) throw new ApiException($"This Email '{request.Email}' is already taken.");
 
-        var isPhoneNumberUnique = await _userRepository.FindAsync(x => x.PhoneNumber == request.PhoneNumber);
+        var isPhoneNumberUnique = await _context.Users.FindAsync(request.PhoneNumber);
         if (isPhoneNumberUnique != null)
             throw new ApiException($"This Phone Number '{request.PhoneNumber}' is already taken.");
 
         var user = _mapper.Map<User>(request);
-        var isFirstAccount = await _userRepository.CountAsync() == 0;
+        var isFirstAccount = await _context.Users.CountAsync() == 0;
 
         user.Role = isFirstAccount ? Roles.Maker : Roles.Checker;
-        user.VerificationToken = RandomTokenString()!;
+        user.VerificationToken = RandomTokenString();
         // user.Created = DateTime.UtcNow;
         user.Password = BC.HashPassword(request.Password);
 
-        await _userRepository.CreateAsync(user);
+        await _context.Users.AddAsync(user);
         await SendVerificationEmail(user, origin);
         return new Response<string?>(request.FirstName,
             "User registered, please open your email to complete registration");
@@ -83,10 +85,10 @@ public class UserService : IUserService
 
     public async Task<AuthResponse> AuthenticateAsync(AuthRequest request, string ipAddress)
     {
-        var user = await _userRepository.FindAsync(x => x.Email == request.Email);
+        var user = await _context.Users.FindAsync(request.Email);
         if (user == null) throw new ApiException("This account does not exist");
 
-        if (user == null || !BC.Verify(request.Password, user.Password))
+        if (!BC.Verify(request.Password, user.Password))
             throw new ApiException("Your account or password is incorrect");
             
         // Console.WriteLine(user.IsVerified);
@@ -107,8 +109,8 @@ public class UserService : IUserService
 
     public async Task<Response<string?>> VerifyEmailAsync(int id, string token)
     {
-        var user = await _userRepository.FindAsync(x => x.Id == id);
-        Console.WriteLine(user.IsVerified);
+        var user = await _context.Users.FindAsync(id);
+        Console.WriteLine(user is {IsVerified: true});
 
         if (user == null) throw new ApiException("Verification failed");
         if (user.IsVerified) return new Response<string?>("This account is already verified.");
@@ -116,32 +118,34 @@ public class UserService : IUserService
         user.Verified = DateTime.UtcNow;
         user.VerificationToken = null!;
 
-        await _userRepository.UpdateAsync(user);
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync();
+        
         return new Response<string?>(user.FirstName, $"Account Confirmed for {user.Email}.");
     }
 
     public async Task ForgotPasswordAsync(ForgotPasswordRequest request, string origin)
     {
-        var user = await _userRepository.FindAsync(x => x.Email == request.Email);
+        var user = await _context.Users.FindAsync(request.Email);
 
         // always return ok response to prevent email enumeration
         if (user == null) return;
 
         // create reset token that expires after 1 day
-        user.ResetToken = RandomTokenString()!;
+        user.ResetToken = RandomTokenString();
         user.ResetTokenExpires = DateTime.UtcNow.AddDays(24);
 
-        await _userRepository.UpdateAsync(user);
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync();
+        
         SendPasswordResetEmail(user, origin);
     }
 
     public async Task<Response<string?>> ResetPasswordAsync(ResetPasswordRequest request)
     {
-        var user = await _userRepository.FindAsync(x =>
-            x.ResetToken == request.Token &&
-            x.ResetTokenExpires > DateTime.UtcNow);
+        var user = _context.Users.SingleOrDefault(x => x.Email == request.Email);
 
-        if (user == null) throw new ApiException("Invalid token");
+        if (user == null) throw new ApiException($"No User is associated with : {request.Email}");
 
         // update password and remove reset token
         user.Password = BC.HashPassword(request.Password);
@@ -149,23 +153,24 @@ public class UserService : IUserService
         user.ResetToken = null!;
         user.ResetTokenExpires = null;
 
-        await _userRepository.UpdateAsync(user);
-        return new Response<string?>(user.Email, "Password Resetted.");
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync();
+        return new Response<string?>(user.Email, "Password Reset Done!.");
     }
 
     private string GenerateJwt(AuthRequest request)
     {
-        var user = _userRepository.FindAsync(x => x.Email == request.Email);
+        var user = _context.Users.FindAsync(request.Email);
         // string ipAddress = IpHelper.GetIpAddress();
             
         var claims = new[]
         {
-            new Claim("Id", user.Result.Id.ToString()),
-            new Claim("FirstName", user.Result.FirstName!),
-            new Claim("LastName", user.Result.LastName!),
-            new Claim("Email", user.Result.Email!),
-            new Claim("Role", user.Result.Role.ToString()),
-            new Claim("IsVerified", user.Result.IsVerified.ToString())
+            new Claim("Id", user.Result?.Id.ToString() ?? string.Empty),
+            new Claim("FirstName", user.Result?.FirstName!),
+            new Claim("LastName", user.Result?.LastName!),
+            new Claim("Email", user.Result?.Email!),
+            new Claim("Role", user.Result?.Role.ToString() ?? string.Empty),
+            new Claim("IsVerified", user.Result?.IsVerified.ToString() ?? string.Empty)
             // new Claim("ip", ipAddress)
         };
             
@@ -203,7 +208,7 @@ public class UserService : IUserService
     //     return (refreshToken, user);
     // }
 
-    private string? RandomTokenString()
+    private string RandomTokenString()
     {
         var rng = RandomNumberGenerator.Create();
         var randomBytes = new byte[40];
