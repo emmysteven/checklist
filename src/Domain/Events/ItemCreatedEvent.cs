@@ -2,12 +2,12 @@ using Checklist.Domain.Entities;
 
 namespace Checklist.Domain.Events;
 
-public class TodoCreatedEvent
+public class ItemCreatedEvent
 {
-    public TodoCreatedEvent(Todo todo)
+    public ItemCreatedEvent(Item item)
     {
-        Todo = todo;
+        Item = item;
     }
 
-    public Todo Todo { get; }
+    public Item Item { get; }
 }
