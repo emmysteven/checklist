@@ -7,14 +7,14 @@ using MediatR;
 
 namespace Checklist.Application.UseCases.Items.Queries;
 
-public record GetItemsQuery : IRequest<PaginateResponse<ItemVm>>
+public record GetItemsQuery : IRequest<PaginatedResponse<ItemVm>>
 {
     public int TodoId { get; init; }
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
 }
 
-public class GetItemsHandler : IRequestHandler<GetItemsQuery, PaginateResponse<ItemVm>>
+public class GetItemsHandler : IRequestHandler<GetItemsQuery, PaginatedResponse<ItemVm>>
 {
     private readonly IDataContext _context;
     private readonly IMapper _mapper;
@@ -25,12 +25,12 @@ public class GetItemsHandler : IRequestHandler<GetItemsQuery, PaginateResponse<I
         _mapper = mapper;
     }
 
-    public async Task<PaginateResponse<ItemVm>> Handle(GetItemsQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResponse<ItemVm>> Handle(GetItemsQuery request, CancellationToken cancellationToken)
     {
         return await _context.Items
             .Where(x => x.TodoId == request.TodoId)
             .OrderBy(x => x.TodoId)
             .ProjectTo<ItemVm>(_mapper.ConfigurationProvider)
-            .PaginatedListAsync(request.PageNumber, request.PageSize);
+            .PaginatedResponseAsync(request.PageNumber, request.PageSize);
     }
 }

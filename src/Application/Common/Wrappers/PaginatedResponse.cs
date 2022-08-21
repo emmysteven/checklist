@@ -2,14 +2,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Checklist.Application.Common.Wrappers;
 
-public class PaginateResponse<T>
+public class PaginatedResponse<T>
 {
     public List<T> Items { get; }
     public int PageNumber { get; }
     public int TotalPages { get; }
     public int TotalCount { get; }
 
-    public PaginateResponse(List<T> items, int count, int pageNumber, int pageSize)
+    public PaginatedResponse(List<T> items, int count, int pageNumber, int pageSize)
     {
         PageNumber = pageNumber;
         TotalPages = (int)Math.Ceiling(count / (double)pageSize);
@@ -21,11 +21,11 @@ public class PaginateResponse<T>
 
     public bool HasNextPage => PageNumber < TotalPages;
 
-    public static async Task<PaginateResponse<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize)
+    public static async Task<PaginatedResponse<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize)
     {
         var count = await source.CountAsync();
         var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-        return new PaginateResponse<T>(items, count, pageNumber, pageSize);
+        return new PaginatedResponse<T>(items, count, pageNumber, pageSize);
     }
 }

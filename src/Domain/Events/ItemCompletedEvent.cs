@@ -1,10 +1,11 @@
+using Checklist.Domain.Common;
 using Checklist.Domain.Entities;
 
 namespace Checklist.Domain.Events;
 
-public class TodoListCreatedEvent
+public class TodoCompletedEvent: DomainEvent
 {
-    public TodoListCreatedEvent(Todo todo)
+    public TodoCompletedEvent(Todo todo)
     {
         Todo = todo;
     }
