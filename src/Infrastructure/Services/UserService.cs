@@ -62,7 +62,7 @@ public class UserService : IUserService
 
     public async Task<Response<string?>> RegisterAsync(RegisterRequest request, string origin)
     {
-        var isEmailUnique = await _context.Users.FindAsync(request.Email);
+        var isEmailUnique = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
         if (isEmailUnique != null) throw new ApiException($"This Email '{request.Email}' is already taken.");
 
         var isPhoneNumberUnique = await _context.Users.FindAsync(request.PhoneNumber);
@@ -85,7 +85,7 @@ public class UserService : IUserService
 
     public async Task<AuthResponse> AuthenticateAsync(AuthRequest request, string ipAddress)
     {
-        var user = await _context.Users.FindAsync(request.Email);
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
         if (user == null) throw new ApiException("This account does not exist");
 
         if (!BC.Verify(request.Password, user.Password))
@@ -126,7 +126,7 @@ public class UserService : IUserService
 
     public async Task ForgotPasswordAsync(ForgotPasswordRequest request, string origin)
     {
-        var user = await _context.Users.FindAsync(request.Email);
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
 
         // always return ok response to prevent email enumeration
         if (user == null) return;
@@ -160,7 +160,7 @@ public class UserService : IUserService
 
     private string GenerateJwt(AuthRequest request)
     {
-        var user = _context.Users.FindAsync(request.Email);
+        var user = _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
         // string ipAddress = IpHelper.GetIpAddress();
             
         var claims = new[]
