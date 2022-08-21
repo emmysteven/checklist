@@ -23,6 +23,8 @@ public static class ServiceExtension
             
         services.AddDbContext<DataContext>(x =>
             x.UseSqlite(config.GetConnectionString("DevDB")));
+        
+        services.AddScoped<IDataContext>(x => x.GetRequiredService<DataContext>());
 
         services.AddStackExchangeRedisCache(options =>
         {
