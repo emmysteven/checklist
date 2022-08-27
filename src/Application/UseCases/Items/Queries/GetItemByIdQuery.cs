@@ -13,20 +13,18 @@ public class GetItemByIdQuery : IRequest<Item>
     }
     public int Id { get; }
 } 
-    
 
-public class GetStepByIdHandler : IRequestHandler<GetItemByIdQuery, Item>
+public class GetItemByIdHandler : IRequestHandler<GetItemByIdQuery, Item>
 {
-    private readonly IDataContext _context;
-
-    public GetStepByIdHandler(IDataContext context)
+    private readonly IItemRepository _repo;
+    public GetItemByIdHandler(IItemRepository repo)
     {
-        _context = context;
+        _repo = repo;
     }
 
     public async Task<Item> Handle(GetItemByIdQuery request, CancellationToken cancellationToken)
     {
-        var item = await _context.Items.FindAsync(request.Id);
+        var item = await _repo.GetByIdAsync(request.Id);
         if (item == null) throw new ApiException("Item Not Found.");
         return item;
     }
