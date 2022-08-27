@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Checklist.Infrastructure.Contexts;
 
-public class DataContext : DbContext, IDataContext
+public class DataContext : DbContext
 {
     private readonly IDateService _date;
     private readonly ICurrentUserService _currentUser;
@@ -46,9 +46,5 @@ public class DataContext : DbContext, IDataContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
-        // modelBuilder.Entity<DomainEvent>(builder => {
-        //     builder.HasNoKey();
-        //     // builder.ToTable("MY_ENTITY");
-        // });
     }
 }
