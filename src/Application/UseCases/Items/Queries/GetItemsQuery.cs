@@ -1,36 +1,34 @@
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Checklist.Application.Common.Interfaces;
 using Checklist.Application.Common.Wrappers;
-using Checklist.Application.Mappings;
 using MediatR;
 
 namespace Checklist.Application.UseCases.Items.Queries;
 
-public record GetItemsQuery : IRequest<PaginatedResponse<ItemVm>>
+public record GetItemsQuery : IRequest<PaginatedResponse<IEnumerable<ItemVm>>>
 {
     public int TodoId { get; init; }
-    public int PageNumber { get; init; } = 1;
-    public int PageSize { get; init; } = 10;
+    public int PageNumber { get; init; }
+    public int PageSize { get; init; } 
 }
 
-public class GetItemsHandler : IRequestHandler<GetItemsQuery, PaginatedResponse<ItemVm>>
+public class GetItemsHandler : IRequestHandler<GetItemsQuery, PaginatedResponse<IEnumerable<ItemVm>>>
 {
-    private readonly IDataContext _context;
+    private readonly IItemRepository _repo;
     private readonly IMapper _mapper;
 
-    public GetItemsHandler(IDataContext context, IMapper mapper)
+    public GetItemsHandler(IItemRepository repo, IMapper mapper)
     {
-        _context = context;
+        _repo = repo;
         _mapper = mapper;
     }
-
-    public async Task<PaginatedResponse<ItemVm>> Handle(GetItemsQuery request, CancellationToken cancellationToken)
+    
+    
+    public async Task<PaginatedResponse<IEnumerable<ItemVm>>> Handle(GetItemsQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Items
-            .Where(x => x.TodoId == request.TodoId)
-            .OrderBy(x => x.TodoId)
-            .ProjectTo<ItemVm>(_mapper.ConfigurationProvider)
-            .PaginatedResponseAsync(request.PageNumber, request.PageSize);
+        var filter = _mapper.Map<ItemParameter>(request);
+        var item = await _repo.GetPagedResponseAsync(filter.PageNumber, filter.PageSize);
+        var itemVm = _mapper.Map<IEnumerable<ItemVm>>(item);
+        return new PaginatedResponse<IEnumerable<ItemVm>>(itemVm, filter.PageNumber, filter.PageSize); 
     }
 }
