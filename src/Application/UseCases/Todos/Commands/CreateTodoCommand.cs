@@ -7,26 +7,25 @@ using MediatR;
 namespace Checklist.Application.UseCases.Todos.Commands;
 public class CreateTodoCommand : IRequest<Response<int>>
 {
-    public string Name { get; set; } = String.Empty;
+    public string Name { get; set; } = string.Empty;
 }
     
 public class CreateTodoHandler : IRequestHandler<CreateTodoCommand, Response<int>>
 {
-    private readonly IDataContext _context;
+    private readonly ITodoRepository _repo;
     private readonly IMapper _mapper;
 
-    public CreateTodoHandler(IDataContext context, IMapper mapper)
+    public CreateTodoHandler(ITodoRepository repo, IMapper mapper)
     {
-        _context = context;
+        _repo = repo;
         _mapper = mapper;
     }
 
     public async Task<Response<int>> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
     {
         var todo = _mapper.Map<Todo>(request);
-        _context.Todos.Add(todo);
+        await _repo.CreateAsync(todo);
         
-        await _context.SaveChangesAsync(cancellationToken);
         return new Response<int>(todo.Id);
     }
 }
