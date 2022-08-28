@@ -12,7 +12,7 @@ public class TodoController : BaseController
     public TodoController(ILogger<TodoController> logger) : base(logger) { }
         
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] GetTodoParameter filter)
+    public async Task<IActionResult> Get([FromQuery] TodoParameter filter)
     {
         var query = await Mediator.Send(new GetTodoQuery
         {
