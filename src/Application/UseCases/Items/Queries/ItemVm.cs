@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Checklist.Application.Mappings;
 using Checklist.Domain.Entities;
 
@@ -6,13 +7,7 @@ namespace Checklist.Application.UseCases.Items.Queries;
 public class ItemVm : IMapFrom<Item>
 {
     public int Id { get; set; }
-    public int TodoId { get; set; }
-    public string? StartTime { get; set; }
-    public string? EndTime { get; set; }
-
-    // public void Mapping(Profile profile)
-    // {
-    //     profile.CreateMap<Item, ItemDto>()
-    //         .ForMember(d => d.Priority, opt => opt.MapFrom(s => (int)s.Priority));
-    // }
+    public Todo Todo { get; set; } = new();
+    public string StartTime { get; set; } = string.Empty;
+    public string EndTime { get; set; } = string.Empty;
 }
