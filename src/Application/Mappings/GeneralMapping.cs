@@ -21,10 +21,10 @@ public class GeneralMapping : Profile
             
         CreateMap<RegisterRequest, User>();
         
-        CreateMap<GetTodoQuery, GetTodoParameter>();
+        CreateMap<GetTodoQuery, TodoParameter>();
         CreateMap<Todo, TodoVm>().ReverseMap();
         
-        CreateMap<GetItemsQuery, GetItemsParameter>();
+        CreateMap<GetItemQuery, ItemParameter>();
         CreateMap<Item, ItemVm>().ReverseMap();
     }
 }
