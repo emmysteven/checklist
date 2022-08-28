@@ -2,33 +2,24 @@ using Checklist.Application.Common.Exceptions;
 using Checklist.Application.Common.Interfaces;
 using Checklist.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Checklist.Application.UseCases.Items.Commands;
-public record DeleteItemCommand(int Id) : IRequest;
-public class DeleteItemHandler : IRequestHandler<DeleteItemCommand>
+public record DeleteItemCommand(int Id) : IRequest<Item>;
+public class DeleteItemHandler : IRequestHandler<DeleteItemCommand, Item>
 {
-    private readonly IDataContext _context;
+    private readonly IItemRepository _repo;
 
-    public DeleteItemHandler(IDataContext context)
+    public DeleteItemHandler(IItemRepository repo)
     {
-        _context = context;
+        _repo = repo;
     }
 
-    public async Task<Unit> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
+    public async Task<Item> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
     {
-        var item = await _context.Items
-            .Where(x => x.Id == request.Id)
-            .SingleOrDefaultAsync(cancellationToken);
+        var item = await _repo.GetByIdAsync(request.Id);
         
-        if (item == null)
-        {
-            throw new NotFoundException(nameof(Item), request.Id);
-        }
+        if (item == null) throw new ApiException("Item Not Found.");
         
-        _context.Items.Remove(item);
-        await _context.SaveChangesAsync(cancellationToken);
-        
-        return Unit.Value;
+        return await _repo.DeleteAsync(item);
     }
 }

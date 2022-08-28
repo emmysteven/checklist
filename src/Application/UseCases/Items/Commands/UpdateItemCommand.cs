@@ -6,43 +6,30 @@ using MediatR;
 
 namespace Checklist.Application.UseCases.Items.Commands;
 
-public record UpdateItemCommand : IRequest
+public record UpdateItemCommand : IRequest<Item>
 {
     public int Id { get; init; }
-    public string? Name { get; init; }
+    public string Name { get; init; } = string.Empty;
 }
     
-public class UpdateTodoHandler : IRequestHandler<UpdateItemCommand>
+public class UpdateTodoHandler : IRequestHandler<UpdateItemCommand, Item>
 {
-    private readonly IDataContext _context;
+    private readonly IItemRepository _repo;
     private readonly IMapper _mapper;
 
-    public UpdateTodoHandler(IDataContext context, IMapper mapper)
+    public UpdateTodoHandler(IItemRepository repo, IMapper mapper)
     {
-        _context = context;
+        _repo = repo;
         _mapper = mapper;
     }
 
-    public async Task<Unit> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
+    public async Task<Item> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
     {
-        var item = await _context.Items
-            .FindAsync(new object[] { request.Id }, cancellationToken);
+        var isItem = await _repo.GetByIdAsync(request.Id);
+        if (isItem == null) throw new ApiException("Item Not Found.");
 
-        if (item == null)
-        {
-            throw new NotFoundException(nameof(Items), request.Id);
-        }
+        var item = _mapper.Map<Item>(request);
 
-        item = _mapper.Map<Item>(request);
-
-        await _context.SaveChangesAsync(cancellationToken);
-        return Unit.Value;
-        
-        
-        // var isItem = await _context.Items.FindAsync(request.Id);
-        // if (isItem == null) throw new ApiException("Item Not Found.");
-        // var item = _mapper.Map<Item>(request);
-        //
-        // return await _itemRepository.UpdateAsync(item);
+        return await _repo.UpdateAsync(item);
     }
 }
