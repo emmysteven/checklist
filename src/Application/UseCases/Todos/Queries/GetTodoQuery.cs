@@ -7,34 +7,30 @@ using MediatR;
 
 namespace Checklist.Application.UseCases.Todos.Queries;
 
-public record GetTodoQuery : IRequest<PaginatedResponse<TodoVm>>
+public record GetTodoQuery : IRequest<PaginatedResponse<IEnumerable<TodoVm>>>
 {
     public int Id { get; init; }
-    public int PageNumber { get; set; }
-    public int PageSize { get; set; }
+    public int PageNumber { get; init; }
+    public int PageSize { get; init; }
 }
     
-public class GetAllTodoHandler : IRequestHandler<GetTodoQuery, PaginatedResponse<TodoVm>>
+public class GetAllTodoHandler : IRequestHandler<GetTodoQuery, PaginatedResponse<IEnumerable<TodoVm>>>
 {
-    private readonly IDataContext _context;
+    private readonly ITodoRepository _repo;
     private readonly IMapper _mapper;
 
-    public GetAllTodoHandler(IDataContext context, IMapper mapper)
+    public GetAllTodoHandler(ITodoRepository repo, IMapper mapper)
     {
-        _context = context;
+        _repo = repo;
         _mapper = mapper;
     }
 
-    public async Task<PaginatedResponse<TodoVm>> Handle(GetTodoQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResponse<IEnumerable<TodoVm>>>  Handle(GetTodoQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Todos
-            .Where(x => x.Id == request.Id)
-            .OrderBy(x => x.Id)
-            .ProjectTo<TodoVm>(_mapper.ConfigurationProvider)
-            .PaginatedResponseAsync(request.PageNumber, request.PageSize);
-        // var filter = _mapper.Map<GetTodoParameter>(request);
-        // var todo = await _context.Todos.FindAsync(filter.PageNumber, filter.PageSize);
-        // var todoViewModel = _mapper.Map<IEnumerable<TodoVm>>(todo);
-        // return new PaginateResponse<IEnumerable<TodoVm>>(todoViewModel, filter.PageNumber, filter.PageSize); 
+        var filter = _mapper.Map<TodoParameter>(request);
+        var todo = await _repo.GetPagedResponseAsync(filter.PageNumber, filter.PageSize);
+        var todoVm = _mapper.Map<IEnumerable<TodoVm>>(todo);
+        
+        return new PaginatedResponse<IEnumerable<TodoVm>>(todoVm, filter.PageNumber, filter.PageSize); 
     }
 }
