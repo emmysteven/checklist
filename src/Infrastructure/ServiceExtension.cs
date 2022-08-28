@@ -25,7 +25,6 @@ public static class ServiceExtension
         services.AddDbContext<DataContext>(x =>
             x.UseSqlite(config.GetConnectionString("DevDB")));
         
-
         services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = config.GetConnectionString("RedisUrl");
