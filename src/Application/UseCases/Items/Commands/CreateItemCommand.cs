@@ -10,8 +10,8 @@ public record CreateItemCommand : IRequest<Response<int>>
 {
     public int TodoId { get; set; } = default;
 
-    public string StartTime => string.Empty;
-    public string EndTime => string.Empty;
+    public string StartTime { get; set; } = string.Empty;
+    public string EndTime { get; set; } = string.Empty;
 }
 
 public class CreateItemHandler : IRequestHandler<CreateItemCommand, Response<int>>
