@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -16,6 +16,12 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "@app/*": ["app/core/*"],
+      "@shared/*": ["shared/*"],
+      "@module/*": ["modules/*"],
+      "@env/*": ["environments/*"]
+    },
     "target": "ES2022",
     "module": "es2020",
     "lib": [
