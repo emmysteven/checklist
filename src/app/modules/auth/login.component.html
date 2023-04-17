@@ -5,7 +5,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" id="email" formControlName="email" class="form-control"
+        <input type="text" id="email" [formControlName]="'email'" class="form-control"
                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
 
         <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
@@ -15,7 +15,7 @@
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" formControlName="password" class="form-control"
+        <input type="password" id="password" [formControlName]="'password'" class="form-control"
                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
 
         <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
