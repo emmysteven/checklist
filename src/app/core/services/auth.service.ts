@@ -7,7 +7,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { IUser } from "../models/user";
 
 import { map } from "rxjs/operators";
-import { environment } from "../../../environments/environment";
+import { environment } from "@env/environment";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -35,8 +35,8 @@ export class AuthService {
     return this.userSubject.value;
   }
 
-  login(usernameOrEmail: string, password: string): Observable<IUser> {
-    return this.http.post<IUser>(`${this.baseUrl}auth/login`, { usernameOrEmail, password })
+  login(email: string, password: string): Observable<IUser> {
+    return this.http.post<IUser>(`${this.baseUrl}api/user/login`, { email, password })
       .pipe(map((response: any) => {
         const token = response.data.jwToken;
         if (response.succeeded) {
