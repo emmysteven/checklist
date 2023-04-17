@@ -38,8 +38,8 @@ export class AuthService {
   login(email: string, password: string): Observable<IUser> {
     return this.http.post<IUser>(`${this.baseUrl}api/user/login`, { email, password })
       .pipe(map((response: any) => {
-        const token = response.data.jwToken;
-        if (response.succeeded) {
+        const token = response.token;
+        if (token) {
           localStorage.setItem('token', token);
           const decodedToken = this.helper.decodeToken(token);
 
@@ -54,6 +54,7 @@ export class AuthService {
           console.log(this.User);
           this.userSubject.next(response);
         }
+        // console.log(response);
         return response;
       }))
   }
