@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService, AlertService } from "@app/core/services";
-import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -15,6 +14,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   loading = false;
   submitted = false;
+  returnUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,7 +22,9 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private alertService: AlertService
-  ) { }
+  ) {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -47,14 +49,12 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.authService.login(this.f['email'].value, this.f['password'].value)
-      .pipe(first())
       .subscribe({
-        next: () => {
-          // get return url from query parameters or default to home page
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigateByUrl(returnUrl);
+        next: (response) => {
+          this.router.navigateByUrl(this.returnUrl);
         },
-        error: error => {
+        error: (error) => {
+          console.log(error);
           this.alertService.error(error);
           this.loading = false;
         }
