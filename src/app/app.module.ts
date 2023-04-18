@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared';
 import { AppComponent } from './app.component';
 import { AuthModule } from "./modules/auth";
+import { DashboardModule } from "./modules/dashboard";
+import { tokenInterceptorProvider } from "./core/interceptors";
 
 @NgModule({
   declarations: [
@@ -15,10 +17,11 @@ import { AuthModule } from "./modules/auth";
     AuthModule,
     SharedModule,
     BrowserModule,
+    DashboardModule,
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [tokenInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
