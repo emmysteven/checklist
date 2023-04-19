@@ -12,13 +12,9 @@ public class TodoController : BaseController
     public TodoController(ILogger<TodoController> logger) : base(logger) { }
         
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] TodoParameter filter)
+    public async Task<IActionResult> Get()
     {
-        var query = await Mediator.Send(new GetTodoQuery
-        {
-            PageSize = filter.PageSize,
-            PageNumber = filter.PageNumber
-        });
+        var query = await Mediator.Send(new GetTodoQuery());
         return Ok(query);
     }
 
