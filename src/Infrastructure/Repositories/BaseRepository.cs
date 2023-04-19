@@ -23,6 +23,13 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         return await _context.Set<T>().ToListAsync();
     }
 
+    public async Task<IEnumerable<T>> BulkInsertAsync(IEnumerable<T> entity)
+    {
+        await _context.Set<T>().BulkInsertAsync(entity.ToList());
+        await _context.BulkSaveChangesAsync();
+        return entity.ToList();
+    }
+
     public async Task<List<T>> GetPagedResponseAsync(int pageNumber, int pageSize)
     {
         return await _context
