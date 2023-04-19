@@ -7,7 +7,8 @@ namespace Checklist.Application.UseCases.Items.Queries;
 public class ItemVm : IMapFrom<Item>
 {
     public int Id { get; set; }
-    public Todo Todo { get; set; } = new();
+    public string Name { get; set; } = string.Empty;
     public string StartTime { get; set; } = string.Empty;
     public string EndTime { get; set; } = string.Empty;
+    public DateTime? EodDate { get; set; }
 }
