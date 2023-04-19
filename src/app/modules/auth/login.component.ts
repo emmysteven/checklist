@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService, AlertService } from "@app/core/services";
+import { first } from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private alertService: AlertService
   ) {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
   }
 
   ngOnInit() {
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.authService.login(this.f['email'].value, this.f['password'].value)
+      .pipe(first())
       .subscribe({
         next: (response) => {
           this.router.navigateByUrl(this.returnUrl);
