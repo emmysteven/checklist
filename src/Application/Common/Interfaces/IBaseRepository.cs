@@ -13,6 +13,8 @@ public interface IBaseRepository<T> where T : class
     Task<T> FindAsync(Expression<Func<T, bool>> predicate);
 
     Task<T> CreateAsync(T entity);
+    
+    Task<IEnumerable<T>> BulkInsertAsync(IEnumerable<T> entity);
 
     Task<T> UpdateAsync(T entity);
 
