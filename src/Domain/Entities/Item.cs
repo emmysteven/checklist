@@ -4,10 +4,11 @@ namespace Checklist.Domain.Entities;
 
 public class Item : AuditableEntity
 {
-    public int TodoId { get; set; }
-    public Todo Todo { get; set; } = null!;
+    public new int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
     public string StartTime { get; set; } = string.Empty;
     public string EndTime { get; set; } = string.Empty;
+    public DateTime? EodDate { get; set; }
     
     // private bool _done;
     // public bool Done
