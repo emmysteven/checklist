@@ -8,6 +8,6 @@ public class ItemConfig : IEntityTypeConfiguration<Item>
 {
     public void Configure(EntityTypeBuilder<Item> builder)
     {
-        builder.HasOne(x => x.Todo);
+        
     }
 }
