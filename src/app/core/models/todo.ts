@@ -1,6 +1,6 @@
 export interface ITodo {
-  Id: string;
-  Name: string;
-  StartTime?: string;
-  EndTime?: String;
+  id: string;
+  name: string;
+  startTime?: string;
+  endTime?: String;
 }
