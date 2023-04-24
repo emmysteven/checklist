@@ -1,10 +1,52 @@
-<!--<form [formGroup]="form" (ngSubmit)="onSubmit()">-->
-<!--  <div class="form-group" *ngFor="let item of items">-->
-<!--    <label for="item">{{ item.name }}</label>-->
-<!--    <input type="text" id="item" [formControlName]="'time'" class="form-control"/>-->
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <div class="label-column">
+      <label for="EodDate">EodDate</label>
+    </div>
+    <div class="input-column">
+      <input type="date" id="EodDate" formControlName="EodDate" class="form-control" />
+    </div>
+  </div>
 
-<!--&lt;!&ndash;    <div *ngIf="submitted && f['time'].errors" class="invalid-feedback">&ndash;&gt;-->
-<!--&lt;!&ndash;      <div *ngIf="f['time'].errors['required']">Email is required</div>&ndash;&gt;-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
-<!--  </div>-->
-<!--</form>-->
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngIf="todos">
+      <div formArrayName="startEndFields">
+        <tr *ngFor="let startEndField of startEndFields.controls; let i = index;" [formGroupName]="i">
+          <td>{{ startEndField.value.name }}</td>
+          <td>
+            <input type="time" formControlName="StartTime" class="form-control"/>
+          </td>
+          <td>
+            <input type="time" formControlName="EndTime" class="form-control"/>
+          </td>
+        </tr>
+      </div>
+      <div formArrayName="timeFields">
+        <tr *ngFor="let timeField of timeFields.controls; let i = index;" [formGroupName]="i">
+          <td>{{ timeField.value.name }}</td>
+          <td>
+            <input type="time" formControlName="StartTime" class="form-control"/>
+          </td>
+          <td></td>
+        </tr>
+      </div>
+    </ng-container>
+    </tbody>
+  </table>
+
+  <div class="form-group">
+    <button [disabled]="loading" class="btn btn-primary">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Submit
+    </button>
+  </div>
+
+</form>
