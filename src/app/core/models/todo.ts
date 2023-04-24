@@ -1,4 +1,6 @@
 export interface ITodo {
-  id: number;
-  name: string;
+  Id: string;
+  Name: string;
+  StartTime?: string;
+  EndTime?: String;
 }
