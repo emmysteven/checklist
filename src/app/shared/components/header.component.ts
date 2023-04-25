@@ -27,6 +27,9 @@ import { AuthService } from "@app/core/services";
               <a class="nav-link" routerLink="/register">Register</a>
             </li>
             <li *ngIf="isLoggedIn()" class="nav-item me-2">
+              <a class="nav-link" routerLink="/dashboard/get_item">get items</a>
+            </li>
+            <li *ngIf="isLoggedIn()" class="nav-item me-2">
               <a class="nav-link" routerLink="/dashboard/add_item">add items</a>
             </li>
             <li *ngIf="isLoggedIn()" class="nav-item">
