@@ -4,7 +4,6 @@ import { AlertService, ItemService } from "@app/core/services";
 import { first } from "rxjs/operators";
 import { ITodo} from "@app/core/models";
 
-
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
@@ -15,18 +14,8 @@ import { ITodo} from "@app/core/models";
       display: flex;
       flex-wrap: wrap;
     }
-    /*table th{*/
-    /*  display: inline;*/
-    /*}*/
-    /*table th:nth-child(2){*/
-    /*  float: right;*/
-    /*}*/
-    /*table th:nth-child(3){*/
-    /*  float: right;*/
-    /*}*/
   `]
 })
-
 
 export class AddItemComponent implements OnInit {
 
@@ -111,7 +100,6 @@ export class AddItemComponent implements OnInit {
     });
   }
 
-
   onSubmit() {
     this.submitted = true;
     this.alertService.clear();
@@ -131,8 +119,6 @@ export class AddItemComponent implements OnInit {
     };
 
     console.log(body);
-
-
     // if (this.form.invalid) { return console.log('Invalid Inputs') }
 
     this.loading = true;
