@@ -20,7 +20,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
 
     public async Task<List<T>> GetAllAsync()
     {
-        return await _context.Set<T>().ToListAsync();
+        return await _context.Set<T>().ToListAsync();    
     }
 
     public async Task<IEnumerable<T>> BulkInsertAsync(IEnumerable<T> entity)
