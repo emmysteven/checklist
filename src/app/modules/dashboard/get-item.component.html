@@ -1,1 +1,31 @@
-<p>get-item works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex">
+  <label for="eodDate">EOD Date</label>
+  <div class="form-group w-25 ml-2">
+    <input type="date" id="eodDate" formControlName="eodDate" class="form-control" />
+  </div>
+  <div class="form-group flex-grow-1">
+    <button [disabled]="loading" class="btn btn-primary">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Search
+    </button>
+  </div>
+</form>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>S/N</th>
+    <th>Name</th>
+    <th class="text-nowrap">Start Time</th>
+    <th class="text-nowrap">End Time</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items; let i = index;">
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.startTime }}</td>
+      <td>{{ item.endTime }}</td>
+    </tr>
+  </tbody>
+</table>
