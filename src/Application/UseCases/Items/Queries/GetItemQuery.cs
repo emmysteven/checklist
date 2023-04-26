@@ -5,14 +5,16 @@ using MediatR;
 
 namespace Checklist.Application.UseCases.Items.Queries;
 
-public record GetItemQuery : IRequest<PaginatedResponse<IEnumerable<ItemVm>>>
+public record GetItemQuery : IRequest<Response<IEnumerable<ItemVm>>>
 {
-    public int TodoId { get; init; }
-    public int PageNumber { get; init; }
-    public int PageSize { get; init; } 
+    public GetItemQuery(string eodDate)
+    {
+        EodDate = eodDate;
+    }
+    public string EodDate { get; }
 }
 
-public class GetItemHandler : IRequestHandler<GetItemQuery, PaginatedResponse<IEnumerable<ItemVm>>>
+public class GetItemHandler : IRequestHandler<GetItemQuery, Response<IEnumerable<ItemVm>>>
 {
     private readonly IItemRepository _repo;
     private readonly IMapper _mapper;
@@ -23,12 +25,11 @@ public class GetItemHandler : IRequestHandler<GetItemQuery, PaginatedResponse<IE
         _mapper = mapper;
     }
     
-    
-    public async Task<PaginatedResponse<IEnumerable<ItemVm>>> Handle(GetItemQuery request, CancellationToken cancellationToken)
+    public async Task<Response<IEnumerable<ItemVm>>> Handle(GetItemQuery request, CancellationToken cancellationToken)
     {
-        var filter = _mapper.Map<ItemParameter>(request);
-        var item = await _repo.GetPagedResponseAsync(filter.PageNumber, filter.PageSize);
+        var item = await _repo.GetByDate(request.EodDate);
         var itemVm = _mapper.Map<IEnumerable<ItemVm>>(item);
-        return new PaginatedResponse<IEnumerable<ItemVm>>(itemVm, filter.PageNumber, filter.PageSize); 
+        
+        return new Response<IEnumerable<ItemVm>>(itemVm);
     }
 }
