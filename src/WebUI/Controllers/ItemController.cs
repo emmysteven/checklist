@@ -11,15 +11,10 @@ public class ItemController : BaseController
     public ItemController(ILogger<ItemController> logger) : base(logger) { }
         
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] ItemParameter filter)
+    public async Task<IActionResult> Get([FromQuery] string eodDate)
     {
-        // var name = await Mediator.Send(new GetTodoByIdQuery(1));
-         var query = await Mediator.Send(new GetItemQuery
-        {
-            PageSize = filter.PageSize,
-            PageNumber = filter.PageNumber
-        });
-         return Ok(query);
+        var query = await Mediator.Send(new GetItemQuery(eodDate));
+        return Ok(query);
     }
 
     [HttpGet("{id}"), AllowAnonymous]
