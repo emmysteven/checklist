@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
 import { AlertService, ItemService } from "@app/core/services";
 import { first } from "rxjs/operators";
-import { ITodo} from "@app/core/models";
+import { Todo } from "@app/core/models";
 
 @Component({
   selector: 'app-add-item',
@@ -60,29 +60,31 @@ export class AddItemComponent implements OnInit {
       next: data => {
         this.data = data;
 
-        this.data.forEach((item: ITodo) => {
-          if (item.name.startsWith('Submit')) {
-            item.startTime = "";
-            item.endTime = "";
+        this.data.forEach((todo: Todo) => {
+          if (todo.name.startsWith('Submit')) {
+            todo.startTime = "";
+            todo.endTime = "";
           } else {
-            item.startTime = "";
+            todo.startTime = "";
           }
         });
 
         this.todos = this.data;
 
-        this.todos.forEach((item: ITodo) => {
-          if (item.name.startsWith('Submit')) {
+        console.log(this.todos);
+
+        this.todos.forEach((todo: Todo) => {
+          if (todo.name.startsWith('Submit')) {
             this.startEndFields.push(this.formBuilder.group({
-              id: [item.id],
-              name: [item.name],
+              id: [todo.id],
+              name: [todo.name],
               StartTime: ['', [Validators.required, Validators.maxLength(7)]],
               EndTime: ['', [Validators.required, Validators.maxLength(7)]]
             }));
           } else {
             this.timeFields.push(this.formBuilder.group({
-              id: [item.id],
-              name: [item.name],
+              id: [todo.id],
+              name: [todo.name],
               StartTime: ['', [Validators.required, Validators.maxLength(7)]]
             }));
           }
@@ -119,7 +121,7 @@ export class AddItemComponent implements OnInit {
     };
 
     console.log(body);
-    // if (this.form.invalid) { return console.log('Invalid Inputs') }
+    if (this.form.invalid) { return console.log('Invalid Inputs') }
 
     this.loading = true;
 
