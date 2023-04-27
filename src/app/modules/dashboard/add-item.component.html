@@ -15,9 +15,18 @@
     </thead>
     <tbody>
     <ng-container *ngIf="todos">
-      <div formArrayName="startEndFields">
-        <tr *ngFor="let startEndField of startEndFields.controls; let i = index;" [formGroupName]="i">
-          <td>{{ startEndField.value.name }}</td>
+      <div formArrayName="preEodFields">
+        <tr *ngFor="let preEodField of preEodFields.controls; let i = index;" [formGroupName]="i">
+          <td>{{ preEodField.value.name }}</td>
+          <td>
+            <input type="time" formControlName="StartTime" class="form-control"/>
+          </td>
+          <td></td>
+        </tr>
+      </div>
+      <div formArrayName="firstStageFields">
+        <tr *ngFor="let firstStageField of firstStageFields.controls; let i = index;" [formGroupName]="i">
+          <td>{{ firstStageField.value.name }}</td>
           <td>
             <input type="time" formControlName="StartTime" class="form-control"/>
           </td>
@@ -26,9 +35,30 @@
           </td>
         </tr>
       </div>
-      <div formArrayName="timeFields">
-        <tr *ngFor="let timeField of timeFields.controls; let i = index;" [formGroupName]="i">
-          <td>{{ timeField.value.name }}</td>
+      <div formArrayName="midEodFields">
+        <tr *ngFor="let midEodField of midEodFields.controls; let i = index;" [formGroupName]="i">
+          <td>{{ midEodField.value.name }}</td>
+          <td>
+            <input type="time" formControlName="StartTime" class="form-control"/>
+          </td>
+          <td></td>
+        </tr>
+      </div>
+      <div formArrayName="lastStageFields">
+        <tr *ngFor="let lastStageField of lastStageFields.controls; let i = index;" [formGroupName]="i">
+          <td>{{ lastStageField.value.name }}</td>
+          <td>
+            <input type="time" formControlName="StartTime" class="form-control"/>
+          </td>
+          <td>
+            <input type="time" formControlName="EndTime" class="form-control"/>
+          </td>
+          <td></td>
+        </tr>
+      </div>
+      <div formArrayName="postEodFields">
+        <tr *ngFor="let postEodField of postEodFields.controls; let i = index;" [formGroupName]="i">
+          <td>{{ postEodField.value.name }}</td>
           <td>
             <input type="time" formControlName="StartTime" class="form-control"/>
           </td>
