@@ -9,7 +9,7 @@ const routes: Routes = [
     path: 'dashboard', component: LayoutComponent,
     children: [
       { path: 'add_item', component: AddItemComponent },
-      { path: 'get_item', component: GetItemComponent }
+      { path: 'report/detail', component: GetItemComponent }
     ]
   }
 ];
