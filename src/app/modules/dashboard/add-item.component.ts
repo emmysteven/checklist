@@ -45,45 +45,23 @@ export class AddItemComponent implements OnInit {
       EodDate: ['', [Validators.required]],
 
       preEodFields: this.formBuilder.array([
-        this.formBuilder.group({
-          id: [],
-          name: [''],
-          startTime: ['']
-        })
+        this.formBuilder.group({ id: [], name: [], startTime: [] })
       ]),
 
       firstStageFields: this.formBuilder.array([
-        this.formBuilder.group({
-          id: [],
-          name: [''],
-          startTime: [''],
-          endTime: ['']
-        })
+        this.formBuilder.group({ id: [], name: [], startTime: [], endTime: [] })
       ]),
 
       midEodFields: this.formBuilder.array([
-        this.formBuilder.group({
-          id: [],
-          name: [''],
-          startTime: ['']
-        })
+        this.formBuilder.group({ id: [], name: [], startTime: [] })
       ]),
 
       lastStageFields: this.formBuilder.array([
-        this.formBuilder.group({
-          id: [],
-          name: [''],
-          startTime: [''],
-          endTime: ['']
-        })
+        this.formBuilder.group({ id: [], name: [], startTime: [], endTime: [] })
       ]),
 
       postEodFields: this.formBuilder.array([
-        this.formBuilder.group({
-          id: [],
-          name: [''],
-          startTime: ['']
-        })
+        this.formBuilder.group({ id: [], name: [], startTime: [] })
       ])
 
     });
@@ -171,7 +149,14 @@ export class AddItemComponent implements OnInit {
     this.alertService.clear();
 
     const data = this.form.value;
-    const allFields = [...data.startEndFields, ...data.timeFields];
+
+    const allFields = [
+      ...data.preEodFields,
+      ...data.firstStageFields,
+      ...data.midEodFields,
+      ...data.lastStageFields,
+      ...data.postEodFields
+    ];
 
     //sort the objects in the array in ascending order using the ids of the objects
     const sortedFields = allFields.sort((a, b) => a.id - b.id);
