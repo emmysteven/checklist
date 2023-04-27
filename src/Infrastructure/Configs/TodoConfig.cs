@@ -12,6 +12,8 @@ public class TodoConfig : IEntityTypeConfiguration<Todo>
 
         builder.Property(s => s.Name).HasMaxLength(50).IsRequired();
         
+        builder.Property(s => s.Group).HasMaxLength(10).IsRequired();
+        
         builder.HasIndex(s => new { s.Name, }).IsUnique();
     }
 }
