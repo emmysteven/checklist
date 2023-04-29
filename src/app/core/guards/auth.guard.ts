@@ -10,10 +10,8 @@ import {
 } from '@angular/router';
 
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuardGuard implements CanActivate {
+@Injectable({ providedIn: 'root' })
+export class AuthGuard implements CanActivate {
 
   constructor(private jwtHelper: JwtHelperService, private router: Router) {}
 
