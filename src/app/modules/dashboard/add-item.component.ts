@@ -37,13 +37,17 @@ export class AddItemComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private itemService: ItemService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
       EodDate: ['', [Validators.required]],
     });
+    this.getTodos()
+  }
 
+  getTodos(){
     this.itemService.getTodos().subscribe({
       next: data => {
         this.data = data;
@@ -52,72 +56,69 @@ export class AddItemComponent implements OnInit {
           if (todo.name.startsWith('Submit')) {
             todo.startTime = "";
             todo.endTime = "";
-          } else {
-            todo.startTime = "";
-          }
-        });
+          } else todo.startTime = "";
+        })
 
         this.todos = this.data;
-
-        console.log(this.todos);
-
-        this.todos.forEach((todo: Todo) => {
-          if (todo.group.startsWith('PreEod')) {
-            this.preEodFields.push(this.formBuilder.group({
-              id: [todo.id],
-              name: [todo.name],
-              StartTime: ['', [Validators.required, Validators.maxLength(7)]]
-            }));
-          }
-
-          if (todo.group.startsWith('FirstStage')) {
-            this.firstStageFields.push(this.formBuilder.group({
-              id: [todo.id],
-              name: [todo.name],
-              StartTime: ['', [Validators.required, Validators.maxLength(7)]],
-              EndTime: ['', [Validators.required, Validators.maxLength(7)]]
-            }));
-          }
-
-          if (todo.group.startsWith('MidEod')) {
-            this.midEodFields.push(this.formBuilder.group({
-              id: [todo.id],
-              name: [todo.name],
-              StartTime: ['', [Validators.required, Validators.maxLength(7)]]
-            }));
-          }
-
-          if (todo.group.startsWith('LastStage')) {
-            this.lastStageFields.push(this.formBuilder.group({
-              id: [todo.id],
-              name: [todo.name],
-              StartTime: ['', [Validators.required, Validators.maxLength(7)]],
-              EndTime: ['', [Validators.required, Validators.maxLength(7)]]
-            }));
-          }
-
-          if (todo.group.startsWith('PostEod')) {
-            this.postEodFields.push(this.formBuilder.group({
-              id: [todo.id],
-              name: [todo.name],
-              StartTime: ['', [Validators.required, Validators.maxLength(7)]]
-            }));
-          }
-
-        });
-
-        this.form = this.formBuilder.group({
-          EodDate: ['', Validators.required],
-          preEodFields: this.preEodFields,
-          firstStageFields: this.firstStageFields,
-          midEodFields: this.midEodFields,
-          lastStageFields: this.lastStageFields,
-          postEodFields: this.postEodFields
-        });
+        this.createForm()
       },
-      error: err => {
-        console.log(err);
+
+      error: err => { console.log(err) }
+    })
+  }
+
+  createForm() {
+    this.todos.forEach((todo: Todo) => {
+      if (todo.group.startsWith('PreEod')) {
+        this.preEodFields.push(this.formBuilder.group({
+          id: [todo.id],
+          name: [todo.name],
+          StartTime: ['', [Validators.required, Validators.maxLength(7)]]
+        }));
       }
+
+      if (todo.group.startsWith('FirstStage')) {
+        this.firstStageFields.push(this.formBuilder.group({
+          id: [todo.id],
+          name: [todo.name],
+          StartTime: ['', [Validators.required, Validators.maxLength(7)]],
+          EndTime: ['', [Validators.required, Validators.maxLength(7)]]
+        }));
+      }
+
+      if (todo.group.startsWith('MidEod')) {
+        this.midEodFields.push(this.formBuilder.group({
+          id: [todo.id],
+          name: [todo.name],
+          StartTime: ['', [Validators.required, Validators.maxLength(7)]]
+        }));
+      }
+
+      if (todo.group.startsWith('LastStage')) {
+        this.lastStageFields.push(this.formBuilder.group({
+          id: [todo.id],
+          name: [todo.name],
+          StartTime: ['', [Validators.required, Validators.maxLength(7)]],
+          EndTime: ['', [Validators.required, Validators.maxLength(7)]]
+        }));
+      }
+
+      if (todo.group.startsWith('PostEod')) {
+        this.postEodFields.push(this.formBuilder.group({
+          id: [todo.id],
+          name: [todo.name],
+          StartTime: ['', [Validators.required, Validators.maxLength(7)]]
+        }));
+      }
+    });
+
+    this.form = this.formBuilder.group({
+      EodDate: ['', Validators.required],
+      preEodFields: this.preEodFields,
+      firstStageFields: this.firstStageFields,
+      midEodFields: this.midEodFields,
+      lastStageFields: this.lastStageFields,
+      postEodFields: this.postEodFields
     });
   }
 
