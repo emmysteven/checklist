@@ -41,31 +41,8 @@ export class AddItemComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-
       EodDate: ['', [Validators.required]],
-
-      preEodFields: this.formBuilder.array([
-        this.formBuilder.group({ id: [], name: [], startTime: [] })
-      ]),
-
-      firstStageFields: this.formBuilder.array([
-        this.formBuilder.group({ id: [], name: [], startTime: [], endTime: [] })
-      ]),
-
-      midEodFields: this.formBuilder.array([
-        this.formBuilder.group({ id: [], name: [], startTime: [] })
-      ]),
-
-      lastStageFields: this.formBuilder.array([
-        this.formBuilder.group({ id: [], name: [], startTime: [], endTime: [] })
-      ]),
-
-      postEodFields: this.formBuilder.array([
-        this.formBuilder.group({ id: [], name: [], startTime: [] })
-      ])
-
     });
-
 
     this.itemService.getTodos().subscribe({
       next: data => {
