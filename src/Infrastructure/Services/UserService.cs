@@ -65,20 +65,21 @@ public class UserService : IUserService
         var isEmailUnique = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
         if (isEmailUnique != null) throw new ApiException($"This Email '{request.Email}' is already taken.");
 
-        var isPhoneNumberUnique = await _context.Users.FindAsync(request.PhoneNumber);
+        var isPhoneNumberUnique = await _context.Users.FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber);
         if (isPhoneNumberUnique != null)
             throw new ApiException($"This Phone Number '{request.PhoneNumber}' is already taken.");
 
         var user = _mapper.Map<User>(request);
-        var isFirstAccount = await _context.Users.CountAsync() == 0;
+        var isFirstAccount = !await _context.Users.AnyAsync();
 
         user.Role = isFirstAccount ? Roles.Maker : Roles.Checker;
         user.VerificationToken = RandomTokenString();
-        // user.Created = DateTime.UtcNow;
+        user.Created = DateTime.UtcNow;
         user.Password = BC.HashPassword(request.Password);
 
         await _context.Users.AddAsync(user);
-        await SendVerificationEmail(user, origin);
+        await _context.SaveChangesAsync();
+        // await SendVerificationEmail(user, origin);
         return new Response<string?>(request.FirstName,
             "User registered, please open your email to complete registration");
     }
