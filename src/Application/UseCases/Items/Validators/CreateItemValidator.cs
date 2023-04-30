@@ -12,10 +12,10 @@ public class CreateItemValidator : AbstractValidator<CreateItemCommand>
     {
         _repo = repo;
 
-        RuleFor(t => t.Id)
-            .Cascade(CascadeMode.Stop)
-            .NotEmpty().WithMessage("{PropertyName} can not be empty")
-            .NotNull();
+        // RuleFor(t => t.Id)
+        //     .Cascade(CascadeMode.Stop)
+        //     .NotEmpty().WithMessage("{PropertyName} can not be empty")
+        //     .NotNull();
     }
     
 }
