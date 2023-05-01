@@ -1,0 +1,68 @@
+<div class="card">
+  <h4 class="card-header">Final Item</h4>
+  <div class="card-body">
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row align-items-center mb-4">
+        <label for="txnCount" class="col-md-2">Txn Count</label>
+        <div class="col-md-3">
+          <input type="text" formControlName="txnCount" id="txnCount" class="form-control" />
+        </div>
+        <label for="eodDate" class="col-md-2">EOD Date</label>
+        <div class="col-md-3">
+          <input type="date" formControlName="eodDate" id="eodDate" class="form-control" />
+        </div>
+      </div>
+
+      <div formArrayName="makers" class="form-group">
+        <div *ngFor="let maker of makers['controls']; let i = index; last as isLast" [formGroupName]="i" class="row align-items-center mb-2">
+          <label for="checker" class="col-md-2">Maker</label>
+          <div class="col-md-4">
+            <input type="text" [formControl]="maker" id="maker" class="form-control" />
+          </div>
+          <button (click)="removeMaker(i)" type="button" class="col-md-1 btn" style="color:red">
+            <fa-icon [icon]="faUserXmark"></fa-icon>
+          </button>
+          <button *ngIf="isLast" (click)="addMaker()" type="button" class="col-md-1 btn" style="color:dodgerblue">
+            <fa-icon [icon]="faUserPlus"></fa-icon>
+          </button>
+        </div>
+
+        <div *ngFor="let checker of checkers['controls']; let i = index; last as isLast" [formGroupName]="i" class="row align-items-center mb-2">
+          <label for="checker" class="col-md-2">Checker</label>
+          <div class="col-md-4">
+            <input type="text" [formControl]="checker" id="checker" class="form-control" />
+          </div>
+          <button (click)="removeChecker(i)" type="button" class="col-md-1 btn" style="color:red">
+            <fa-icon [icon]="faUserXmark"></fa-icon>
+          </button>
+          <button *ngIf="isLast" (click)="addChecker()" type="button" class="col-md-1 btn" style="color:dodgerblue">
+            <fa-icon [icon]="faUserPlus"></fa-icon>
+          </button>
+        </div>
+
+        <div *ngFor="let dba of dbas['controls']; let i = index; last as isLast" [formGroupName]="i" class="row align-items-center mb-2">
+          <label for="dba" class="col-md-2">DB Admin</label>
+          <div class="col-md-4">
+            <input type="text" [formControl]="dba" id="dba" class="form-control" />
+          </div>
+          <button (click)="removeDba(i)" type="button" class="col-md-1 btn" style="color:red">
+            <fa-icon [icon]="faUserXmark"></fa-icon>
+          </button>
+          <button *ngIf="isLast" (click)="addDba()" type="button" class="col-md-1 btn" style="color:dodgerblue">
+            <fa-icon [icon]="faUserPlus"></fa-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group mt-4">
+        <button [disabled]="loading" class="btn btn-primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Submit
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
