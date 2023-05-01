@@ -20,10 +20,10 @@
           <div class="col-md-4">
             <input type="text" [formControl]="maker" id="maker" class="form-control" />
           </div>
-          <button (click)="removeMaker(i)" type="button" class="col-md-1 btn" style="color:red">
+          <button (click)="removeMaker(i)" type="button" class="col-md-1 btn remove">
             <fa-icon [icon]="faUserXmark"></fa-icon>
           </button>
-          <button *ngIf="isLast" (click)="addMaker()" type="button" class="col-md-1 btn" style="color:dodgerblue">
+          <button *ngIf="isLast" (click)="addMaker()" type="button" class="col-md-1 btn add">
             <fa-icon [icon]="faUserPlus"></fa-icon>
           </button>
         </div>
@@ -33,10 +33,10 @@
           <div class="col-md-4">
             <input type="text" [formControl]="checker" id="checker" class="form-control" />
           </div>
-          <button (click)="removeChecker(i)" type="button" class="col-md-1 btn" style="color:red">
+          <button (click)="removeChecker(i)" type="button" class="col-md-1 btn remove">
             <fa-icon [icon]="faUserXmark"></fa-icon>
           </button>
-          <button *ngIf="isLast" (click)="addChecker()" type="button" class="col-md-1 btn" style="color:dodgerblue">
+          <button *ngIf="isLast" (click)="addChecker()" type="button" class="col-md-1 btn add">
             <fa-icon [icon]="faUserPlus"></fa-icon>
           </button>
         </div>
@@ -46,10 +46,10 @@
           <div class="col-md-4">
             <input type="text" [formControl]="dba" id="dba" class="form-control" />
           </div>
-          <button (click)="removeDba(i)" type="button" class="col-md-1 btn" style="color:red">
+          <button (click)="removeDba(i)" type="button" class="col-md-1 btn remove">
             <fa-icon [icon]="faUserXmark"></fa-icon>
           </button>
-          <button *ngIf="isLast" (click)="addDba()" type="button" class="col-md-1 btn" style="color:dodgerblue">
+          <button *ngIf="isLast" (click)="addDba()" type="button" class="col-md-1 btn add">
             <fa-icon [icon]="faUserPlus"></fa-icon>
           </button>
         </div>

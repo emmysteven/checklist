@@ -7,7 +7,10 @@ import { first } from "rxjs/operators";
 @Component({
   selector: 'app-final-item',
   templateUrl: './final-item.component.html',
-  styles: []
+  styles: [`
+    .remove { color: red }
+    .add { color: dodgerblue }
+  `]
 })
 
 export class FinalItemComponent implements OnInit {
