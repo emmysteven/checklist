@@ -1,7 +1,9 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <label for="EodDate">EodDate</label>
-  <div class="form-group">
-    <input type="date" id="EodDate" formControlName="EodDate" class="form-control" />
+  <div class="row align-items-center mb-4">
+    <label class="col-md-1" for="EodDate">EodDate</label>
+    <div class="col-md-3 ps-4">
+      <input type="date" id="EodDate" formControlName="EodDate" class="form-control" />
+    </div>
   </div>
 
   <table class="table table-bordered">
