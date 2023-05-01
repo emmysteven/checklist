@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
 import { AlertService, ItemService } from "@app/core/services";
 import { first } from "rxjs/operators";
@@ -9,7 +10,7 @@ import { Todo } from "@app/core/models";
   templateUrl: './add-item.component.html',
   styles: [`
     form { padding-bottom: 100px; }
-    .form-control { width: 130px; }
+    table .form-control { width: 130px; }
     .form-group:nth-child(1) {
       display: flex;
       flex-wrap: wrap;
@@ -32,12 +33,16 @@ export class AddItemComponent implements OnInit {
 
   loading = false;
   submitted = false;
+  returnUrl: string;
 
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private itemService: ItemService
   ) {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/final_item';
   }
 
   ngOnInit() {
@@ -157,8 +162,9 @@ export class AddItemComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log(response);
-          this.alertService.success('Item added successfully', { keepAfterRouteChange: true });
+          this.alertService.success('Item added successfully');
           this.loading = false;
+          this.router.navigateByUrl(this.returnUrl);
         },
         error: (error) => {
           console.log(error);
