@@ -7,10 +7,11 @@ import { AddItemComponent } from './add-item.component';
 import { GetItemComponent } from './get-item.component';
 import { FinalItemComponent } from './final-item.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SummaryComponent } from './summary.component';
 
 
 @NgModule({
-  declarations: [AddItemComponent, GetItemComponent, FinalItemComponent],
+  declarations: [AddItemComponent, GetItemComponent, FinalItemComponent, SummaryComponent],
   imports: [CommonModule, ReactiveFormsModule, DashboardRoutingModule, FontAwesomeModule]
 })
 export class DashboardModule { }
