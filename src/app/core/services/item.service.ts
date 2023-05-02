@@ -35,4 +35,11 @@ export class ItemService {
         return response.data;
     }))
   }
+
+  getSummary(eodDate: string): Observable<Item> {
+    return this.http.get<Item>(`${this.baseUrl}api/summary?eodDate=${eodDate}`, httpOptions)
+      .pipe(map((response: any) => {
+        return response.data;
+      }))
+  }
 }
