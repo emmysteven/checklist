@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AlertService, ItemService } from "@app/core/services";
 import { faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import { first } from "rxjs/operators";
@@ -25,6 +25,7 @@ export class FinalItemComponent implements OnInit {
   faUserXmark = faUserXmark;
 
   form: FormGroup = new FormGroup({});
+  data: any;
   makers = this.fb.array([this.fb.control('', Validators.required)]);
   checkers = this.fb.array([this.fb.control('', Validators.required)]);
   dbas = this.fb.array([this.fb.control('', Validators.required)]);
@@ -37,6 +38,9 @@ export class FinalItemComponent implements OnInit {
       makers: this.makers,
       checkers: this.checkers,
       dbas: this.dbas,
+      startTime: ['', Validators.required],
+      endTime:  ['', Validators.required],
+      duration: ['', Validators.required],
       txnCount: ['', Validators.required],
       eodDate: ['', Validators.required]
     });
@@ -72,22 +76,33 @@ export class FinalItemComponent implements OnInit {
     this.alertService.clear();
 
     if (this.form.invalid) {
-      return;
+      console.log("form is invalid" + this.form.invalid)
     }
 
+    const data = this.form.value;
+
+    for (const prop in data) {
+      if (Array.isArray(data[prop])) {
+        data[prop] = data[prop].join(',')
+      }
+    }
+
+    console.log(data);
+
     this.loading = true;
-    // this.itemService.login(this.f['email'].value, this.f['password'].value)
-    //   .pipe(first())
-    //   .subscribe({
-    //     next: (response) => {
-    //       this.router.navigateByUrl(this.returnUrl);
-    //     },
-    //     error: (error) => {
-    //       console.log(error);
-    //       this.alertService.error(error);
-    //       this.loading = false;
-    //     }
-    //   });
+    this.itemService.addFinalItem(data)
+      .pipe(first())
+      .subscribe({
+        next: (response) => {
+          this.loading = false;
+          console.log(response)
+        },
+        error: (error) => {
+          console.log(error);
+          this.alertService.error(error);
+          this.loading = false;
+        }
+      });
   }
 
 }
