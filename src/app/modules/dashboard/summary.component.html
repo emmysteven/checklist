@@ -13,3 +13,31 @@
       </button>
     </div>
   </div>
+</form>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Makers</th>
+    <th>Checkers</th>
+    <th class="text-nowrap">DB Admin</th>
+    <th class="text-nowrap">EOD Date</th>
+    <th class="text-nowrap">Start Time</th>
+    <th class="text-nowrap">End Time</th>
+    <th>Duration</th>
+    <th>TxnCount</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of summary; let i = index;">
+    <td>{{ item.makers }}</td>
+    <td>{{ item.checkers }}</td>
+    <td>{{ item.dbas }}</td>
+    <td>{{ item.eodDate }}</td>
+    <td>{{ item.startTime }}</td>
+    <td>{{ item.endTime }}</td>
+    <td>{{ item.duration }}</td>
+    <td>{{ item.txnCount }}</td>
+  </tr>
+  </tbody>
+</table>
