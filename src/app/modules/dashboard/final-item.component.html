@@ -4,13 +4,29 @@
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="row align-items-center mb-4">
-        <label for="txnCount" class="col-md-2">Txn Count</label>
-        <div class="col-md-3">
-          <input type="text" formControlName="txnCount" id="txnCount" class="form-control" />
-        </div>
-        <label for="eodDate" class="col-md-2">EOD Date</label>
-        <div class="col-md-3">
+        <div class="form-group col-md-3">
+          <label for="eodDate">EOD Date</label>
           <input type="date" formControlName="eodDate" id="eodDate" class="form-control" />
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="startTime">Start Time</label>
+          <input type="time" formControlName="startTime" id="startTime" class="form-control" />
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="endTime">End Time</label>
+          <input type="time" formControlName="endTime" id="endTime" class="form-control" />
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="duration">Duration</label>
+          <input type="text" formControlName="duration" id="duration" class="form-control" />
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="txnCount">Txn Count</label>
+          <input type="text" formControlName="txnCount" id="txnCount" class="form-control" />
         </div>
       </div>
 
