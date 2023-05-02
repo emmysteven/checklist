@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService, ItemService } from "@app/core/services";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import {Item, Todo} from "@app/core/models";
 
 @Component({
@@ -18,6 +19,7 @@ export class GetItemComponent implements OnInit {
   data: any;
   items: any;
   eodDate: string = '';
+  faMagnifyingGlass = faMagnifyingGlass;
 
   loading = false;
   submitted = false;
