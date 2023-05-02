@@ -38,8 +38,6 @@ export class SummaryComponent implements OnInit {
 
     const eodDate = this.form.value.eodDate;
 
-    console.log(eodDate)
-
     if (this.form.invalid) { return console.log('Invalid Inputs') }
 
     this.loading = true;
@@ -48,6 +46,7 @@ export class SummaryComponent implements OnInit {
       next: data => {
         this.loading = false
         this.summary = data
+        console.log(this.summary)
         this.alertService.success(this.summary)
       },
       error: err => {
@@ -57,6 +56,4 @@ export class SummaryComponent implements OnInit {
       }
     });
   }
-
-
 }
