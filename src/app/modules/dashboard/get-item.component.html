@@ -1,14 +1,19 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex">
-  <label for="eodDate">EOD Date</label>
-  <div class="form-group w-25 ml-2">
-    <input type="date" id="eodDate" formControlName="eodDate" class="form-control" />
+  <div class="row align-items-center mb-4">
+    <div class="col-md-4 pe-0">
+      <label for="EodDate">EOD Date</label>
+    </div>
+    <div class="col-md-6">
+      <input type="date" id="eodDate" formControlName="eodDate" class="form-control" />
+    </div>
+    <div class="col-md-2">
+      <button [disabled]="loading" class="btn btn-primary">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+      </button>
+    </div>
   </div>
-  <div class="form-group flex-grow-1">
-    <button [disabled]="loading" class="btn btn-primary">
-      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-      Search
-    </button>
-  </div>
+
 </form>
 
 <table class="table">
