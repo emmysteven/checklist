@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "@env/environment";
-import {Item, Todo} from "@app/core/models";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "@env/environment";
+import { Item, Todo, Summary } from "@app/core/models";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -29,6 +29,10 @@ export class ItemService {
     return this.http.post(`${this.baseUrl}api/item`, item);
   }
 
+  addFinalItem(finalItem: any) {
+    return this.http.post(`${this.baseUrl}api/summary`, finalItem);
+  }
+
   getItem(eodDate: string): Observable<Item> {
     return this.http.get<Item>(`${this.baseUrl}api/item?eodDate=${eodDate}`, httpOptions)
       .pipe(map((response: any) => {
@@ -36,8 +40,8 @@ export class ItemService {
     }))
   }
 
-  getSummary(eodDate: string): Observable<Item> {
-    return this.http.get<Item>(`${this.baseUrl}api/summary?eodDate=${eodDate}`, httpOptions)
+  getSummary(eodDate: string): Observable<Summary> {
+    return this.http.get<Summary>(`${this.baseUrl}api/summary?eodDate=${eodDate}`, httpOptions)
       .pipe(map((response: any) => {
         return response.data;
       }))
