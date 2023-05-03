@@ -39,6 +39,7 @@ public static class ServiceExtension
         services.AddTransient<ITodoRepository, TodoRepository>();
         services.AddTransient<IItemRepository, ItemRepository>();
         services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<ISummaryRepository, SummaryRepository>();
 
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IEmailService, EmailService>();
