@@ -22,6 +22,7 @@ public class DataContext : DbContext
     public virtual DbSet<Todo> Todos => Set<Todo>();
     public virtual DbSet<Item> Items => Set<Item>();
     public virtual DbSet<User> Users => Set<User>();
+    public virtual DbSet<Summary> Summary => Set<Summary>();
         
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
