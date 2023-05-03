@@ -2,6 +2,8 @@ using AutoMapper;
 using Checklist.Application.DTOs.Account;
 using Checklist.Application.UseCases.Items.Commands;
 using Checklist.Application.UseCases.Items.Queries;
+using Checklist.Application.UseCases.Summaries.Commands;
+using Checklist.Application.UseCases.Summaries.Queries;
 using Checklist.Application.UseCases.Todos.Commands;
 using Checklist.Application.UseCases.Todos.Queries;
 using Checklist.Domain.Entities;
@@ -18,6 +20,9 @@ public class GeneralMapping : Profile
         
         CreateMap<CreateItemCommand, Item>();
         CreateMap<UpdateItemCommand, Item>();
+        
+        CreateMap<CreateSummaryCommand, Summary>();
+        CreateMap<UpdateSummaryCommand, Summary>();
             
         CreateMap<RegisterRequest, User>();
         
@@ -26,5 +31,8 @@ public class GeneralMapping : Profile
         
         CreateMap<GetItemQuery, ItemParameter>();
         CreateMap<Item, ItemVm>().ReverseMap();
+        
+        CreateMap<GetSummaryQuery, SummaryParameter>();
+        CreateMap<Summary, SummaryVm>().ReverseMap();
     }
 }
