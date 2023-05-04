@@ -3,7 +3,7 @@ using Checklist.Domain.Enums;
 
 namespace Checklist.Domain.Entities;
 
-public class Todo: AuditableEntity//, IHasDomainEvent
+public class Todo: AuditEntity//, IHasDomainEvent
 {
     public string Name { get; set; }
     public Groups Group { get; set; }

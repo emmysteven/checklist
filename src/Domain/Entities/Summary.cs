@@ -2,7 +2,7 @@ using Checklist.Domain.Common;
 
 namespace Checklist.Domain.Entities;
 
-public class Summary  : AuditableEntity
+public class Summary  : AuditEntity
 {
     public string Makers { get; set; }
     public string Checkers { get; set; }

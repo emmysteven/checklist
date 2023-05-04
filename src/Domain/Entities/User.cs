@@ -3,7 +3,7 @@ using Checklist.Domain.Enums;
 
 namespace Checklist.Domain.Entities;
 
-public class User : AuditableEntity
+public class User : AuditEntity
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
