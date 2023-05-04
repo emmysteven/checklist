@@ -1,6 +1,6 @@
 namespace Checklist.Domain.Common;
 
-public class AuditableEntity
+public class AuditEntity
 {
     public int Id { get; set; }
     public string MakerId { get; set; } = string.Empty;
