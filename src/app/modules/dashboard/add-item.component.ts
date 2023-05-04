@@ -72,61 +72,37 @@ export class AddItemComponent implements OnInit {
     })
   }
 
+  createFieldsForGroup(todo: Todo) {
+    return this.formBuilder.group({
+      id: [todo.id],
+      name: [todo.name],
+      StartTime: ['', [Validators.required, Validators.maxLength(7)]],
+      EndTime: ['', [Validators.required, Validators.maxLength(7)]],
+      status: ['', [Validators.required, Validators.maxLength(7)]],
+      remark: ['', [Validators.required, Validators.maxLength(100)]]
+    })
+  }
+
   createForm() {
     this.todos.forEach((todo: Todo) => {
       if (todo.group.startsWith('PreEod')) {
-        this.preEodFields.push(this.formBuilder.group({
-          id: [todo.id],
-          name: [todo.name],
-          StartTime: ['', [Validators.required, Validators.maxLength(7)]],
-          EndTime: ['', [Validators.required, Validators.maxLength(7)]],
-          status: ['', [Validators.required, Validators.maxLength(7)]],
-          remark: ['', [Validators.required, Validators.maxLength(7)]]
-        }));
+        this.preEodFields.push(this.createFieldsForGroup(todo));
       }
 
       if (todo.group.startsWith('FirstStage')) {
-        this.firstStageFields.push(this.formBuilder.group({
-          id: [todo.id],
-          name: [todo.name],
-          StartTime: ['', [Validators.required, Validators.maxLength(7)]],
-          EndTime: ['', [Validators.required, Validators.maxLength(7)]],
-          status: ['', [Validators.required, Validators.maxLength(7)]],
-          remark: ['', [Validators.required, Validators.maxLength(7)]]
-        }));
+        this.firstStageFields.push(this.createFieldsForGroup(todo));
       }
 
       if (todo.group.startsWith('MidEod')) {
-        this.midEodFields.push(this.formBuilder.group({
-          id: [todo.id],
-          name: [todo.name],
-          StartTime: ['', [Validators.required, Validators.maxLength(7)]],
-          EndTime: ['', [Validators.required, Validators.maxLength(7)]],
-          status: ['', [Validators.required, Validators.maxLength(7)]],
-          remark: ['', [Validators.required, Validators.maxLength(7)]]
-        }));
+        this.midEodFields.push(this.createFieldsForGroup(todo));
       }
 
       if (todo.group.startsWith('LastStage')) {
-        this.lastStageFields.push(this.formBuilder.group({
-          id: [todo.id],
-          name: [todo.name],
-          StartTime: ['', [Validators.required, Validators.maxLength(7)]],
-          EndTime: ['', [Validators.required, Validators.maxLength(7)]],
-          status: ['', [Validators.required, Validators.maxLength(7)]],
-          remark: ['', [Validators.required, Validators.maxLength(7)]]
-        }));
+        this.lastStageFields.push(this.createFieldsForGroup(todo));
       }
 
       if (todo.group.startsWith('PostEod')) {
-        this.postEodFields.push(this.formBuilder.group({
-          id: [todo.id],
-          name: [todo.name],
-          StartTime: ['', [Validators.required, Validators.maxLength(7)]],
-          status: ['', [Validators.required, Validators.maxLength(7)]],
-          EndTime: ['', [Validators.required, Validators.maxLength(7)]],
-          remark: ['', [Validators.required, Validators.maxLength(7)]]
-        }));
+        this.postEodFields.push(this.createFieldsForGroup(todo));
       }
     });
 
