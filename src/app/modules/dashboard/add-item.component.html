@@ -1,3 +1,8 @@
+<!--<div *ngFor="let alert of alerts" [ngClass]="alert?.type">-->
+<!--  {{ alert?.message }}-->
+<!--  <button (click)="clearAlert(alert)">x</button>-->
+<!--</div>-->
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row align-items-center mb-4">
     <label class="col-md-1" for="EodDate">EodDate</label>
@@ -13,6 +18,8 @@
       <th scope="col">Name</th>
       <th scope="col" class="text-nowrap">Start Time</th>
       <th scope="col" class="text-nowrap">End Time</th>
+      <th scope="col" class="text-nowrap">Status</th>
+      <th scope="col" class="text-nowrap">Remark</th>
     </tr>
     </thead>
     <tbody>
@@ -25,7 +32,19 @@
           <td>
             <input type="time" formControlName="StartTime" class="form-control"/>
           </td>
-          <td></td>
+          <td>
+            <input type="time" formControlName="EndTime" class="form-control"/>
+          </td>
+          <td>
+            <select class="form-control" formControlName="status">
+              <option value="">Not Done</option>
+              <option value="pending">Pending</option>
+              <option value="done">Done</option>
+            </select>
+          </td>
+          <td>
+            <textarea formControlName="remark" class="form-control"></textarea>
+          </td>
         </tr>
       </ng-container>
 
@@ -39,6 +58,16 @@
           <td>
             <input type="time" formControlName="EndTime" class="form-control"/>
           </td>
+          <td>
+            <select class="form-control" formControlName="status">
+              <option value="">Not Done</option>
+              <option value="pending">Pending</option>
+              <option value="done">Done</option>
+            </select>
+          </td>
+          <td>
+            <textarea formControlName="remark" class="form-control"></textarea>
+          </td>
         </tr>
       </ng-container>
 
@@ -49,7 +78,19 @@
           <td>
             <input type="time" formControlName="StartTime" class="form-control"/>
           </td>
-          <td></td>
+          <td>
+            <input type="time" formControlName="EndTime" class="form-control"/>
+          </td>
+          <td>
+            <select class="form-control" formControlName="status">
+              <option value="">Not Done</option>
+              <option value="pending">Pending</option>
+              <option value="done">Done</option>
+            </select>
+          </td>
+          <td>
+            <textarea formControlName="remark" class="form-control"></textarea>
+          </td>
         </tr>
       </ng-container>
 
@@ -63,6 +104,16 @@
           <td>
             <input type="time" formControlName="EndTime" class="form-control"/>
           </td>
+          <td>
+            <select class="form-control" formControlName="status">
+              <option value="">Not Done</option>
+              <option value="pending">Pending</option>
+              <option value="done">Done</option>
+            </select>
+          </td>
+          <td>
+            <textarea formControlName="remark" class="form-control"></textarea>
+          </td>
         </tr>
       </ng-container>
 
@@ -73,7 +124,19 @@
           <td>
             <input type="time" formControlName="StartTime" class="form-control"/>
           </td>
-          <td></td>
+          <td>
+            <input type="time" formControlName="EndTime" class="form-control"/>
+          </td>
+          <td>
+            <select class="form-control" formControlName="status">
+              <option value="">Not Done</option>
+              <option value="pending">Pending</option>
+              <option value="done">Done</option>
+            </select>
+          </td>
+          <td>
+            <textarea formControlName="remark" class="form-control"></textarea>
+          </td>
         </tr>
       </ng-container>
 
