@@ -3,7 +3,9 @@ namespace Checklist.Domain.Common;
 public class AuditableEntity
 {
     public int Id { get; set; }
-    public DateTime? Created { get; set; }
-    public DateTime? LastModified { get; set; }
-    public string? LastModifiedBy { get; set; }
+    public string MakerId { get; set; } = string.Empty;
+    public DateTime? MakerDt { get; set; }
+    public string CheckerId { get; set; } = string.Empty;
+    public DateTime? CheckerDt { get; set; }
+    public bool? AuthStatus { get; set; }
 }
