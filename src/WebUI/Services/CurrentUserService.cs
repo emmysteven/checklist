@@ -6,9 +6,9 @@ public class CurrentUserService: ICurrentUserService
 {
     public CurrentUserService(IHttpContextAccessor httpContextAccessor)
     {
-        UserId = httpContextAccessor.HttpContext?.User.FindFirst("Id")?.Value!;
-        Console.WriteLine($"UserId is: {UserId}");
+        Username = httpContextAccessor.HttpContext?.User.FindFirst("Username")?.Value!;
+        Console.WriteLine($"Username is: {Username}");
     }
-    public string UserId { get; }
-    public bool IsAuthenticated => UserId != null;
+    public string Username { get; }
+    public bool IsAuthenticated => true;
 }

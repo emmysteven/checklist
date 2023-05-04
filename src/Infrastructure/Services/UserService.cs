@@ -74,7 +74,7 @@ public class UserService : IUserService
 
         user.Role = isFirstAccount ? Roles.Maker : Roles.Checker;
         user.VerificationToken = RandomTokenString();
-        user.Created = DateTime.UtcNow;
+        user.MakerDt = DateTime.UtcNow;
         user.Password = BC.HashPassword(request.Password);
 
         await _context.Users.AddAsync(user);
