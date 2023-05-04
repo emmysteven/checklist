@@ -26,17 +26,17 @@ public class DataContext : DbContext
         
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
-        foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+        foreach (var entry in ChangeTracker.Entries<AuditEntity>())
         {
             switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Entity.Created = _date.NowUtc;
-                    // entry.Entity.CreatedBy = _currentUser.UserId;
+                    entry.Entity.MakerId = _currentUser.Username;
+                    entry.Entity.MakerDt = _date.NowUtc;
                     break;
                 case EntityState.Modified:
-                    entry.Entity.LastModified = _date.NowUtc;
-                    entry.Entity.LastModifiedBy = _currentUser.UserId;
+                    entry.Entity.MakerId = _currentUser.Username;
+                    entry.Entity.MakerDt = _date.NowUtc;
                     break;
             }
         }
