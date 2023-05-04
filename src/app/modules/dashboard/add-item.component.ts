@@ -21,19 +21,15 @@ import { Todo } from "@app/core/models";
 export class AddItemComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
+  Fields: FormArray<any> = new FormArray<any>([]);
+
   todos: any;
   data: any;
   EodDate: string = '';
-
-  preEodFields: FormArray<any> = new FormArray<any>([]);
-  firstStageFields: FormArray<any> = new FormArray<any>([]);
-  midEodFields: FormArray<any> = new FormArray<any>([]);
-  lastStageFields: FormArray<any> = new FormArray<any>([]);
-  postEodFields: FormArray<any> = new FormArray<any>([]);
+  returnUrl: string;
 
   loading = false;
   submitted = false;
-  returnUrl: string;
 
   constructor(
     private router: Router,
@@ -60,7 +56,6 @@ export class AddItemComponent implements OnInit {
         this.data.forEach((todo: Todo) => {
             todo.startTime = "";
             todo.endTime = "";
-            todo.status = "";
             todo.remark = "";
         })
 
@@ -78,7 +73,6 @@ export class AddItemComponent implements OnInit {
       name: [todo.name],
       StartTime: ['', [Validators.required, Validators.maxLength(7)]],
       EndTime: ['', [Validators.required, Validators.maxLength(7)]],
-      status: ['', [Validators.required, Validators.maxLength(7)]],
       remark: ['', [Validators.required, Validators.maxLength(100)]]
     })
   }
@@ -86,33 +80,29 @@ export class AddItemComponent implements OnInit {
   createForm() {
     this.todos.forEach((todo: Todo) => {
       if (todo.group.startsWith('PreEod')) {
-        this.preEodFields.push(this.createFieldsForGroup(todo));
+        this.Fields.push(this.createFieldsForGroup(todo));
       }
 
       if (todo.group.startsWith('FirstStage')) {
-        this.firstStageFields.push(this.createFieldsForGroup(todo));
+        this.Fields.push(this.createFieldsForGroup(todo));
       }
 
       if (todo.group.startsWith('MidEod')) {
-        this.midEodFields.push(this.createFieldsForGroup(todo));
+        this.Fields.push(this.createFieldsForGroup(todo));
       }
 
       if (todo.group.startsWith('LastStage')) {
-        this.lastStageFields.push(this.createFieldsForGroup(todo));
+        this.Fields.push(this.createFieldsForGroup(todo));
       }
 
       if (todo.group.startsWith('PostEod')) {
-        this.postEodFields.push(this.createFieldsForGroup(todo));
+        this.Fields.push(this.createFieldsForGroup(todo));
       }
     });
 
     this.form = this.formBuilder.group({
       EodDate: ['', Validators.required],
-      preEodFields: this.preEodFields,
-      firstStageFields: this.firstStageFields,
-      midEodFields: this.midEodFields,
-      lastStageFields: this.lastStageFields,
-      postEodFields: this.postEodFields
+      allFields: this.Fields
     });
   }
 
@@ -121,17 +111,10 @@ export class AddItemComponent implements OnInit {
     this.alertService.clear();
 
     const data = this.form.value;
-
-    const allFields = [
-      ...data.preEodFields,
-      ...data.firstStageFields,
-      ...data.midEodFields,
-      ...data.lastStageFields,
-      ...data.postEodFields
-    ];
+    const Fields = [...data.Fields];
 
     //sort the objects in the array in ascending order using the ids of the objects
-    const sortedFields = allFields.sort((a, b) => a.id - b.id);
+    const sortedFields = Fields.sort((a, b) => a.id - b.id);
 
     sortedFields.forEach((obj: { EodDate: string; }) => {
       obj.EodDate = this.form.value.EodDate;
