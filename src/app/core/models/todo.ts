@@ -4,6 +4,5 @@ export interface Todo {
   group: string;
   startTime: string;
   endTime: string;
-  status: string;
   remark: string;
 }
