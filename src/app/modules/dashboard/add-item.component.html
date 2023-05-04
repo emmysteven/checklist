@@ -25,10 +25,10 @@
     <tbody>
     <ng-container *ngIf="todos">
 
-      <ng-container formArrayName="preEodFields">
-        <tr *ngFor="let preEodField of preEodFields.controls; let i = index;" [formGroupName]="i">
-          <td>{{ preEodField.value.id }}</td>
-          <td>{{ preEodField.value.name }}</td>
+      <ng-container formArrayName="allFields">
+        <tr *ngFor="let field of Fields.controls; let i = index;" [formGroupName]="i">
+          <td>{{ field.value.id }}</td>
+          <td>{{ field.value.name }}</td>
           <td>
             <input type="time" formControlName="StartTime" class="form-control"/>
           </td>
@@ -36,99 +36,7 @@
             <input type="time" formControlName="EndTime" class="form-control"/>
           </td>
           <td>
-            <select class="form-control" formControlName="status">
-              <option value="">Not Done</option>
-              <option value="pending">Pending</option>
-              <option value="done">Done</option>
-            </select>
-          </td>
-          <td>
-            <textarea formControlName="remark" class="form-control"></textarea>
-          </td>
-        </tr>
-      </ng-container>
-
-      <ng-container formArrayName="firstStageFields">
-        <tr *ngFor="let firstStageField of firstStageFields.controls; let i = index;" [formGroupName]="i">
-          <td>{{ firstStageField.value.id }}</td>
-          <td>{{ firstStageField.value.name }}</td>
-          <td>
-            <input type="time" formControlName="StartTime" class="form-control"/>
-          </td>
-          <td>
-            <input type="time" formControlName="EndTime" class="form-control"/>
-          </td>
-          <td>
-            <select class="form-control" formControlName="status">
-              <option value="">Not Done</option>
-              <option value="pending">Pending</option>
-              <option value="done">Done</option>
-            </select>
-          </td>
-          <td>
-            <textarea formControlName="remark" class="form-control"></textarea>
-          </td>
-        </tr>
-      </ng-container>
-
-      <ng-container formArrayName="midEodFields">
-        <tr *ngFor="let midEodField of midEodFields.controls; let i = index;" [formGroupName]="i">
-          <td>{{ midEodField.value.id }}</td>
-          <td>{{ midEodField.value.name }}</td>
-          <td>
-            <input type="time" formControlName="StartTime" class="form-control"/>
-          </td>
-          <td>
-            <input type="time" formControlName="EndTime" class="form-control"/>
-          </td>
-          <td>
-            <select class="form-control" formControlName="status">
-              <option value="">Not Done</option>
-              <option value="pending">Pending</option>
-              <option value="done">Done</option>
-            </select>
-          </td>
-          <td>
-            <textarea formControlName="remark" class="form-control"></textarea>
-          </td>
-        </tr>
-      </ng-container>
-
-      <ng-container formArrayName="lastStageFields">
-        <tr *ngFor="let lastStageField of lastStageFields.controls; let i = index;" [formGroupName]="i">
-          <td>{{ lastStageField.value.id }}</td>
-          <td>{{ lastStageField.value.name }}</td>
-          <td>
-            <input type="time" formControlName="StartTime" class="form-control"/>
-          </td>
-          <td>
-            <input type="time" formControlName="EndTime" class="form-control"/>
-          </td>
-          <td>
-            <select class="form-control" formControlName="status">
-              <option value="">Not Done</option>
-              <option value="pending">Pending</option>
-              <option value="done">Done</option>
-            </select>
-          </td>
-          <td>
-            <textarea formControlName="remark" class="form-control"></textarea>
-          </td>
-        </tr>
-      </ng-container>
-
-      <ng-container formArrayName="postEodFields">
-        <tr *ngFor="let postEodField of postEodFields.controls; let i = index;" [formGroupName]="i">
-          <td>{{ postEodField.value.id }}</td>
-          <td>{{ postEodField.value.name }}</td>
-          <td>
-            <input type="time" formControlName="StartTime" class="form-control"/>
-          </td>
-          <td>
-            <input type="time" formControlName="EndTime" class="form-control"/>
-          </td>
-          <td>
-            <select class="form-control" formControlName="status">
+            <select class="form-control">
               <option value="">Not Done</option>
               <option value="pending">Pending</option>
               <option value="done">Done</option>
