@@ -58,10 +58,10 @@ export class AddItemComponent implements OnInit {
         this.data = data;
 
         this.data.forEach((todo: Todo) => {
-          if (todo.name.startsWith('Submit')) {
             todo.startTime = "";
             todo.endTime = "";
-          } else todo.startTime = "";
+            todo.status = "";
+            todo.remark = "";
         })
 
         this.todos = this.data;
@@ -78,7 +78,10 @@ export class AddItemComponent implements OnInit {
         this.preEodFields.push(this.formBuilder.group({
           id: [todo.id],
           name: [todo.name],
-          StartTime: ['', [Validators.required, Validators.maxLength(7)]]
+          StartTime: ['', [Validators.required, Validators.maxLength(7)]],
+          EndTime: ['', [Validators.required, Validators.maxLength(7)]],
+          status: ['', [Validators.required, Validators.maxLength(7)]],
+          remark: ['', [Validators.required, Validators.maxLength(7)]]
         }));
       }
 
@@ -87,7 +90,9 @@ export class AddItemComponent implements OnInit {
           id: [todo.id],
           name: [todo.name],
           StartTime: ['', [Validators.required, Validators.maxLength(7)]],
-          EndTime: ['', [Validators.required, Validators.maxLength(7)]]
+          EndTime: ['', [Validators.required, Validators.maxLength(7)]],
+          status: ['', [Validators.required, Validators.maxLength(7)]],
+          remark: ['', [Validators.required, Validators.maxLength(7)]]
         }));
       }
 
@@ -95,7 +100,10 @@ export class AddItemComponent implements OnInit {
         this.midEodFields.push(this.formBuilder.group({
           id: [todo.id],
           name: [todo.name],
-          StartTime: ['', [Validators.required, Validators.maxLength(7)]]
+          StartTime: ['', [Validators.required, Validators.maxLength(7)]],
+          EndTime: ['', [Validators.required, Validators.maxLength(7)]],
+          status: ['', [Validators.required, Validators.maxLength(7)]],
+          remark: ['', [Validators.required, Validators.maxLength(7)]]
         }));
       }
 
@@ -104,7 +112,9 @@ export class AddItemComponent implements OnInit {
           id: [todo.id],
           name: [todo.name],
           StartTime: ['', [Validators.required, Validators.maxLength(7)]],
-          EndTime: ['', [Validators.required, Validators.maxLength(7)]]
+          EndTime: ['', [Validators.required, Validators.maxLength(7)]],
+          status: ['', [Validators.required, Validators.maxLength(7)]],
+          remark: ['', [Validators.required, Validators.maxLength(7)]]
         }));
       }
 
@@ -112,7 +122,10 @@ export class AddItemComponent implements OnInit {
         this.postEodFields.push(this.formBuilder.group({
           id: [todo.id],
           name: [todo.name],
-          StartTime: ['', [Validators.required, Validators.maxLength(7)]]
+          StartTime: ['', [Validators.required, Validators.maxLength(7)]],
+          status: ['', [Validators.required, Validators.maxLength(7)]],
+          EndTime: ['', [Validators.required, Validators.maxLength(7)]],
+          remark: ['', [Validators.required, Validators.maxLength(7)]]
         }));
       }
     });
