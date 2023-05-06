@@ -5,6 +5,7 @@ using Checklist.Infrastructure.Contexts;
 using Checklist.Infrastructure.Repositories;
 using Checklist.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +45,9 @@ public static class ServiceExtension
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IEmailService, EmailService>();
         services.AddTransient<IDateService, DateService>();
+        
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         services.Configure<JWTSettings>(config.GetSection("JWTSettings"));
         services.Configure<MailSettings>(config.GetSection("MailSettings"));
