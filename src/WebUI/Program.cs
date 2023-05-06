@@ -1,7 +1,7 @@
 using Checklist.Application;
 using Checklist.Application.Common.Interfaces;
 using Checklist.Infrastructure;
-using Checklist.WebUI.Services;
+using Checklist.Infrastructure.Services;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -27,7 +27,6 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
-builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCors(options =>
 {
