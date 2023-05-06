@@ -167,8 +167,9 @@ public class UserService : IUserService
         var claims = new[]
         {
             new Claim("Id", user.Result?.Id.ToString() ?? string.Empty),
-            new Claim("FirstName", user.Result?.FirstName!),
-            new Claim("LastName", user.Result?.LastName!),
+            new Claim("Firstname", user.Result?.FirstName!),
+            new Claim("Lastname", user.Result?.LastName!),
+            new Claim("Username", user.Result?.Username!),
             new Claim("Email", user.Result?.Email!),
             new Claim("Role", user.Result?.Role.ToString() ?? string.Empty),
             new Claim("IsVerified", user.Result?.IsVerified.ToString() ?? string.Empty)
