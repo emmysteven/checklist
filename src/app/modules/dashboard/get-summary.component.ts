@@ -5,11 +5,11 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-summary',
-  templateUrl: './summary.component.html',
+  templateUrl: './get-summary.component.html',
   styles: [
   ]
 })
-export class SummaryComponent implements OnInit {
+export class GetSummaryComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   data: any;

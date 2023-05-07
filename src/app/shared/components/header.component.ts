@@ -30,7 +30,7 @@ import { AuthService } from "@app/core/services";
               <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reports</a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" routerLink="/dashboard/report/detail">Details</a></li>
-                <li><a class="dropdown-item" routerLink="/dashboard/report/summary">Summary</a></li>
+                <li><a class="dropdown-item" routerLink="/dashboard/report/get_summary">Summary</a></li>
 <!--                <li><hr class="dropdown-divider" /></li>-->
 <!--                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
               </ul>

@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from "@app/modules/auth/layout.component";
 import { AddItemComponent } from "./add-item.component";
 import { GetItemComponent } from "./get-item.component";
-import { FinalItemComponent } from "./final-item.component";
-import { SummaryComponent } from "@app/modules/dashboard/summary.component";
+import { AddSummaryComponent } from "./add-summary.component";
+import { GetSummaryComponent } from "@app/modules/dashboard/get-summary.component";
 import { AuthGuard } from "@app/core/guards";
 
 const routes: Routes = [
@@ -12,9 +12,9 @@ const routes: Routes = [
     path: 'dashboard', component: LayoutComponent, canActivate: [AuthGuard],
     children: [
       { path: 'checks/add_checks', component: AddItemComponent },
-      { path: 'checks/add_summary', component: FinalItemComponent },
+      { path: 'checks/add_summary', component: AddSummaryComponent },
       { path: 'report/detail', component: GetItemComponent },
-      { path: 'report/summary', component: SummaryComponent }
+      { path: 'report/get_summary', component: GetSummaryComponent }
     ]
   }
 ];
