@@ -35,8 +35,12 @@ import { AuthService } from "@app/core/services";
 <!--                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
               </ul>
             </li>
-            <li *ngIf="isLoggedIn()" class="nav-item me-2">
-              <a class="nav-link" routerLink="/dashboard/add_item">add items</a>
+            <li *ngIf="isLoggedIn()" class="nav-item me-2 dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Checks</a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" routerLink="/dashboard/checks/add_checks">Add Checks</a></li>
+                <li><a class="dropdown-item" routerLink="/dashboard/checks/add_summary">Add Summary</a></li>
+              </ul>
             </li>
             <li *ngIf="isLoggedIn()" class="nav-item">
               <a class="nav-link" role="button" (click)="logout()">logout</a>
