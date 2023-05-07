@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
-import { AlertService, ItemService } from "@app/core/services";
+import { AlertService, ApiService } from "@app/core/services";
 import { first } from "rxjs/operators";
 import { Todo } from "@app/core/models";
 
@@ -36,7 +36,7 @@ export class AddItemComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    private itemService: ItemService
+    private apiService: ApiService
   ) {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/final_item';
   }
@@ -49,7 +49,7 @@ export class AddItemComponent implements OnInit {
   }
 
   getTodos(){
-    this.itemService.getTodos().subscribe({
+    this.apiService.getTodos().subscribe({
       next: data => {
         this.data = data;
 
@@ -129,7 +129,7 @@ export class AddItemComponent implements OnInit {
 
     this.loading = true;
 
-    this.itemService.addItem(body)
+    this.apiService.addItem(body)
       .pipe(first())
       .subscribe({
         next: (response) => {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertService, ItemService } from "@app/core/services";
+import { AlertService, ApiService } from "@app/core/services";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
@@ -23,7 +23,7 @@ export class SummaryComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    private itemService: ItemService
+    private apiService: ApiService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class SummaryComponent implements OnInit {
 
     this.loading = true;
 
-    this.itemService.getSummary(eodDate).subscribe({
+    this.apiService.getSummary(eodDate).subscribe({
       next: data => {
         this.loading = false
         this.summary = data

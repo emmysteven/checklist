@@ -12,7 +12,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class ItemService {
+export class ApiService {
 
   baseUrl: string = environment.baseUrl;
 

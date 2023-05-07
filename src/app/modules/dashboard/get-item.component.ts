@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertService, ItemService } from "@app/core/services";
+import { AlertService, ApiService } from "@app/core/services";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import {Item, Todo} from "@app/core/models";
@@ -27,7 +27,7 @@ export class GetItemComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    private itemService: ItemService
+    private apiService: ApiService
   ) { }
 
   ngOnInit(): void {
@@ -42,13 +42,11 @@ export class GetItemComponent implements OnInit {
 
     const eodDate = this.form.value.eodDate;
 
-    console.log(eodDate)
-
     if (this.form.invalid) { return console.log('Invalid Inputs') }
 
     this.loading = true;
 
-    this.itemService.getItem(eodDate).subscribe({
+    this.apiService.getItem(eodDate).subscribe({
       next: data => {
         this.loading = false
         this.items = data

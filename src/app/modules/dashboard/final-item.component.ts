@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AlertService, ItemService } from "@app/core/services";
+import { AlertService, ApiService } from "@app/core/services";
 import { faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import { first } from "rxjs/operators";
 
@@ -18,7 +18,7 @@ export class FinalItemComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private itemService: ItemService
+    private apiService: ApiService
   ) { }
 
   faUserPlus = faUserPlus;
@@ -90,7 +90,7 @@ export class FinalItemComponent implements OnInit {
     console.log(data);
 
     this.loading = true;
-    this.itemService.addFinalItem(data)
+    this.apiService.addFinalItem(data)
       .pipe(first())
       .subscribe({
         next: (response) => {
