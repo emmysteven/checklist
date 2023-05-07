@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { JwtHelperService } from "@auth0/angular-jwt";
 
-import { IUser } from "../models/user";
+import { User } from "../models/user";
 
 import { map } from "rxjs/operators";
 import { environment } from "@env/environment";
@@ -12,10 +12,11 @@ import { environment } from "@env/environment";
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  User: IUser = {
+  newUser: User = {
     Id: '',
-    FirstName: '',
-    LastName: '',
+    Firstname: '',
+    Lastname: '',
+    Username: '',
     Email: '',
     Role: '',
     PhoneNumber: ''
@@ -23,35 +24,36 @@ export class AuthService {
   baseUrl: string = environment.baseUrl;
   helper = new JwtHelperService();
 
-  private userSubject: BehaviorSubject<IUser>;
-  public user: Observable<IUser>
+  private userSubject: BehaviorSubject<User>;
+  public user: Observable<User>
 
   constructor(private router: Router, private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<IUser>(JSON.parse(localStorage.getItem('user')!));
+    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')!));
     this.user = this.userSubject.asObservable();
   }
 
-  public get userValue(): IUser {
+  public get userValue(): User {
     return this.userSubject.value;
   }
 
-  login(email: string, password: string): Observable<IUser> {
-    return this.http.post<IUser>(`${this.baseUrl}api/user/login`, { email, password })
+  login(email: string, password: string): Observable<User> {
+    return this.http.post<User>(`${this.baseUrl}api/user/login`, { email, password })
       .pipe(map((response: any) => {
         const token = response.token;
         if (token) {
           localStorage.setItem('token', token);
           const decodedToken = this.helper.decodeToken(token);
 
-          this.User = {
+          this.newUser = {
             Id: decodedToken.Id,
-            FirstName: decodedToken.FirstName,
-            LastName: decodedToken.LastName,
+            Firstname: decodedToken.Firstname,
+            Lastname: decodedToken.Lastname,
+            Username: decodedToken.Username,
             Email: decodedToken.Email,
             Role: decodedToken.Role,
             PhoneNumber: decodedToken.PhoneNumber
           }
-          console.log(this.User);
+          console.log(this.newUser);
           this.userSubject.next(response);
         }
         // console.log(response);
@@ -59,16 +61,16 @@ export class AuthService {
       }))
   }
 
-  register(user: IUser) {
+  register(user: User) {
     return this.http.post(`${this.baseUrl}user/register`, user);
   }
 
   getAll() {
-    return this.http.get<IUser[]>(`${this.baseUrl}users`);
+    return this.http.get<User[]>(`${this.baseUrl}users`);
   }
 
   getById(id: string) {
-    return this.http.get<IUser>(`${this.baseUrl}user/${id}`);
+    return this.http.get<User>(`${this.baseUrl}user/${id}`);
   }
 
   update(id: string, params: object) {
@@ -104,16 +106,17 @@ export class AuthService {
   }
 
   logout(): void {
-    this.User = {
+    this.newUser = {
       Id: '',
-      FirstName: '',
-      LastName: '',
+      Firstname: '',
+      Lastname: '',
+      Username: '',
       Email: '',
       Role: '',
       PhoneNumber: ''
     }
     localStorage.removeItem('token');
-    this.userSubject.next(this.User);
+    this.userSubject.next(this.newUser);
     this.router.navigate(['login']);
   }
 
