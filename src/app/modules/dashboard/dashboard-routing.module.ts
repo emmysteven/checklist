@@ -11,8 +11,8 @@ const routes: Routes = [
   {
     path: 'dashboard', component: LayoutComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'add_item', component: AddItemComponent },
-      { path: 'final_item', component: FinalItemComponent },
+      { path: 'checks/add_checks', component: AddItemComponent },
+      { path: 'checks/add_summary', component: FinalItemComponent },
       { path: 'report/detail', component: GetItemComponent },
       { path: 'report/summary', component: SummaryComponent }
     ]
