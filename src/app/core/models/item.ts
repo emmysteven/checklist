@@ -3,5 +3,6 @@ export interface Item {
   name: string;
   startTime: string;
   endTime: string;
+  remark: string;
   eodDate: string;
 }
