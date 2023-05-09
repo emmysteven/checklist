@@ -8,10 +8,11 @@ import { GetItemComponent } from './get-item.component';
 import { AddSummaryComponent } from './add-summary.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GetSummaryComponent } from './get-summary.component';
+import { SharedModule } from "@app/shared";
 
 
 @NgModule({
   declarations: [AddItemComponent, GetItemComponent, AddSummaryComponent, GetSummaryComponent],
-  imports: [CommonModule, ReactiveFormsModule, DashboardRoutingModule, FontAwesomeModule]
+  imports: [CommonModule, ReactiveFormsModule, DashboardRoutingModule, FontAwesomeModule, SharedModule]
 })
 export class DashboardModule { }
