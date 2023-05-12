@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Alert, AlertType} from "../models/alert";
-import {Observable, Subject} from "rxjs";
-import {filter} from "rxjs/operators";
+import { Observable, Subject } from "rxjs";
+import { filter } from "rxjs/operators";
+import { Alert, AlertType } from "../models/alert";
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
@@ -14,19 +14,19 @@ export class AlertService {
 
   // convenience methods
   success(message: string, options?: any) {
-    this.alert(new Alert({ ...options, type: AlertType.Success, message }));
+    this.alert(new Alert({ ...options, type: AlertType.SUCCESS, message }));
   }
 
   error(message: string, options?: any) {
-    this.alert(new Alert({ ...options, type: AlertType.Error, message }));
+    this.alert(new Alert({ ...options, type: AlertType.ERROR, message }));
   }
 
   info(message: string, options?: any) {
-    this.alert(new Alert({ ...options, type: AlertType.Info, message }));
+    this.alert(new Alert({ ...options, type: AlertType.INFO, message }));
   }
 
   warn(message: string, options?: any) {
-    this.alert(new Alert({ ...options, type: AlertType.Warning, message }));
+    this.alert(new Alert({ ...options, type: AlertType.WARNING, message }));
   }
 
   // main alert method
