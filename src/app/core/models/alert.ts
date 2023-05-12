@@ -1,6 +1,6 @@
 export class Alert {
   id: string = '';
-  type: AlertType = AlertType.Info;
+  type: AlertType = AlertType.INFO;
   message: string = '';
   autoClose: boolean = false;
   keepAfterRouteChange: boolean = false;
@@ -12,8 +12,8 @@ export class Alert {
 }
 
 export enum AlertType {
-  Success,
-  Error,
-  Info,
-  Warning
+  SUCCESS = "success",
+  ERROR = "error",
+  INFO = "info",
+  WARNING = "warning",
 }
