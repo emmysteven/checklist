@@ -125,7 +125,10 @@ export class AddItemComponent implements OnInit {
     };
 
     console.log(body);
-    if (this.form.invalid) { return console.log('Invalid Inputs') }
+    if (this.form.invalid) {
+      this.alertService.error("Some fields are empty: ", { autoClose: false });
+      return;
+    }
 
     this.loading = true;
 
@@ -134,13 +137,14 @@ export class AddItemComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log(response);
-          this.alertService.success('Item added successfully');
+          this.form.reset({});
+          this.alertService.success('Item added successfully', { autoClose: false });
           this.loading = false;
           this.router.navigateByUrl(this.returnUrl);
         },
         error: (error) => {
           console.log(error);
-          this.alertService.error(error);
+          this.alertService.error("Something went wrong, please try again" + error)
           this.loading = false;
         }
       });
