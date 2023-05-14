@@ -6,14 +6,14 @@ import {Item, Todo} from "@app/core/models";
 
 @Component({
   selector: 'app-get-item',
-  templateUrl: './get-item.component.html',
+  templateUrl: './get-check.component.html',
   styles: [`
     .table { padding-bottom: 400px; }
   `]
 })
 
 
-export class GetItemComponent implements OnInit {
+export class GetCheckComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   data: any;
