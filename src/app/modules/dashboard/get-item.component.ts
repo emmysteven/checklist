@@ -50,11 +50,10 @@ export class GetItemComponent implements OnInit {
       next: data => {
         this.loading = false
         this.items = data
-        this.alertService.success(this.items)
       },
       error: err => {
         this.loading = false
-        this.alertService.error(err)
+        this.alertService.error("Something went wrong, please try again" + err)
         console.log(err)
       }
     });
