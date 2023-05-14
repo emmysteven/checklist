@@ -32,13 +32,15 @@ export class GetSummaryComponent implements OnInit {
     });
   }
 
+  get control() { return this.form.controls; }
+
   onSubmit() {
     this.submitted = true;
     this.alertService.clear();
 
     const eodDate = this.form.value.eodDate;
 
-    if (this.form.invalid) { return console.log('Invalid Inputs') }
+    if (this.form.invalid) { return }
 
     this.loading = true;
 
@@ -47,11 +49,11 @@ export class GetSummaryComponent implements OnInit {
         this.loading = false
         this.summary = data
         console.log(this.summary)
-        this.alertService.success(this.summary)
+        this.alertService.success('Item added successfully', { autoClose: false });
       },
       error: err => {
         this.loading = false
-        this.alertService.error(err)
+        this.alertService.error("Something went wrong, please try again" + err)
         console.log(err)
       }
     });
