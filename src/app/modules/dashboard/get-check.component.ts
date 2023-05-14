@@ -36,6 +36,8 @@ export class GetCheckComponent implements OnInit {
     });
   }
 
+  get control() { return this.form.controls; }
+
   onSubmit() {
     this.submitted = true;
     this.alertService.clear();
