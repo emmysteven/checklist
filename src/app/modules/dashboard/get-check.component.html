@@ -4,7 +4,12 @@
       <label for="EodDate">EOD Date</label>
     </div>
     <div class="col-md-6">
-      <input type="date" id="eodDate" formControlName="eodDate" class="form-control" />
+      <input type="date" id="eodDate" formControlName="eodDate" class="form-control"
+             [ngClass]="{ 'is-invalid': submitted && control['eodDate'].errors }" />
+
+      <div *ngIf="submitted && control['eodDate'].errors" class="invalid-feedback">
+        <div *ngIf="control['eodDate'].errors['required']">Eod Date is required</div>
+      </div>
     </div>
     <div class="col-md-2">
       <button [disabled]="loading" class="btn btn-primary">
