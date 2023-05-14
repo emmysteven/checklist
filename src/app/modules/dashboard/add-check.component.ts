@@ -7,7 +7,7 @@ import { Todo } from "@app/core/models";
 
 @Component({
   selector: 'app-add-item',
-  templateUrl: './add-item.component.html',
+  templateUrl: './add-check.component.html',
   styles: [`
     form { padding-bottom: 100px; }
     table .form-control { width: 130px; }
@@ -18,7 +18,7 @@ import { Todo } from "@app/core/models";
   `]
 })
 
-export class AddItemComponent implements OnInit {
+export class AddCheckComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   Fields: FormArray<any> = new FormArray<any>([]);
