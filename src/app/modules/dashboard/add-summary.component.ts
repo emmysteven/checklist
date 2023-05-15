@@ -70,14 +70,13 @@ export class AddSummaryComponent implements OnInit {
     this.dbas.removeAt(index);
   }
 
+  get control() { return this.form.controls; }
 
   onSubmit() {
     this.submitted = true;
     this.alertService.clear();
 
-    if (this.form.invalid) {
-      console.log("form is invalid" + this.form.invalid)
-    }
+    if (this.form.invalid) { return }
 
     const data = this.form.value;
 
@@ -87,19 +86,19 @@ export class AddSummaryComponent implements OnInit {
       }
     }
 
-    console.log(data);
-
     this.loading = true;
     this.apiService.addFinalItem(data)
       .pipe(first())
       .subscribe({
         next: (response) => {
           this.loading = false;
+          this.form.reset({});
+          this.alertService.success("Summary was added successfully", { autoClose: false });
           console.log(response)
         },
         error: (error) => {
           console.log(error);
-          this.alertService.error(error);
+          this.alertService.error("Something went wrong: " + error, { autoClose: false });
           this.loading = false;
         }
       });
