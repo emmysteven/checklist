@@ -106,23 +106,19 @@ export class AddCheckComponent implements OnInit {
     });
   }
 
+  get control() { return this.form.controls; }
+
   onSubmit() {
     this.submitted = true;
     this.alertService.clear();
 
-    const data = this.form.value;
-    const Fields = [...data.Fields];
+    const Fields = [...this.form.value.allFields]
 
-    //sort the objects in the array in ascending order using the ids of the objects
-    const sortedFields = Fields.sort((a, b) => a.id - b.id);
-
-    sortedFields.forEach((obj: { EodDate: string; }) => {
-      obj.EodDate = this.form.value.EodDate;
+    Fields.forEach((obj: { EodDate: string; }) => {
+      obj.EodDate = this.form.value.EodDate
     });
 
-    const body = {
-      items: sortedFields
-    };
+    const body = { items: Fields }
 
     console.log(body);
     if (this.form.invalid) {
@@ -137,7 +133,6 @@ export class AddCheckComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log(response);
-          this.form.reset({});
           this.alertService.success('Item added successfully', { autoClose: false });
           this.loading = false;
           this.router.navigateByUrl(this.returnUrl);
