@@ -4,7 +4,12 @@
   <div class="row align-items-center mb-4">
     <label class="col-md-1" for="EodDate">EodDate</label>
     <div class="col-md-3 ps-4">
-      <input type="date" id="EodDate" formControlName="EodDate" class="form-control" />
+      <input type="date" id="EodDate" formControlName="EodDate" class="form-control"
+             [ngClass]="{ 'is-invalid': submitted && control['EodDate'].errors }" />
+
+      <div *ngIf="submitted && control['EodDate'].errors" class="invalid-feedback">
+        <div *ngIf="control['EodDate'].errors['required']">EOD Date is required</div>
+      </div>
     </div>
   </div>
 
@@ -21,16 +26,25 @@
     </thead>
     <tbody>
     <ng-container *ngIf="todos">
-
       <ng-container formArrayName="allFields">
         <tr *ngFor="let field of Fields.controls; let i = index;" [formGroupName]="i">
           <td>{{ field.value.id }}</td>
           <td>{{ field.value.name }}</td>
           <td>
-            <input type="time" formControlName="StartTime" class="form-control"/>
+            <input type="time" formControlName="StartTime" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && field.errors }" />
+
+            <div *ngIf="submitted && field.errors" class="invalid-feedback">
+              <div *ngIf="field.errors['required']">Start Time is required</div>
+            </div>
           </td>
           <td>
-            <input type="time" formControlName="EndTime" class="form-control"/>
+            <input type="time" formControlName="EndTime" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && field.errors }" />
+
+            <div *ngIf="submitted && field.errors" class="invalid-feedback">
+              <div *ngIf="field.errors['required']">End Time is required</div>
+            </div>
           </td>
           <td>
             <select class="form-control">
@@ -44,7 +58,6 @@
           </td>
         </tr>
       </ng-container>
-
     </ng-container>
     </tbody>
   </table>
