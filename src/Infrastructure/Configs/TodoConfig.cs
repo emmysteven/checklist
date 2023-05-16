@@ -8,12 +8,15 @@ public class TodoConfig : IEntityTypeConfiguration<Todo>
 {
     public void Configure(EntityTypeBuilder<Todo> builder)
     {
+        builder.ToTable("Checklist_Todo");
+        
         builder.HasKey(s => s.Id);
 
-        builder.Property(s => s.Name).HasMaxLength(50).IsRequired();
+        builder.Property(s => s.TodoName).HasMaxLength(50).IsRequired();
         
-        builder.Property(s => s.Group).HasMaxLength(10).IsRequired();
+        builder.Property(s => s.TodoGroup).HasMaxLength(10).IsRequired();
         
-        builder.HasIndex(s => new { s.Name, }).IsUnique();
+        builder.HasIndex(s => new {
+            Name = s.TodoName, }).IsUnique();
     }
 }

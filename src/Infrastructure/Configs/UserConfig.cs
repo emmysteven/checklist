@@ -8,6 +8,8 @@ public class UserConfig : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
+        builder.ToTable("Checklist_User");
+        
         builder.HasKey(u => u.Id);
 
         builder.Property(u => u.FirstName).HasMaxLength(30).IsRequired();

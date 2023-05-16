@@ -8,6 +8,8 @@ public class ItemConfig : IEntityTypeConfiguration<Item>
 {
     public void Configure(EntityTypeBuilder<Item> builder)
     {
+        builder.ToTable("Checklist_Item");
+        
         builder.HasNoKey();
     }
 }

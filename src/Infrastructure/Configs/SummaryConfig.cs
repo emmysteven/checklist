@@ -8,6 +8,8 @@ public class SummaryConfig : IEntityTypeConfiguration<Summary>
 {
     public void Configure(EntityTypeBuilder<Summary> builder)
     {
+        builder.ToTable("Checklist_Summary"); 
+        
         builder.HasKey(s => s.Id);
 
         builder.Property(s => s.Makers).HasMaxLength(50).IsRequired();
