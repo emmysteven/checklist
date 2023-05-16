@@ -15,19 +15,6 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    // [HttpGet]
-    // public async Task<IActionResult> Get()
-    // {
-    //     var query = await Mediator.Send(new GetAllUserQuery());
-    //     return Ok(query);
-    // }
-
-    // [HttpGet("{id}")]
-    // public async Task<IActionResult> Get([FromRoute] int id)
-    // {
-    //     var query = await Mediator.Send(new GetUserByIdQuery(id));
-    //     return Ok(query);
-    // }
     [HttpGet]
     public async Task<IActionResult> Get()
     {
