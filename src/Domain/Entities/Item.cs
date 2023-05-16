@@ -5,7 +5,7 @@ namespace Checklist.Domain.Entities;
 public class Item : AuditEntity
 {
     public new int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public string ItemName { get; set; } = string.Empty;
     public string StartTime { get; set; } = string.Empty;
     public string EndTime { get; set; } = string.Empty;
     public DateTime? EodDate { get; set; }
