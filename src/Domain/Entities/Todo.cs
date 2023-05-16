@@ -5,13 +5,13 @@ namespace Checklist.Domain.Entities;
 
 public class Todo: AuditEntity//, IHasDomainEvent
 {
-    public string Name { get; set; }
-    public Groups Group { get; set; }
+    public string TodoName { get; set; }
+    public Groups TodoGroup { get; set; }
 
-    public Todo(string name, Groups group)
+    public Todo(string todoName, Groups todoGroup)
     {
-        Name = name;
-        Group = group;
+        TodoName = todoName;
+        TodoGroup = todoGroup;
     }
 
     // public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
