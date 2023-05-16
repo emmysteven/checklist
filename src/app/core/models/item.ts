@@ -1,6 +1,6 @@
 export interface Item {
   id: string;
-  name: string;
+  itemName: string;
   startTime: string;
   endTime: string;
   remark: string;
