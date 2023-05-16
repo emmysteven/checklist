@@ -1,0 +1,72 @@
+<alert></alert>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row align-items-center mb-4">
+    <label class="col-md-1" for="EodDate">EodDate</label>
+    <div class="col-md-3 ps-4">
+      <input type="date" id="EodDate" formControlName="EodDate" class="form-control"
+             [ngClass]="{ 'is-invalid': submitted && control['EodDate'].errors }" />
+
+      <div *ngIf="submitted && control['EodDate'].errors" class="invalid-feedback">
+        <div *ngIf="control['EodDate'].errors['required']">EOD Date is required</div>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col" class="text-nowrap">Start Time</th>
+      <th scope="col" class="text-nowrap">End Time</th>
+      <th scope="col" class="text-nowrap">Status</th>
+      <th scope="col" class="text-nowrap">Remark</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngIf="todos">
+      <ng-container formArrayName="allFields">
+        <tr *ngFor="let field of Fields.controls; let i = index;" [formGroupName]="i">
+          <td>{{ field.value.id }}</td>
+          <td>{{ field.value.todoName }}</td>
+          <td>
+            <input type="time" formControlName="StartTime" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && field.errors }" />
+
+            <div *ngIf="submitted && field.errors" class="invalid-feedback">
+              <div *ngIf="field.errors['required']">Start Time is required</div>
+            </div>
+          </td>
+          <td>
+            <input type="time" formControlName="EndTime" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && field.errors }" />
+
+            <div *ngIf="submitted && field.errors" class="invalid-feedback">
+              <div *ngIf="field.errors['required']">End Time is required</div>
+            </div>
+          </td>
+          <td>
+            <select class="form-control">
+              <option value="">Not Done</option>
+              <option value="pending">Pending</option>
+              <option value="done">Done</option>
+            </select>
+          </td>
+          <td>
+            <textarea formControlName="remark" class="form-control"></textarea>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    </tbody>
+  </table>
+
+  <div class="form-group">
+    <button [disabled]="loading" class="btn btn-primary">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Submit
+    </button>
+  </div>
+
+</form>

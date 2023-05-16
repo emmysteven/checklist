@@ -1,0 +1,49 @@
+<alert></alert>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex">
+  <div class="row align-items-center mb-4">
+    <div class="col-md-4 pe-0">
+      <label for="EodDate">EOD Date</label>
+    </div>
+    <div class="col-md-6">
+      <input type="date" id="eodDate" formControlName="eodDate" class="form-control"
+             [ngClass]="{ 'is-invalid': submitted && control['eodDate'].errors }" />
+
+      <div *ngIf="submitted && control['eodDate'].errors" class="invalid-feedback">
+        <div *ngIf="control['eodDate'].errors['required']">Eod Date is required</div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button [disabled]="loading" class="btn btn-primary">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+      </button>
+    </div>
+  </div>
+</form>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Makers</th>
+    <th>Checkers</th>
+    <th class="text-nowrap">DB Admin</th>
+    <th class="text-nowrap">EOD Date</th>
+    <th class="text-nowrap">Start Time</th>
+    <th class="text-nowrap">End Time</th>
+    <th>Duration</th>
+    <th>TxnCount</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of summary; let i = index;">
+    <td>{{ item.makers }}</td>
+    <td>{{ item.checkers }}</td>
+    <td>{{ item.dbas }}</td>
+    <td>{{ item.eodDate }}</td>
+    <td>{{ item.startTime }}</td>
+    <td>{{ item.endTime }}</td>
+    <td>{{ item.duration }}</td>
+    <td>{{ item.txnCount }}</td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex">
+  <div class="row align-items-center mb-4">
+    <div class="col-md-4 pe-0">
+      <label for="EodDate">EOD Date</label>
+    </div>
+    <div class="col-md-6">
+      <input type="date" id="eodDate" formControlName="eodDate" class="form-control"
+             [ngClass]="{ 'is-invalid': submitted && control['eodDate'].errors }" />
+
+      <div *ngIf="submitted && control['eodDate'].errors" class="invalid-feedback">
+        <div *ngIf="control['eodDate'].errors['required']">Eod Date is required</div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button [disabled]="loading" class="btn btn-primary">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+      </button>
+    </div>
+  </div>
+
+</form>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>S/N</th>
+    <th>Name</th>
+    <th class="text-nowrap">Start Time</th>
+    <th class="text-nowrap">End Time</th>
+    <th class="text-nowrap">Total Time</th>
+    <th class="text-nowrap">Remarks</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items; let i = index;">
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.startTime }}</td>
+      <td>{{ item.endTime }}</td>
+      <td>{{ item.totalTime }}</td>
+      <td>{{ item.remarks }}</td>
+    </tr>
+  </tbody>
+</table>

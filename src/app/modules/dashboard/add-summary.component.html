@@ -1,0 +1,125 @@
+<alert></alert>
+<div class="card">
+  <h4 class="card-header">Final Item</h4>
+  <div class="card-body">
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row align-items-center mb-4">
+        <div class="form-group col-md-3">
+          <label for="eodDate">EOD Date</label>
+          <input type="date" formControlName="eodDate" id="eodDate" class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && control['eodDate'].errors }" />
+
+          <div *ngIf="submitted && control['eodDate'].errors" class="invalid-feedback">
+            <div *ngIf="control['eodDate'].errors['required']">Eod Date is required</div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="startTime">Start Time</label>
+          <input type="time" formControlName="startTime" id="startTime" class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && control['startTime'].errors }" />
+
+          <div *ngIf="submitted && control['startTime'].errors" class="invalid-feedback">
+            <div *ngIf="control['startTime'].errors['required']">Start Time is required</div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="endTime">End Time</label>
+          <input type="time" formControlName="endTime" id="endTime" class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && control['endTime'].errors }" />
+
+          <div *ngIf="submitted && control['endTime'].errors" class="invalid-feedback">
+            <div *ngIf="control['endTime'].errors['required']">End Time is required</div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="duration">Duration</label>
+          <input type="text" formControlName="duration" id="duration" class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && control['duration'].errors }" />
+
+          <div *ngIf="submitted && control['duration'].errors" class="invalid-feedback">
+            <div *ngIf="control['duration'].errors['required']">Duration is required</div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="txnCount">Txn Count</label>
+          <input type="text" formControlName="txnCount" id="txnCount" class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && control['txnCount'].errors }" />
+
+          <div *ngIf="submitted && control['txnCount'].errors" class="invalid-feedback">
+            <div *ngIf="control['txnCount'].errors['required']">Transaction Count is required</div>
+          </div>
+        </div>
+      </div>
+
+      <div formArrayName="makers" class="form-group">
+        <div *ngFor="let maker of makers['controls']; let i = index; last as isLast" [formGroupName]="i" class="row align-items-center mb-2">
+          <label for="checker" class="col-md-2">Maker</label>
+          <div class="col-md-4">
+            <input type="text" [formControl]="maker" id="maker" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && maker.errors }" />
+
+            <div *ngIf="submitted && maker.errors" class="invalid-feedback">
+              <div *ngIf="maker.errors['required']">Maker is required</div>
+            </div>
+          </div>
+          <button (click)="removeMaker(i)" type="button" class="col-md-1 btn remove">
+            <fa-icon [icon]="faUserXmark"></fa-icon>
+          </button>
+          <button *ngIf="isLast" (click)="addMaker()" type="button" class="col-md-1 btn add">
+            <fa-icon [icon]="faUserPlus"></fa-icon>
+          </button>
+        </div>
+
+        <div *ngFor="let checker of checkers['controls']; let i = index; last as isLast" [formGroupName]="i" class="row align-items-center mb-2">
+          <label for="checker" class="col-md-2">Checker</label>
+          <div class="col-md-4">
+            <input type="text" [formControl]="checker" id="checker" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && checker.errors }" />
+
+            <div *ngIf="submitted && checker.errors" class="invalid-feedback">
+              <div *ngIf="checker.errors['required']">Checker is required</div>
+            </div>
+          </div>
+          <button (click)="removeChecker(i)" type="button" class="col-md-1 btn remove">
+            <fa-icon [icon]="faUserXmark"></fa-icon>
+          </button>
+          <button *ngIf="isLast" (click)="addChecker()" type="button" class="col-md-1 btn add">
+            <fa-icon [icon]="faUserPlus"></fa-icon>
+          </button>
+        </div>
+
+        <div *ngFor="let dba of dbas['controls']; let i = index; last as isLast" [formGroupName]="i" class="row align-items-center mb-2">
+          <label for="dba" class="col-md-2">DB Admin</label>
+          <div class="col-md-4">
+            <input type="text" [formControl]="dba" id="dba" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && dba.errors }" />
+
+            <div *ngIf="submitted && dba.errors" class="invalid-feedback">
+              <div *ngIf="dba.errors['required']">Database Admin is required</div>
+            </div>
+          </div>
+          <button (click)="removeDba(i)" type="button" class="col-md-1 btn remove">
+            <fa-icon [icon]="faUserXmark"></fa-icon>
+          </button>
+          <button *ngIf="isLast" (click)="addDba()" type="button" class="col-md-1 btn add">
+            <fa-icon [icon]="faUserPlus"></fa-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group mt-4">
+        <button [disabled]="loading" class="btn btn-primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Submit
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
