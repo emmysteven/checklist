@@ -29,7 +29,7 @@
       <ng-container formArrayName="allFields">
         <tr *ngFor="let field of Fields.controls; let i = index;" [formGroupName]="i">
           <td>{{ field.value.id }}</td>
-          <td>{{ field.value.name }}</td>
+          <td>{{ field.value.todoName }}</td>
           <td>
             <input type="time" formControlName="StartTime" class="form-control"
                    [ngClass]="{ 'is-invalid': submitted && field.errors }" />

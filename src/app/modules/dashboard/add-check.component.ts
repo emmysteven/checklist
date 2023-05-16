@@ -53,6 +53,8 @@ export class AddCheckComponent implements OnInit {
       next: data => {
         this.data = data;
 
+        console.log(data)
+
         this.data.forEach((todo: Todo) => {
             todo.startTime = "";
             todo.endTime = "";
@@ -70,7 +72,7 @@ export class AddCheckComponent implements OnInit {
   createFieldsForGroup(todo: Todo) {
     return this.formBuilder.group({
       id: [todo.id],
-      name: [todo.name],
+      todoName: [todo.todoName],
       StartTime: ['', [Validators.required, Validators.maxLength(7)]],
       EndTime: ['', [Validators.required, Validators.maxLength(7)]],
       remark: ['', [Validators.required, Validators.maxLength(100)]]
@@ -79,23 +81,23 @@ export class AddCheckComponent implements OnInit {
 
   createForm() {
     this.todos.forEach((todo: Todo) => {
-      if (todo.group.startsWith('PreEod')) {
+      if (todo.todoGroup.startsWith('PreEod')) {
         this.Fields.push(this.createFieldsForGroup(todo));
       }
 
-      if (todo.group.startsWith('FirstStage')) {
+      if (todo.todoGroup.startsWith('FirstStage')) {
         this.Fields.push(this.createFieldsForGroup(todo));
       }
 
-      if (todo.group.startsWith('MidEod')) {
+      if (todo.todoGroup.startsWith('MidEod')) {
         this.Fields.push(this.createFieldsForGroup(todo));
       }
 
-      if (todo.group.startsWith('LastStage')) {
+      if (todo.todoGroup.startsWith('LastStage')) {
         this.Fields.push(this.createFieldsForGroup(todo));
       }
 
-      if (todo.group.startsWith('PostEod')) {
+      if (todo.todoGroup.startsWith('PostEod')) {
         this.Fields.push(this.createFieldsForGroup(todo));
       }
     });
