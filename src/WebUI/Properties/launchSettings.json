@@ -8,43 +8,36 @@
       "sslPort": 44331
     }
   },
+  
   "profiles": {
-    "WebUI": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:3000;http://localhost:3001",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "dev"
       }
     },
 
     "Development": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "api",
-      "applicationUrl": "https://localhost:3000;http://localhost:3001",
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:3000;https://localhost:3001",
       "environmentVariables": {
-        "Environment": "dev"
+        "ASPNETCORE_ENVIRONMENT": "dev"
       }
     },
 
     "Production": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "api",
-      "applicationUrl": "https://localhost:3000;http://localhost:3001",
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:3000;https://localhost:3001",
       "environmentVariables": {
-        "Environment": "prod"
+        "ASPNETCORE_ENVIRONMENT": "prod"
       }
     }
   }
