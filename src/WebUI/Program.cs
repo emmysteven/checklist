@@ -6,7 +6,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-var env = Environment.GetEnvironmentVariable("Environment") ?? "prod";
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "prod";
 var configuration = builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -84,10 +84,13 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseRouting();
 app.UseCors("AllowSpecificOrigins");
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
+app.UseEndpoints(endpoints => endpoints.MapControllers());
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.Run();
