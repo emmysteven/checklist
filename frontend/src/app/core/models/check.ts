@@ -1,4 +1,4 @@
-export interface Item {
+export interface Check {
   id: string;
   itemName: string;
   startTime: string;
