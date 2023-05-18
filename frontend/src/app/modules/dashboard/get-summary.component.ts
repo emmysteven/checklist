@@ -48,8 +48,6 @@ export class GetSummaryComponent implements OnInit {
       next: data => {
         this.loading = false
         this.summary = data
-        console.log(this.summary)
-        this.alertService.success('Item added successfully', { autoClose: false });
       },
       error: err => {
         this.loading = false
