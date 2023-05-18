@@ -33,13 +33,13 @@
   </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of items; let i = index;">
-      <td>{{ item.id }}</td>
-      <td>{{ item.name }}</td>
-      <td>{{ item.startTime }}</td>
-      <td>{{ item.endTime }}</td>
-      <td>{{ item.totalTime }}</td>
-      <td>{{ item.remarks }}</td>
+    <tr *ngFor="let check of checks; let i = index;">
+      <td>{{ check.id }}</td>
+      <td>{{ check.checkName }}</td>
+      <td>{{ check.startTime }}</td>
+      <td>{{ check.endTime }}</td>
+      <td>{{ check.totalTime }}</td>
+      <td>{{ check.remarks }}</td>
     </tr>
   </tbody>
 </table>

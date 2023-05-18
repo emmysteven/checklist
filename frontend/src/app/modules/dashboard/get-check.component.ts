@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AlertService, ApiService } from "@app/core/services";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import {Item, Todo} from "@app/core/models";
 
 @Component({
   selector: 'app-get-item',
@@ -17,7 +16,7 @@ export class GetCheckComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   data: any;
-  items: any;
+  checks: any;
   eodDate: string = '';
   faMagnifyingGlass = faMagnifyingGlass;
 
@@ -48,10 +47,11 @@ export class GetCheckComponent implements OnInit {
 
     this.loading = true;
 
-    this.apiService.getItem(eodDate).subscribe({
+    this.apiService.getCheck(eodDate).subscribe({
       next: data => {
         this.loading = false
-        this.items = data
+        this.checks = data
+        console.log(data);
       },
       error: err => {
         this.loading = false
