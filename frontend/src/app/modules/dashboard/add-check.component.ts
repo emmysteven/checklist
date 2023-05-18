@@ -38,7 +38,7 @@ export class AddCheckComponent implements OnInit {
     private alertService: AlertService,
     private apiService: ApiService
   ) {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/final_item';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/checks/add_summary';
   }
 
   ngOnInit() {
@@ -72,10 +72,10 @@ export class AddCheckComponent implements OnInit {
   createFieldsForGroup(todo: Todo) {
     return this.formBuilder.group({
       id: [todo.id],
-      todoName: [todo.todoName],
+      checkName: [todo.todoName],
       StartTime: ['', [Validators.required, Validators.maxLength(7)]],
       EndTime: ['', [Validators.required, Validators.maxLength(7)]],
-      remark: ['', [Validators.required, Validators.maxLength(100)]]
+      remark: ['', [Validators.maxLength(100)]]
     })
   }
 
@@ -120,7 +120,7 @@ export class AddCheckComponent implements OnInit {
       obj.EodDate = this.form.value.EodDate
     });
 
-    const body = { items: Fields }
+    const body = { checks: Fields }
 
     console.log(body);
     if (this.form.invalid) {
@@ -130,12 +130,12 @@ export class AddCheckComponent implements OnInit {
 
     this.loading = true;
 
-    this.apiService.addItem(body)
+    this.apiService.addCheck(body)
       .pipe(first())
       .subscribe({
         next: (response) => {
           console.log(response);
-          this.alertService.success('Item added successfully', { autoClose: false });
+          this.alertService.success('Checks were added successfully', { autoClose: false });
           this.loading = false;
           this.router.navigateByUrl(this.returnUrl);
         },
