@@ -87,7 +87,7 @@ export class AddSummaryComponent implements OnInit {
     }
 
     this.loading = true;
-    this.apiService.addFinalItem(data)
+    this.apiService.addSummary(data)
       .pipe(first())
       .subscribe({
         next: (response) => {
