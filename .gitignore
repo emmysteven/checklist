@@ -350,8 +350,8 @@ healthchecksdb
 
 .vscode/
 VSIXCore/
-./backend/appsettings.json
-/backend/Infrastructure/Migrations/
+/backend/appsettings.json
+/backend/Migrations/
 .eslintcache
 
 
@@ -398,5 +398,5 @@ testem.log
 /typings
 
 # System files
-.DS_Store
+*.DS_Store
 Thumbs.db
