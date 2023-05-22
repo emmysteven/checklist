@@ -348,11 +348,10 @@ healthchecksdb
 *.db-shm
 *.db-wal
 
-/backend/src/WebUI/appsettings.json
 .vscode/
 VSIXCore/
-/backend/src/WebUI/wwwroot/
-/backend/src/Infrastructure/Migrations/
+/backend/appsettings.json
+/backend/Infrastructure/Migrations/
 .eslintcache
 
 
