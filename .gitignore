@@ -350,7 +350,7 @@ healthchecksdb
 
 .vscode/
 VSIXCore/
-/backend/appsettings.json
+./backend/appsettings.json
 /backend/Infrastructure/Migrations/
 .eslintcache
 
