@@ -31,8 +31,6 @@ public static class ServiceExtension
         
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-        services.AddTransient<ICacheService, CacheService>();
-
         services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
         services.AddTransient<ITodoRepository, TodoRepository>();
         services.AddTransient<ICheckRepository, CheckRepository>();
@@ -48,11 +46,9 @@ public static class ServiceExtension
         
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
-
-        services.Configure<JWTSettings>(config.GetSection("JWTSettings"));
+        
         services.Configure<MailSettings>(config.GetSection("MailSettings"));
-
-        services.AddSingleton(x => x.GetRequiredService<IOptions<JWTSettings>>().Value);
+        
         services.AddSingleton(x => x.GetRequiredService<IOptions<MailSettings>>().Value);
 
         services.AddAuthentication(x =>
