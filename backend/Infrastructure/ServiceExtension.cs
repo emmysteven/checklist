@@ -28,11 +28,6 @@ public static class ServiceExtension
                         errorNumbersToAdd: null);
                 });
         });
-
-        services.AddStackExchangeRedisCache(options =>
-        {
-            options.Configuration = config.GetConnectionString("RedisUrl");
-        });
         
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
