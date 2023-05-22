@@ -17,8 +17,17 @@ public static class ServiceExtension
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env)
     {
 
-        services.AddDbContext<DataContext>(x => 
-            x.UseSqlServer(config.GetConnectionString(env.IsDevelopment() ? "Dev" : "Prod")));
+        services.AddDbContext<DataContext>(x =>
+        {
+            x.UseSqlServer(config.GetConnectionString(env.IsDevelopment() ? "Dev" : "Prod"),
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 10,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: null);
+                });
+        });
 
         services.AddStackExchangeRedisCache(options =>
         {
