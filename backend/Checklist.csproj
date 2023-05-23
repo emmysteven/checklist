@@ -38,6 +38,7 @@
         <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
         <PackageReference Include="SerilogTimings" Version="3.0.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <PackageReference Include="System.DirectoryServices.AccountManagement" Version="6.0.0" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
         <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="6.22.0" />
     </ItemGroup>
