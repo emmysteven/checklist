@@ -5,12 +5,6 @@ namespace Checklist.Domain.Entities;
 
 public class Todo: AuditEntity
 {
-    public string TodoName { get; set; }
+    public string TodoName { get; set; } = string.Empty;
     public Groups TodoGroup { get; set; }
-
-    public Todo(string todoName, Groups todoGroup)
-    {
-        TodoName = todoName;
-        TodoGroup = todoGroup;
-    }
 }
