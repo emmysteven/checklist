@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from "@app/modules/auth/layout.component";
+import { LayoutComponent } from "@app/shared";
 import { AddCheckComponent } from "./add-check.component";
 import { GetCheckComponent } from "./get-check.component";
 import { AddSummaryComponent } from "./add-summary.component";
-import { GetSummaryComponent } from "@app/modules/dashboard/get-summary.component";
+import { GetSummaryComponent } from "./get-summary.component";
 import { AuthGuard } from "@app/core/guards";
 
 const routes: Routes = [
