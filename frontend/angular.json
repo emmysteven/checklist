@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "checklist_web": {
+    "eodchecklist": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,13 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/checklist_web",
+            "outputPath": "../dist/eodchecklist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
+              "src/web.config",
               "src/assets"
             ],
             "styles": [
@@ -38,10 +39,19 @@
           },
           "configurations": {
             "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                }
+              },
+              "aot": true,
+              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "1mb",
                   "maximumError": "1mb"
                 },
                 {
@@ -73,10 +83,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "checklist_web:build:production"
+              "browserTarget": "eodchecklist:build:production"
             },
             "development": {
-              "browserTarget": "checklist_web:build:development"
+              "browserTarget": "eodchecklist:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +94,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "checklist_web:build"
+            "browserTarget": "eodchecklist:build"
           }
         },
         "test": {
