@@ -6,8 +6,7 @@ import { Component } from '@angular/core';
     <footer class="footer py-3">
       <div class="container">
         <span class="text-muted">
-          &copy; {{ showYear }}, created by
-              <a href="https://emmysteven.com" target="blank">emmysteven</a>
+          &copy; {{ showYear }} <a href="https://polarisplus.polarisbanklimited.com" target="blank">Polaris Bank, Ltd</a>
         </span>
       </div>
     </footer>
@@ -32,7 +31,7 @@ import { Component } from '@angular/core';
     .footer a,
     .footer a:link {
       color: #343a40;
-      font-style: italic;
+      font-style: normal;
       text-decoration: none;
     }
   `]
