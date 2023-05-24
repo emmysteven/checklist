@@ -5,9 +5,12 @@ import { AuthService } from "@app/core/services";
 @Component({
   selector: 'app-header',
   template: `
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" routerLink="/">EOD Checklist</a>
+        <a class="navbar-brand" routerLink="/">
+          <img ngSrc="../../../assets/img/polaris_logo.png" height="55" width="55">
+          &nbsp;&nbsp;EOD Checklist
+        </a>
         <button
           class="navbar-toggler"
           type="button"
@@ -31,8 +34,8 @@ import { AuthService } from "@app/core/services";
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" routerLink="/dashboard/report/get_check">Checks</a></li>
                 <li><a class="dropdown-item" routerLink="/dashboard/report/get_summary">Summary</a></li>
-<!--                <li><hr class="dropdown-divider" /></li>-->
-<!--                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                <!--                <li><hr class="dropdown-divider" /></li>-->
+                <!--                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
               </ul>
             </li>
             <li *ngIf="isLoggedIn()" class="nav-item me-2 dropdown">
@@ -51,6 +54,8 @@ import { AuthService } from "@app/core/services";
     </nav>
   `,
 })
+
+
 export class HeaderComponent implements OnInit {
 
   constructor(public authService: AuthService) {}
