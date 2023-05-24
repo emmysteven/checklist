@@ -23,19 +23,19 @@ import { AuthService } from "@app/core/services";
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li *ngIf="!isLoggedIn()" class="nav-item">
-              <a class="nav-link" routerLink="/login">Login</a>
-            </li>
-            <li *ngIf="!isLoggedIn()" class="nav-item">
-              <a class="nav-link" routerLink="/register">Register</a>
-            </li>
+<!--            <li *ngIf="!isLoggedIn()" class="nav-item">-->
+<!--              <a class="nav-link" routerLink="/login">Login</a>-->
+<!--            </li>-->
+<!--            <li *ngIf="!isLoggedIn()" class="nav-item">-->
+<!--              <a class="nav-link" routerLink="/register">Register</a>-->
+<!--            </li>-->
             <li *ngIf="isLoggedIn()" class="nav-item me-2 dropdown">
               <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reports</a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" routerLink="/dashboard/report/get_check">Checks</a></li>
                 <li><a class="dropdown-item" routerLink="/dashboard/report/get_summary">Summary</a></li>
-                <!--                <li><hr class="dropdown-divider" /></li>-->
-                <!--                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" routerLink="/dashboard/report/get_todo">Todos</a></li>
               </ul>
             </li>
             <li *ngIf="isLoggedIn()" class="nav-item me-2 dropdown">
@@ -43,10 +43,12 @@ import { AuthService } from "@app/core/services";
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" routerLink="/dashboard/checks/add_checks">Add Checks</a></li>
                 <li><a class="dropdown-item" routerLink="/dashboard/checks/add_summary">Add Summary</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" routerLink="/dashboard/report/add_todo">Add Todo</a></li>
               </ul>
             </li>
             <li *ngIf="isLoggedIn()" class="nav-item">
-              <a class="nav-link" role="button" (click)="logout()">logout</a>
+              <a class="nav-link" role="button" (click)="logout()">Logout</a>
             </li>
           </ul>
         </div>
