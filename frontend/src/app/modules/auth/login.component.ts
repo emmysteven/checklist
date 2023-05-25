@@ -7,8 +7,11 @@ import { first } from "rxjs/operators";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styles: [
-  ]
+  styles: [`
+    .mt-5 {
+      padding-top: 4rem;
+    }
+  `]
 })
 export class LoginComponent implements OnInit {
 
