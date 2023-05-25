@@ -7,7 +7,7 @@ import { AuthService } from "@app/core/services";
   template: `
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" routerLink="/">
+        <a class="navbar-brand">
           <img ngSrc="../../../assets/img/polaris_logo.png" height="55" width="55">
           &nbsp;&nbsp;EOD Checklist
         </a>
