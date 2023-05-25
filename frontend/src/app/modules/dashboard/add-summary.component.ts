@@ -87,13 +87,14 @@ export class AddSummaryComponent implements OnInit {
     }
 
     this.loading = true;
+
     this.apiService.addSummary(data)
       .pipe(first())
       .subscribe({
         next: (response) => {
           this.loading = false;
-          this.form.reset({});
-          this.alertService.success("Summary was added successfully", { autoClose: false });
+          this.alertService.success("Summary was added successfully");
+          setTimeout(() => { window.location.reload() }, 2000);
           console.log(response)
         },
         error: (error) => {
