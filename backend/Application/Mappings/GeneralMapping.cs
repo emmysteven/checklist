@@ -1,6 +1,5 @@
 using AutoMapper;
-using Checklist.Application.DTOs.Account;
-using Checklist.Application.DTOs.Entities;
+using Checklist.Application.DTOs;
 using Checklist.Application.ViewModels;
 using Checklist.Domain.Entities;
 
@@ -14,7 +13,7 @@ public class GeneralMapping : Profile
         CreateMap<CheckDto, Check>();
         CreateMap<SummaryDto, Summary>();
 
-        CreateMap<RegisterRequest, User>();
+        CreateMap<UserDto, User>();
         
         CreateMap<Todo, TodoVm>().ReverseMap();
         CreateMap<Check, CheckVm>().ReverseMap();
