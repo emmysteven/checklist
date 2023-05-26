@@ -3,7 +3,7 @@ using Checklist.Application.Common.Exceptions;
 using Checklist.Application.Common.Interfaces.Repositories;
 using Checklist.Application.Common.Interfaces.Services;
 using Checklist.Application.Common.Wrappers;
-using Checklist.Application.DTOs.Entities;
+using Checklist.Application.DTOs;
 using Checklist.Application.ViewModels;
 using Checklist.Domain.Entities;
 
