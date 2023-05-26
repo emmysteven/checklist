@@ -29,10 +29,18 @@ public class UserController : ControllerBase
         return Ok(await _userService.RegisterAsync(request, origin));
     }
 
+    // [HttpPost("login")]
+    // public async Task<IActionResult> Login([FromBody] AuthRequest request)
+    // {
+    //     var response = await _userService.AuthenticateAsync(request, GenerateIpAddress());
+    //     SetTokenCookie(response.RefreshToken);
+    //     return Ok(response);
+    // }
+    
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] AuthRequest request)
+    public IActionResult Login([FromBody] AuthRequest request)
     {
-        var response = await _userService.AuthenticateAsync(request, GenerateIpAddress());
+        var response = _userService.AuthenticateAsync(request, GenerateIpAddress());
         SetTokenCookie(response.RefreshToken);
         return Ok(response);
     }

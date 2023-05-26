@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,8 +14,10 @@ using Checklist.Domain.Common;
 using Checklist.Domain.Entities;
 using Checklist.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Exchange.WebServices.Data;
 using Microsoft.IdentityModel.Tokens;
 using BC = BCrypt.Net.BCrypt;
+using Task = System.Threading.Tasks.Task;
 
 namespace Checklist.Infrastructure.Services;
 
@@ -23,30 +26,33 @@ public class UserService : IUserService
     private readonly IEmailService _emailService;
     private readonly MailSettings _mailSettings;
     private readonly JWTSettings _jwtSettings;
-    private readonly IMapper _mapper;
+    private readonly AppSettings _appSettings;
     private readonly DataContext _context;
+    private readonly IMapper _mapper;
 
     public UserService(
-        DataContext context,
-        IMapper mapper,
-        JWTSettings jwtSettings,
         IEmailService emailService,
-        MailSettings mailSettings)
+        MailSettings mailSettings,
+        AppSettings appSettings,
+        JWTSettings jwtSettings,
+        DataContext context,
+        IMapper mapper)
     {
-        _context = context;
-        _mapper = mapper;
-        _jwtSettings = jwtSettings;
         _emailService = emailService;
         _mailSettings = mailSettings;
+        _jwtSettings = jwtSettings;
+        _appSettings = appSettings;
+        _context = context;
+        _mapper = mapper;
     }
-        
+
     private async Task<User> GetUser(int id)
     {
         var user = await _context.Users.FindAsync(id);
         if (user == null) throw new KeyNotFoundException("Account not found");
         return user;
     }
-        
+
     public async Task<IEnumerable<AuthResponse>> GetAllAsync()
     {
         var users = await _context.Users.FindAsync();
@@ -83,29 +89,41 @@ public class UserService : IUserService
             "User registered, please open your email to complete registration");
     }
 
-    public async Task<AuthResponse> AuthenticateAsync(AuthRequest request, string ipAddress)
+    public AuthResponse AuthenticateAsync(AuthRequest request, string ipAddress)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
-        if (user == null) throw new ApiException("This account does not exist");
+        var url = _appSettings.Url;
+        var service = new ExchangeService
+        {
+            Credentials = new NetworkCredential(request.Username, request.Password),
+            Url = new Uri(url)
+        };
 
-        if (!BC.Verify(request.Password, user.Password))
-            throw new ApiException("Your account or password is incorrect");
+        ServicePointManager.Expect100Continue = true;
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+        ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+        
+        var result = service.ConvertIds(new AlternateId[]
+        {
+            new AlternateId(IdFormat.HexEntryId, "00", request.Username) 
             
-        // Console.WriteLine(user.IsVerified);
-        // TODO: add the feature to check if user is verified from frontend
-        var jwtToken = GenerateJwt(request);
-        var refreshToken = GenerateRefreshToken(ipAddress).Token;
-            
-        // // save refresh token
-        // user.RefreshTokens.Add(refreshToken);
-        // await _userRepository.UpdateAsync(user);
+        }, IdFormat.HexEntryId);
+
+        if (result == null) throw new ApiException("This account does not exist");
+
+        var ncCol = service.ResolveName(request.Username, ResolveNameSearchLocation.DirectoryOnly, true);
 
         return new AuthResponse
         {
-            Token = GenerateJwt(request),
-            RefreshToken = GenerateRefreshToken(ipAddress).Token
+            FullName = ncCol == null ? "Unknown" : ncCol[0].Contact.DisplayName,
+            ResponseCode = "00",
+            ResponseMessage = "Success",
+            // Token = GenerateJwt(request),
+            // RefreshToken = GenerateRefreshToken(ipAddress).Token
+            Token = "mdmdmldldldlldkkdjc7c8ekdldldlo9eokdjdkdldldldldl",
+            RefreshToken = "839eodlfjfkd,dd;dldldldldldldl,c6370e0e0ddkdkdk"
         };
     }
+
 
     public async Task<Response<string?>> VerifyEmailAsync(int id, string token)
     {
@@ -160,18 +178,15 @@ public class UserService : IUserService
 
     private string GenerateJwt(AuthRequest request)
     {
-        var user = _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
+        var user = _context.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
         // string ipAddress = IpHelper.GetIpAddress();
             
         var claims = new[]
         {
             new Claim("Id", user.Result?.Id.ToString() ?? string.Empty),
             new Claim("Firstname", user.Result?.FirstName!),
-            new Claim("Lastname", user.Result?.LastName!),
             new Claim("Username", user.Result?.Username!),
-            new Claim("Email", user.Result?.Email!),
-            new Claim("Role", user.Result?.Role.ToString() ?? string.Empty),
-            new Claim("IsVerified", user.Result?.IsVerified.ToString() ?? string.Empty)
+            new Claim("Role", user.Result?.Role.ToString() ?? string.Empty)
             // new Claim("ip", ipAddress)
         };
             
