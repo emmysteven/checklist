@@ -1,6 +1,6 @@
 using Checklist.Domain.Enums;
 
-namespace Checklist.Application.DTOs.Entities;
+namespace Checklist.Application.DTOs;
 
 public record TodoDto
 {

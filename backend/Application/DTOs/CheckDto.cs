@@ -1,6 +1,6 @@
 using Checklist.Domain.Entities;
 
-namespace Checklist.Application.DTOs.Entities;
+namespace Checklist.Application.DTOs;
 
 public class CheckDto
 {

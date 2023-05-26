@@ -1,4 +1,4 @@
-namespace Checklist.Application.DTOs.Entities;
+namespace Checklist.Application.DTOs;
 
 public class SummaryDto
 {

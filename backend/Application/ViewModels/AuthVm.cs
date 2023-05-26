@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Checklist.Application.DTOs.Account;
+namespace Checklist.Application.ViewModels;
 
 public class AuthResponse
 {

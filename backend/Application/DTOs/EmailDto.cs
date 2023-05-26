@@ -1,4 +1,4 @@
-namespace Checklist.Application.DTOs.Email;
+namespace Checklist.Application.DTOs;
 
 public class EmailRequest
 {
