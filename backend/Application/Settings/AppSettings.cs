@@ -1,6 +1,6 @@
 namespace Checklist.Application.Settings;
 
-public class CacheSettings
+public class AppSettings
 {
     public string? Url { get; set; }
 }
