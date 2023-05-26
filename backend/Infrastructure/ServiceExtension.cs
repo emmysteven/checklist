@@ -47,9 +47,11 @@ public static class ServiceExtension
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         
+        services.Configure<AppSettings>(config.GetSection("AppSettings"));
         services.Configure<JWTSettings>(config.GetSection("JWTSettings"));
         services.Configure<MailSettings>(config.GetSection("MailSettings"));
         
+        services.AddSingleton(x => x.GetRequiredService<IOptions<AppSettings>>().Value);
         services.AddSingleton(x => x.GetRequiredService<IOptions<JWTSettings>>().Value);
         services.AddSingleton(x => x.GetRequiredService<IOptions<MailSettings>>().Value);
 
