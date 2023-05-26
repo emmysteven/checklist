@@ -1,7 +1,7 @@
 using Checklist.Application.Common.Exceptions;
 using Checklist.Application.Common.Interfaces.Services;
+using Checklist.Application.DTOs;
 using MimeKit;
-using Checklist.Application.DTOs.Email;
 using Checklist.Application.Settings;
 using MailKit.Net.Smtp;
 
@@ -16,18 +16,18 @@ public class EmailService : IEmailService
         Logger = logger;
     }
 
-    public async Task SendAsync(EmailRequest request)
+    public async Task SendAsync(EmailDto emailDto)
     {
         try
         {
             // create message
             var email = new MimeMessage();
-            email.Sender = MailboxAddress.Parse(request.From ?? _mailSettings.EmailFrom);
-            email.To.Add(MailboxAddress.Parse(request.To));
-            email.Subject = request.Subject;
+            email.Sender = MailboxAddress.Parse(emailDto.From ?? _mailSettings.EmailFrom);
+            email.To.Add(MailboxAddress.Parse(emailDto.To));
+            email.Subject = emailDto.Subject;
 
             var builder = new BodyBuilder();
-            builder.HtmlBody = request.Body;
+            builder.HtmlBody = emailDto.Body;
             email.Body = builder.ToMessageBody();
 
             using var smtp = new SmtpClient();
