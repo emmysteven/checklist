@@ -1,5 +1,5 @@
 using Checklist.Application.Common.Wrappers;
-using Checklist.Application.DTOs.Entities;
+using Checklist.Application.DTOs;
 using Checklist.Application.ViewModels;
 using Checklist.Domain.Entities;
 
