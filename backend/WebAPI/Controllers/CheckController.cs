@@ -1,5 +1,5 @@
 using Checklist.Application.Common.Interfaces.Services;
-using Checklist.Application.DTOs.Entities;
+using Checklist.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
