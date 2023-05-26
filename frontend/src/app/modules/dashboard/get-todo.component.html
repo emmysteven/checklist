@@ -1,0 +1,14 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>S/N</th>
+    <th>Name</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let todo of todos; let i = index;">
+    <td>{{ todo.id }}</td>
+    <td>{{ todo.todoName }}</td>
+  </tr>
+  </tbody>
+</table>
