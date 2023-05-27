@@ -13,13 +13,10 @@ import { environment } from "@env/environment";
 export class AuthService {
 
   newUser: User = {
-    Id: '',
-    Firstname: '',
-    Lastname: '',
-    Username: '',
-    Email: '',
-    Role: '',
-    PhoneNumber: ''
+    id: '',
+    fullName: '',
+    userName: '',
+    role: ''
   }
   baseUrl: string = environment.baseUrl;
   helper = new JwtHelperService();
@@ -36,8 +33,8 @@ export class AuthService {
     return this.userSubject.value;
   }
 
-  login(email: string, password: string): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}api/user/login`, { email, password })
+  login(username: string, password: string): Observable<User> {
+    return this.http.post<User>(`${this.baseUrl}api/user/login`, { username, password })
       .pipe(map((response: any) => {
         const token = response.token;
         if (token) {
@@ -45,18 +42,16 @@ export class AuthService {
           const decodedToken = this.helper.decodeToken(token);
 
           this.newUser = {
-            Id: decodedToken.Id,
-            Firstname: decodedToken.Firstname,
-            Lastname: decodedToken.Lastname,
-            Username: decodedToken.Username,
-            Email: decodedToken.Email,
-            Role: decodedToken.Role,
-            PhoneNumber: decodedToken.PhoneNumber
+            id: decodedToken.Id,
+            fullName: decodedToken.FullName,
+            userName: decodedToken.UserName,
+            role: decodedToken.Role
           }
+
           console.log(this.newUser);
           this.userSubject.next(response);
         }
-        // console.log(response);
+
         return response;
       }))
   }
@@ -77,7 +72,7 @@ export class AuthService {
     return this.http.put(`${this.baseUrl}user/${id}`, params)
       .pipe(map(x => {
         // update stored user if the logged in user updated their own record
-        if (id == this.userValue.Id) {
+        if (id == this.userValue.id) {
           // update local storage
           const user = { ...this.userValue, ...params };
           localStorage.setItem('token', JSON.stringify(user));
@@ -93,7 +88,7 @@ export class AuthService {
     return this.http.delete(`${this.baseUrl}user/${id}`)
       .pipe(map(x => {
         // auto logout if the logged in user deleted their own record
-        if (id == this.userValue.Id) {
+        if (id == this.userValue.id) {
           this.logout();
         }
         return x;
@@ -107,13 +102,10 @@ export class AuthService {
 
   logout(): void {
     this.newUser = {
-      Id: '',
-      Firstname: '',
-      Lastname: '',
-      Username: '',
-      Email: '',
-      Role: '',
-      PhoneNumber: ''
+      id: '',
+      fullName: '',
+      userName: '',
+      role: ''
     }
     localStorage.removeItem('token');
     this.userSubject.next(this.newUser);
