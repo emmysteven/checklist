@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from "@app/shared";
-import { AddCheckComponent } from "./add-check.component";
-import { GetCheckComponent } from "./get-check.component";
-import { AddSummaryComponent } from "./add-summary.component";
-import { GetSummaryComponent } from "./get-summary.component";
+import { AddCheckComponent } from "./check/add-check.component";
+import { GetCheckComponent } from "./check/get-check.component";
+import { AddSummaryComponent } from "./summary/add-summary.component";
+import { GetSummaryComponent } from "./summary/get-summary.component";
 import { AuthGuard } from "@app/core/guards";
-import { GetTodoComponent } from "./get-todo.component";
-import { AddTodoComponent } from "./add-todo.component";
+import { GetTodoComponent } from "./todo/get-todo.component";
+import { AddTodoComponent } from "./todo/add-todo.component";
 
 const routes: Routes = [
   {
