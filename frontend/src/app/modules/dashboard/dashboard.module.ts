@@ -9,10 +9,27 @@ import { AddSummaryComponent } from './add-summary.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GetSummaryComponent } from './get-summary.component';
 import { SharedModule } from "@app/shared";
+import { AddTodoComponent } from './add-todo.component';
+import { GetTodoComponent } from './get-todo.component';
 
 
 @NgModule({
-  declarations: [AddCheckComponent, GetCheckComponent, AddSummaryComponent, GetSummaryComponent],
-  imports: [CommonModule, ReactiveFormsModule, DashboardRoutingModule, FontAwesomeModule, SharedModule]
+  declarations: [
+    AddCheckComponent,
+    GetCheckComponent,
+    AddSummaryComponent,
+    GetSummaryComponent,
+    AddTodoComponent,
+    GetTodoComponent
+  ],
+
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DashboardRoutingModule,
+    FontAwesomeModule,
+    SharedModule
+  ]
 })
+
 export class DashboardModule { }
