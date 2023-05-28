@@ -10,7 +10,7 @@ import { map } from "rxjs/operators";
 import { environment } from "@env/environment";
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
+export class UserService {
 
   newUser: User = {
     id: '',
@@ -56,8 +56,8 @@ export class AuthService {
       }))
   }
 
-  register(user: User) {
-    return this.http.post(`${this.baseUrl}user/register`, user);
+  addUser(user: User) {
+    return this.http.post(`${this.baseUrl}user/add`, user);
   }
 
   getAll() {
