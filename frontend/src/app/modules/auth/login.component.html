@@ -5,12 +5,12 @@
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" id="email" [formControlName]="'email'" class="form-control"
-                 [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+          <label for="username">UserID</label>
+          <input type="text" id="username" [formControlName]="'username'" class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" />
 
-          <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-            <div *ngIf="f['email'].errors['required']">Email is required</div>
+          <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+            <div *ngIf="f['username'].errors['required']">UserID is required</div>
           </div>
         </div>
 
@@ -29,7 +29,6 @@
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Login
           </button>
-  <!--        <a routerLink="../signup" class="btn btn-link mt-3">Sign Up</a>-->
         </div>
 
       </form>

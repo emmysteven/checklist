@@ -27,12 +27,12 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private alertService: AlertService
   ) {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/checks/add_checks';
   }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
+    console.log(this.form.controls)
+
     // reset alerts on submit
     this.alertService.clear();
 
@@ -52,7 +54,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authService.login(this.f['email'].value, this.f['password'].value)
+    this.authService.login(this.f['username'].value, this.f['password'].value)
       .pipe(first())
       .subscribe({
         next: (response) => {
