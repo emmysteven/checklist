@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared';
 import { AppComponent } from './app.component';
-import { AuthModule } from "./modules/auth";
+import { UserModule } from "./modules/user";
 import { DashboardModule } from "./modules/dashboard";
 import { TokenInterceptor } from "./core/interceptors";
 
@@ -14,7 +14,7 @@ import { TokenInterceptor } from "./core/interceptors";
     AppComponent
   ],
   imports: [
-    AuthModule,
+    UserModule,
     SharedModule,
     BrowserModule,
     DashboardModule,

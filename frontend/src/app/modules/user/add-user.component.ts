@@ -8,11 +8,11 @@ import {IError} from "@app/core/models/error";
 
 @Component({
   selector: 'app-signup',
-  templateUrl: './signup.component.html',
+  templateUrl: './add-user.component.html',
   styles: [
   ]
 })
-export class SignupComponent implements OnInit {
+export class AddUserComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   loading = false;
   submitted = false;
