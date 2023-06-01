@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AuthService, AlertService } from "@app/core/services";
+import { UserService, AlertService } from "@app/core/services";
 import { first } from "rxjs/operators";
 
 @Component({
@@ -18,17 +18,14 @@ export class LoginComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   loading = false;
   submitted = false;
-  returnUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService,
+    private authService: UserService,
     private alertService: AlertService
-  ) {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/checks/add_checks';
-  }
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -42,23 +39,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
-    console.log(this.form.controls)
-
-    // reset alerts on submit
     this.alertService.clear();
 
-    // stop here if form is invalid
-    if (this.form.invalid) {
-      return;
-    }
+    if (this.form.invalid) { return }
 
     this.loading = true;
     this.authService.login(this.f['username'].value, this.f['password'].value)
       .pipe(first())
       .subscribe({
         next: (response) => {
-          this.router.navigateByUrl(this.returnUrl);
+          this.router.navigateByUrl('/dashboard/checks').then(() => window.location.reload());
         },
         error: (error) => {
           console.log(error);
