@@ -10,7 +10,7 @@
                  [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" />
 
           <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
-            <div *ngIf="f['username'].errors['required']">UserID is required</div>
+            <div *ngIf="f['username'].errors?.['required']">UserID is required</div>
           </div>
         </div>
 
@@ -20,7 +20,7 @@
                  [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
 
           <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
-            <div *ngIf="f['password'].errors['required']">Password is required</div>
+            <div *ngIf="f['password'].errors?.['required']">Password is required</div>
           </div>
         </div>
 
