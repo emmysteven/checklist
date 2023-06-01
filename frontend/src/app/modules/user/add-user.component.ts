@@ -1,64 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { first } from "rxjs/operators";
-
-import { AuthService, AlertService } from "@app/core/services";
-import {IError} from "@app/core/models/error";
+import { UserService, AlertService } from "@app/core/services";
 
 @Component({
   selector: 'app-signup',
   templateUrl: './add-user.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class AddUserComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   loading = false;
   submitted = false;
 
-  Error: IError = {
-    error: ''
-  }
-
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService,
+    private userService: UserService,
     private alertService: AlertService
   ) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      userName: ['', Validators.required],
+      role: ['', Validators.required]
     });
   }
 
-  // convenience getter for easy access to form fields
+  resetFormData():void {
+    let control: AbstractControl;
+    this.form.reset();
+    Object.keys(this.form.controls).forEach((name) => {
+      control = this.form.controls[name];
+      control.setErrors(null);
+    });
+  }
+
   get f() { return this.form.controls; }
 
   onSubmit() {
     this.submitted = true;
-
-    // reset alerts on submit
     this.alertService.clear();
 
-    // stop here if form is invalid
-    if (this.form.invalid) {
-      return;
-    }
+    if (this.form.invalid) { return }
 
     this.loading = true;
-    this.authService.register(this.form.value).pipe(first())
+    this.userService.addUser(this.form.value).pipe(first())
       .subscribe(
         data => {
-          this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-          this.router.navigate(['../login'], { relativeTo: this.route });
+          this.loading = false;
+          this.alertService.success("User was added successfully");
+          this.resetFormData()
           console.log(data);
         },
         (error) => {
