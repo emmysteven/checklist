@@ -1,67 +1,44 @@
+<alert></alert>
 <div class="card">
-  <h4 class="card-header">Sign Up</h4>
+  <h4 class="card-header">Profile Users</h4>
   <div class="card-body">
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
-      <div class="form-group">
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" [formControlName]="'firstName'"
-               class="form-control" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" />
 
-        <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
-          <div *ngIf="f['firstName'].errors['required']">First Name is required</div>
+      <div class="row align-items-center mb-4">
+        <div class="form-group col-md-4">
+          <label for="userName">User ID</label>
+          <input type="text" id="userName" [formControlName]="'userName'"
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f['userName'].errors }" />
+
+          <div *ngIf="submitted && f['userName'].errors" class="invalid-feedback">
+            <p *ngIf="f['userName'].hasError('required')">User ID is required</p>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="role">User Role</label>
+          <select id="role" class="form-select" aria-label="User Role" [formControlName]="'role'"
+                  [ngClass]="{ 'is-invalid': submitted && f['role'].errors }">
+            <option value="">-----</option>
+            <option value="Maker">Maker</option>
+            <option value="Checker">Checker</option>
+            <option value="Admin">Admin</option>
+          </select>
+
+          <div *ngIf="submitted && f['role'].errors" class="invalid-feedback">
+            <p *ngIf="f['role'].hasError('required')">User Role is required</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary mt-4">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Add
+          </button>
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" [formControlName]="'lastName'" class="form-control"
-               [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }" />
-
-        <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
-          <div *ngIf="f['lastName'].errors['required']">Last Name is required</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="text" id="email" [formControlName]="'email'" class="form-control"
-               [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
-
-        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-          <div *ngIf="f['email'].errors['required']">Email is required</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="phoneNumber">Phone Number</label>
-        <input type="tel" id="phoneNumber" [formControlName]="'phoneNumber'" class="form-control"
-               [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" />
-
-        <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
-          <div *ngIf="f['phoneNumber'].errors['required']">Phone Number is required</div>
-          <div *ngIf="f['phoneNumber'].errors['minlength']">Phone Number must be at least 6 characters</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" [formControlName]="'password'" class="form-control"
-               [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
-
-        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
-          <div *ngIf="f['password'].errors['required']">Password is required</div>
-          <div *ngIf="f['password'].errors['minlength']">Password must be at least 8 characters</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
-          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-          Sign Up
-        </button>
-        <a routerLink="../login" class="btn btn-link">Cancel</a>
-      </div>
     </form>
   </div>
 </div>
