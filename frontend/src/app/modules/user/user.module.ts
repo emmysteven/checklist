@@ -5,11 +5,14 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { UserRoutingModule } from './user-routing.module';
 import { AddUserComponent } from './add-user.component';
 import { LoginComponent } from './login.component';
-import { LayoutComponent } from '@app/shared';
+import { LayoutComponent, SharedModule } from '@app/shared';
+import { GetUserComponent } from './get-user.component';
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { EditUserComponent } from './edit-user.component';
 
 
 @NgModule({
-  declarations: [AddUserComponent, LoginComponent, LayoutComponent],
-  imports: [CommonModule, UserRoutingModule, ReactiveFormsModule]
+  declarations: [AddUserComponent, LoginComponent, LayoutComponent, GetUserComponent, EditUserComponent],
+  imports: [CommonModule, UserRoutingModule, ReactiveFormsModule, SharedModule, FontAwesomeModule]
 })
 export class UserModule { }

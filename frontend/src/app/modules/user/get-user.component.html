@@ -1,0 +1,20 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>User ID</th>
+    <th class="text-nowrap">User Role</th>
+    <th class="text-nowrap">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users; let i = index;">
+    <td>{{ user.userName }}</td>
+    <td>{{ user.role }}</td>
+    <td>
+      <button type="button" class="col-md-1 btn add">
+        <fa-icon [icon]="faUserEdit"></fa-icon>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
