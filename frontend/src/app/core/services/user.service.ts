@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Router } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
-import { JwtHelperService } from "@auth0/angular-jwt";
+import {Injectable} from '@angular/core';
+import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject, Observable} from "rxjs";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
-import { User } from "../models/user";
+import {User} from "../models/user";
 
-import { map } from "rxjs/operators";
-import { environment } from "@env/environment";
+import {map} from "rxjs/operators";
+import {environment} from "@env/environment";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -57,19 +57,19 @@ export class UserService {
   }
 
   addUser(user: User) {
-    return this.http.post(`${this.baseUrl}user/add`, user);
+    return this.http.post(`${this.baseUrl}api/user/add`, user);
   }
 
-  getAll() {
-    return this.http.get<User[]>(`${this.baseUrl}users`);
+  getUsers() {
+    return this.http.get<User[]>(`${this.baseUrl}api/user`);
   }
 
   getById(id: string) {
-    return this.http.get<User>(`${this.baseUrl}user/${id}`);
+    return this.http.get<User>(`${this.baseUrl}api/user/${id}`);
   }
 
   update(id: string, params: object) {
-    return this.http.put(`${this.baseUrl}user/${id}`, params)
+    return this.http.put(`${this.baseUrl}api/user/${id}`, params)
       .pipe(map(x => {
         // update stored user if the logged in user updated their own record
         if (id == this.userValue.id) {
@@ -85,7 +85,7 @@ export class UserService {
   }
 
   delete(id: string) {
-    return this.http.delete(`${this.baseUrl}user/${id}`)
+    return this.http.delete(`${this.baseUrl}api/user/${id}`)
       .pipe(map(x => {
         // auto logout if the logged in user deleted their own record
         if (id == this.userValue.id) {
@@ -98,6 +98,31 @@ export class UserService {
   isLoggedIn(): boolean {
     const token = localStorage.getItem('token') || '';
     return !this.helper.isTokenExpired(token);
+  }
+
+  getUserRole(): string | null {
+    const token = localStorage.getItem('token');
+    console.log(token);
+
+    if (token) {
+      const decodedToken = this.helper.decodeToken(token);
+      console.log(decodedToken.Role)
+      return decodedToken && decodedToken.Role;
+    }
+
+    return null;
+  }
+
+  isAdmin(role: string | null): boolean {
+    return role === 'Admin';
+  }
+
+  isChecker(role: string | null): boolean {
+    return role === 'Checker';
+  }
+
+  isMaker(role: string | null): boolean {
+    return role === 'Maker';
   }
 
   logout(): void {
