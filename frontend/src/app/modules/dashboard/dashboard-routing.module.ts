@@ -8,17 +8,22 @@ import { GetSummaryComponent } from "./summary/get-summary.component";
 import { AuthGuard } from "@app/core/guards";
 import { GetTodoComponent } from "./todo/get-todo.component";
 import { AddTodoComponent } from "./todo/add-todo.component";
+import { AddUserComponent, EditUserComponent, GetUserComponent } from "@app/modules/user";
 
 const routes: Routes = [
   {
     path: 'dashboard', component: LayoutComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'todos/get_todos', component: GetTodoComponent },
-      { path: 'todos/add_todos', component: AddTodoComponent },
-      { path: 'checks/add_checks', component: AddCheckComponent },
-      { path: 'checks/add_summary', component: AddSummaryComponent },
-      { path: 'report/get_check', component: GetCheckComponent },
-      { path: 'report/get_summary', component: GetSummaryComponent }
+      { path: 'users', component: GetUserComponent },
+      { path: 'users/add', component: AddUserComponent },
+      { path: 'users/:id', component: GetUserComponent },
+      { path: 'users/edit/:id', component: EditUserComponent },
+      { path: 'todos', component: GetTodoComponent },
+      { path: 'todos/add', component: AddTodoComponent },
+      { path: 'checks', component: GetCheckComponent },
+      { path: 'checks/add', component: AddCheckComponent },
+      { path: 'summary', component: GetSummaryComponent },
+      { path: 'summary/add', component: AddSummaryComponent }
     ]
   }
 ];
