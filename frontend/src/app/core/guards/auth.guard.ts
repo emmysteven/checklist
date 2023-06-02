@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from "@app/core/services";
+import { UserService } from "@app/core/services";
 import { Observable } from 'rxjs';
 import {
   ActivatedRouteSnapshot,
@@ -12,17 +12,17 @@ import {
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService) {}
+  constructor(private userService: UserService) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    if (this.authService.isLoggedIn()){
+    if (this.userService.isLoggedIn()){
       return true;
     }
-    this.authService.logout();
+    this.userService.logout();
     return false;
   }
 }
