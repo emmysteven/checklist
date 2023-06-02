@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "@env/environment";
-import { Check, Todo, Summary } from "@app/core/models";
+import { Todo, Summary, CheckVm } from "@app/core/models";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -33,8 +33,8 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}api/summary`, summary);
   }
 
-  getCheck(eodDate: string): Observable<Check> {
-    return this.http.get<Check>(`${this.baseUrl}api/check?eodDate=${eodDate}`, httpOptions)
+  getCheck(eodDate: string): Observable<CheckVm[]> {
+    return this.http.get<CheckVm[]>(`${this.baseUrl}api/check?eodDate=${eodDate}`, httpOptions)
       .pipe(map((response: any) => {
         return response.data;
     }))
