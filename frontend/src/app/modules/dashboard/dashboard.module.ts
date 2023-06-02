@@ -20,7 +20,7 @@ import { GetTodoComponent } from './todo/get-todo.component';
     AddSummaryComponent,
     GetSummaryComponent,
     AddTodoComponent,
-    GetTodoComponent
+    GetTodoComponent,
   ],
 
   imports: [
