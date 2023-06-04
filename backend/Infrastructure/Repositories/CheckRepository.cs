@@ -7,17 +7,23 @@ namespace Checklist.Infrastructure.Repositories;
 
 public class CheckRepository : BaseRepository<Check>, ICheckRepository
 {
-    private readonly DbSet<Check> _item;
+    private readonly DbSet<Check> _check;
 
     public CheckRepository(DataContext context) : base(context)
     {
-        _item = context.Set<Check>();
+        _check = context.Set<Check>();
     }
     
     public async Task<List<Check>> GetByDate(string eodDate)
     {
         var dateValue = DateTime.ParseExact(eodDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-        return await _item.Where(p => p.EodDate == dateValue).ToListAsync();
+        return await _check.Where(p => p.EodDate == dateValue).ToListAsync();
+    }
+    
+    public bool CheckDate(string eodDate)
+    {
+        var dateValue = DateTime.ParseExact(eodDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+        return _check.Any(p => p.EodDate == dateValue);
     }
     
 }
