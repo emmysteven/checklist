@@ -29,7 +29,7 @@ public class TodoService: ITodoService
     }
     
     
-    public async Task<Todo> GetByIdAsync(int id)
+    public async Task<Todo> GetByIdAsync(long id)
     {
         var todo = await _repo.GetByIdAsync(id);
         if (todo == null) throw new ApiException("Todo Not Found.");
@@ -38,16 +38,16 @@ public class TodoService: ITodoService
     }
     
     
-    public async Task<Response<int>> CreateAsync(TodoDto todoDto)
+    public async Task<Response<long>> CreateAsync(TodoDto todoDto)
     {
         var todo = _mapper.Map<Todo>(todoDto);
         await _repo.CreateAsync(todo);
         
-        return new Response<int>(todo.Id);
+        return new Response<long>(todo.Id);
     }
     
     
-    public async Task<Todo> UpdateAsync(int id, TodoDto todoDto)
+    public async Task<Todo> UpdateAsync(long id, TodoDto todoDto)
     {
         var isTodo = await _repo.GetByIdAsync(id);
         if (isTodo == null) throw new ApiException("Todo Not Found.");
@@ -57,7 +57,7 @@ public class TodoService: ITodoService
     }
     
     
-    public async Task<Todo> DeleteAsync(int id)
+    public async Task<Todo> DeleteAsync(long id)
     {
         var todo = await _repo.GetByIdAsync(id);
         if (todo == null) throw new ApiException("Todo Not Found.");

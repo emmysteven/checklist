@@ -30,7 +30,7 @@ public class SummaryService : ISummaryService
     }
     
     
-    public async Task<Summary> GetByIdAsync(int id)
+    public async Task<Summary> GetByIdAsync(long id)
     {
         var summary = await _repo.GetByIdAsync(id);
         if (summary == null) throw new ApiException("Summary Not Found.");
@@ -38,16 +38,16 @@ public class SummaryService : ISummaryService
     }
     
     
-    public async Task<Response<int>> CreateAsync(SummaryDto summaryDto)
+    public async Task<Response<long>> CreateAsync(SummaryDto summaryDto)
     {
         var summary = _mapper.Map<Summary>(summaryDto);
         await _repo.CreateAsync(summary);
         
-        return new Response<int>(summary.Id);
+        return new Response<long>(summary.Id);
     }
     
     
-    public async Task<Summary> UpdateAsync(int id, SummaryDto summaryDto)
+    public async Task<Summary> UpdateAsync(long id, SummaryDto summaryDto)
     {
         var isSummary = await _repo.GetByIdAsync(id);
         if (isSummary == null) throw new ApiException("Item Not Found.");
@@ -57,7 +57,7 @@ public class SummaryService : ISummaryService
     }
     
     
-    public async Task<Summary> DeleteAsync(int id)
+    public async Task<Summary> DeleteAsync(long id)
     {
         var summary = await _repo.GetByIdAsync(id);
         if (summary == null) throw new ApiException("Summary Not Found.");
