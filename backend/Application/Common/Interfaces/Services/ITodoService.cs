@@ -8,8 +8,8 @@ namespace Checklist.Application.Common.Interfaces.Services;
 public interface ITodoService
 {
     Task<Response<IEnumerable<TodoVm>>> GetAllAsync();
-    Task<Todo> GetByIdAsync(int id);
-    Task<Response<int>> CreateAsync(TodoDto todoDto);
-    Task<Todo> UpdateAsync(int id, TodoDto todoDto);
-    Task<Todo> DeleteAsync(int id);
+    Task<Todo> GetByIdAsync(long id);
+    Task<Response<long>> CreateAsync(TodoDto todoDto);
+    Task<Todo> UpdateAsync(long id, TodoDto todoDto);
+    Task<Todo> DeleteAsync(long id);
 }

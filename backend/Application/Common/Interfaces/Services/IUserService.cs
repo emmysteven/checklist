@@ -6,8 +6,8 @@ namespace Checklist.Application.Common.Interfaces.Services;
 
 public interface IUserService
 {
-    Task<Response<AuthVm>> GetByIdAsync(int id);
-    Task<IEnumerable<AuthVm>> GetUsersAsync();
+    Task<Response<UserVm>> GetByIdAsync(long id);
+    Task<IEnumerable<UserVm>> GetUsersAsync();
     Task<Response<string?>> AddUserAsync(UserDto dto);
     AuthVm AuthenticateAsync(AuthDto authDto);
 }

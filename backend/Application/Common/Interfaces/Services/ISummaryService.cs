@@ -8,8 +8,8 @@ namespace Checklist.Application.Common.Interfaces.Services;
 public interface ISummaryService
 {
     Task<Response<IEnumerable<SummaryVm>>> GetAllAsync(string eodDate);
-    Task<Summary> GetByIdAsync(int id);
-    Task<Response<int>> CreateAsync(SummaryDto summaryDto);
-    Task<Summary> UpdateAsync(int id, SummaryDto summaryDto);
-    Task<Summary> DeleteAsync(int id);
+    Task<Summary> GetByIdAsync(long id);
+    Task<Response<long>> CreateAsync(SummaryDto summaryDto);
+    Task<Summary> UpdateAsync(long id, SummaryDto summaryDto);
+    Task<Summary> DeleteAsync(long id);
 }
