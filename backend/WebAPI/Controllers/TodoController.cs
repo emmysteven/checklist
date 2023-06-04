@@ -22,7 +22,7 @@ public class TodoController : BaseController
     }
 
     [HttpGet("{id}"), AllowAnonymous]
-    public async Task<IActionResult> Get([FromRoute] int id)
+    public async Task<IActionResult> Get([FromRoute] long id)
     {
         return Ok(await _todoService.GetByIdAsync(id));
     }
@@ -36,14 +36,14 @@ public class TodoController : BaseController
 
     // PUT api/<controller>/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] TodoDto todoDto)
+    public async Task<IActionResult> Update([FromRoute] long id, [FromBody] TodoDto todoDto)
     {
         return Ok(await _todoService.UpdateAsync(id, todoDto));
     }
     
     // DELETE api/<controller>/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(long id)
     {
         await _todoService.DeleteAsync(id);
         return NoContent();

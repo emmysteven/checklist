@@ -5,7 +5,7 @@ namespace Checklist.Application.ViewModels;
 
 public class SummaryVm : IMapFrom<Summary>
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
     public string Makers { get; set; } = string.Empty;
     public string Checkers { get; set; } = string.Empty;
     public string Dbas { get; set; } = string.Empty;
