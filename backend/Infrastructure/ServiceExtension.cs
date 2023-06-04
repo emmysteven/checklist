@@ -5,6 +5,7 @@ using Checklist.Application.Common.Interfaces.Services;
 using Checklist.Application.Settings;
 using Checklist.Infrastructure.Repositories;
 using Checklist.Infrastructure.Services;
+using HashidsNet;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -43,7 +44,8 @@ public static class ServiceExtension
         services.AddTransient<ICheckService, CheckService>();
         services.AddTransient<IEmailService, EmailService>();
         services.AddTransient<ISummaryService, SummaryService>();
-        
+
+        services.AddSingleton<IHashids>(_ => new Hashids("Emmy", 8));
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         
