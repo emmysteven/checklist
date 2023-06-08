@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AlertService, ApiService } from "@app/core/services";
 import { faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import { first } from "rxjs/operators";
+import { resetFormData } from "@app/core/utils";
 
 @Component({
   selector: 'app-final-item',
@@ -41,7 +42,7 @@ export class AddSummaryComponent implements OnInit {
       startTime: ['', Validators.required],
       endTime:  ['', Validators.required],
       duration: ['', Validators.required],
-      txnCount: ['', Validators.required],
+      txnCount: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       eodDate: ['', Validators.required]
     });
   }
@@ -93,14 +94,14 @@ export class AddSummaryComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.loading = false;
+          resetFormData(this.form);
           this.alertService.success("Summary was added successfully");
-          setTimeout(() => { window.location.reload() }, 2000);
-          console.log(response)
+          // setTimeout(() => { window.location.reload() }, 2000);
         },
         error: (error) => {
-          console.log(error);
-          this.alertService.error("Something went wrong: " + error, { autoClose: false });
           this.loading = false;
+          this.alertService.error("Something went wrong", { autoClose: false });
+          console.log(error.error.errors);
         }
       });
   }
