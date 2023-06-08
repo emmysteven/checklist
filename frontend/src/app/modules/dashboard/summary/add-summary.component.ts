@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { AlertService, ApiService } from "@app/core/services";
 import { faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import { first } from "rxjs/operators";
@@ -96,7 +96,7 @@ export class AddSummaryComponent implements OnInit {
           this.loading = false;
           resetFormData(this.form);
           this.alertService.success("Summary was added successfully");
-          // setTimeout(() => { window.location.reload() }, 2000);
+          setTimeout(() => { window.location.reload() }, 2000);
         },
         error: (error) => {
           this.loading = false;
