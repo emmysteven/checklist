@@ -11,7 +11,7 @@
                  [ngClass]="{ 'is-invalid': submitted && control['eodDate'].errors }" />
 
           <div *ngIf="submitted && control['eodDate'].errors" class="invalid-feedback">
-            <div *ngIf="control['eodDate'].errors['required']">Eod Date is required</div>
+            <div *ngIf="control['eodDate'].errors?.['required']">Eod Date is required</div>
           </div>
         </div>
 
@@ -21,7 +21,7 @@
                  [ngClass]="{ 'is-invalid': submitted && control['startTime'].errors }" />
 
           <div *ngIf="submitted && control['startTime'].errors" class="invalid-feedback">
-            <div *ngIf="control['startTime'].errors['required']">Start Time is required</div>
+            <div *ngIf="control['startTime'].errors?.['required']">Start Time is required</div>
           </div>
         </div>
 
@@ -31,27 +31,28 @@
                  [ngClass]="{ 'is-invalid': submitted && control['endTime'].errors }" />
 
           <div *ngIf="submitted && control['endTime'].errors" class="invalid-feedback">
-            <div *ngIf="control['endTime'].errors['required']">End Time is required</div>
+            <div *ngIf="control['endTime'].errors?.['required']">End Time is required</div>
           </div>
         </div>
 
         <div class="form-group col-md-3">
           <label for="duration">Duration</label>
-          <input type="text" formControlName="duration" id="duration" class="form-control"
+          <input type="text" formControlName="duration" id="duration" placeholder="11hr:30mins" class="form-control"
                  [ngClass]="{ 'is-invalid': submitted && control['duration'].errors }" />
 
           <div *ngIf="submitted && control['duration'].errors" class="invalid-feedback">
-            <div *ngIf="control['duration'].errors['required']">Duration is required</div>
+            <div *ngIf="control['duration'].errors?.['required']">Duration is required</div>
           </div>
         </div>
 
         <div class="form-group col-md-3">
           <label for="txnCount">Txn Count</label>
-          <input type="text" formControlName="txnCount" id="txnCount" class="form-control"
+          <input type="text" formControlName="txnCount" placeholder="1903205200" id="txnCount" class="form-control"
                  [ngClass]="{ 'is-invalid': submitted && control['txnCount'].errors }" />
 
           <div *ngIf="submitted && control['txnCount'].errors" class="invalid-feedback">
-            <div *ngIf="control['txnCount'].errors['required']">Transaction Count is required</div>
+            <div *ngIf="control['txnCount'].errors?.['required']">Transaction Count is required</div>
+            <div *ngIf="control['txnCount'].errors?.['pattern']">Enter only numbers</div>
           </div>
         </div>
       </div>
@@ -74,7 +75,9 @@
             <fa-icon [icon]="faUserPlus"></fa-icon>
           </button>
         </div>
+      </div>
 
+      <div formArrayName="checkers" class="form-group">
         <div *ngFor="let checker of checkers['controls']; let i = index; last as isLast" [formGroupName]="i" class="row align-items-center mb-2">
           <label for="checker" class="col-md-2">Checker</label>
           <div class="col-md-4">
@@ -92,7 +95,9 @@
             <fa-icon [icon]="faUserPlus"></fa-icon>
           </button>
         </div>
+      </div>
 
+      <div formArrayName="dbas" class="form-group">
         <div *ngFor="let dba of dbas['controls']; let i = index; last as isLast" [formGroupName]="i" class="row align-items-center mb-2">
           <label for="dba" class="col-md-2">DB Admin</label>
           <div class="col-md-4">
@@ -122,4 +127,3 @@
 
   </div>
 </div>
-
