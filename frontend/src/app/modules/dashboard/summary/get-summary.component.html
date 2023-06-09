@@ -9,7 +9,7 @@
              [ngClass]="{ 'is-invalid': submitted && control['eodDate'].errors }" />
 
       <div *ngIf="submitted && control['eodDate'].errors" class="invalid-feedback">
-        <div *ngIf="control['eodDate'].errors['required']">Eod Date is required</div>
+        <div *ngIf="control['eodDate'].errors?.['required']">Eod Date is required</div>
       </div>
     </div>
     <div class="col-md-2">
@@ -39,7 +39,7 @@
     <td>{{ item.makers }}</td>
     <td>{{ item.checkers }}</td>
     <td>{{ item.dbas }}</td>
-    <td>{{ item.eodDate }}</td>
+    <td class="text-nowrap">{{ item.eodDate | date:'dd-MMM-yy' }}</td>
     <td>{{ item.startTime }}</td>
     <td>{{ item.endTime }}</td>
     <td>{{ item.duration }}</td>
