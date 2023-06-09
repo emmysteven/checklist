@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { first } from "rxjs/operators";
 import { UserService, AlertService } from "@app/core/services";
+import { resetFormData } from "@app/core/utils";
 
 @Component({
   selector: 'app-signup',
@@ -29,15 +30,6 @@ export class AddUserComponent implements OnInit {
     });
   }
 
-  resetFormData():void {
-    let control: AbstractControl;
-    this.form.reset();
-    Object.keys(this.form.controls).forEach((name) => {
-      control = this.form.controls[name];
-      control.setErrors(null);
-    });
-  }
-
   get f() { return this.form.controls; }
 
   onSubmit() {
@@ -52,7 +44,7 @@ export class AddUserComponent implements OnInit {
         data => {
           this.loading = false;
           this.alertService.success("User was added successfully");
-          this.resetFormData()
+          resetFormData(this.form);
           console.log(data);
         },
         (error) => {
