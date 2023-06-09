@@ -26,7 +26,6 @@ export class AddCheckComponent implements OnInit {
   todos: any;
   data: any;
   EodDate: string = '';
-  returnUrl: string;
 
   loading = false;
   submitted = false;
@@ -37,9 +36,7 @@ export class AddCheckComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private apiService: ApiService
-  ) {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/checks/add_summary';
-  }
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -137,7 +134,7 @@ export class AddCheckComponent implements OnInit {
           console.log(response);
           this.alertService.success('Checks were added successfully', { autoClose: false });
           this.loading = false;
-          this.router.navigateByUrl(this.returnUrl);
+          this.router.navigateByUrl('/dashboard/summary/add');
         },
         error: (error) => {
           console.log(error);
