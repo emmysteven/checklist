@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertService, ApiService } from "@app/core/services";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { duration } from "@app/core/utils";
 
 @Component({
   selector: 'app-get-item',
@@ -50,7 +51,7 @@ export class GetCheckComponent implements OnInit {
     this.apiService.getCheck(eodDate).subscribe({
       next: data => {
         this.loading = false
-        this.checks = data
+        this.checks = duration(data)
         console.log(data);
       },
       error: err => {
