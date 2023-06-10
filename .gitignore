@@ -349,8 +349,8 @@ healthchecksdb
 
 .vscode/
 VSIXCore/
-/backend/appsettings.json
-/backend/Migrations/
+**appsettings.json
+**/Migrations/
 .eslintcache
 
 
