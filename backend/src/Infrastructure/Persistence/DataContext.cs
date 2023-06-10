@@ -1,9 +1,9 @@
-using Checklist.Application.Common.Interfaces.Services;
+using Checklist.Application.Common.Interfaces;
 using Checklist.Domain.Common;
 using Checklist.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Checklist.Infrastructure;
+namespace Checklist.Infrastructure.Persistence;
 
 public class DataContext : DbContext
 {
@@ -24,7 +24,7 @@ public class DataContext : DbContext
     public virtual DbSet<User> Users => Set<User>();
     public virtual DbSet<Summary> Summary => Set<Summary>();
         
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<AuditEntity>())
         {

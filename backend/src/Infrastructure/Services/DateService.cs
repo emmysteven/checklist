@@ -1,4 +1,4 @@
-using Checklist.Application.Common.Interfaces.Services;
+using Checklist.Application.Common.Interfaces;
 
 namespace Checklist.Infrastructure.Services;
 

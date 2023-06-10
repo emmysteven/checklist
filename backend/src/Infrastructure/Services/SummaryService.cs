@@ -1,29 +1,32 @@
 using AutoMapper;
 using Checklist.Application.Common.Exceptions;
-using Checklist.Application.Common.Interfaces.Repositories;
-using Checklist.Application.Common.Interfaces.Services;
+using Checklist.Application.Common.Interfaces;
 using Checklist.Application.Common.Wrappers;
 using Checklist.Application.DTOs;
 using Checklist.Application.ViewModels;
 using Checklist.Domain.Entities;
+using Checklist.Infrastructure.Helpers;
+using Checklist.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Checklist.Infrastructure.Services;
 
 public class SummaryService : ISummaryService
 {
     private readonly IMapper _mapper;
-    private readonly ISummaryRepository _repo;
+    private readonly DataContext _context;
 
-    public SummaryService(IMapper mapper, ISummaryRepository repo)
+    public SummaryService(IMapper mapper, DataContext context)
     {
         _mapper = mapper;
-        _repo = repo;
+        _context = context;
     }
     
 
     public async Task<Response<IEnumerable<SummaryVm>>> GetAllAsync(string eodDate)
     {
-        var summary = await _repo.GetByDate(eodDate);
+        var dateValue = IpHelper.GetDate(eodDate);
+        var summary = await _context.Summary.FirstOrDefaultAsync(x => x.EodDate == dateValue);
         var summaryVm = _mapper.Map<IEnumerable<SummaryVm>>(summary);
         
         return new Response<IEnumerable<SummaryVm>>(summaryVm);
@@ -32,7 +35,7 @@ public class SummaryService : ISummaryService
     
     public async Task<Summary> GetByIdAsync(long id)
     {
-        var summary = await _repo.GetByIdAsync(id);
+        var summary = await _context.Summary.FindAsync(id);
         if (summary == null) throw new ApiException("Summary Not Found.");
         return summary;
     }
@@ -41,7 +44,8 @@ public class SummaryService : ISummaryService
     public async Task<Response<long>> CreateAsync(SummaryDto summaryDto)
     {
         var summary = _mapper.Map<Summary>(summaryDto);
-        await _repo.CreateAsync(summary);
+        await _context.Summary.AddAsync(summary);
+        await _context.SaveChangesAsync();
         
         return new Response<long>(summary.Id);
     }
@@ -49,19 +53,23 @@ public class SummaryService : ISummaryService
     
     public async Task<Summary> UpdateAsync(long id, SummaryDto summaryDto)
     {
-        var isSummary = await _repo.GetByIdAsync(id);
+        var isSummary = await _context.Summary.FindAsync(id);
         if (isSummary == null) throw new ApiException("Item Not Found.");
 
         var summary = _mapper.Map<Summary>(summaryDto);
-        return await _repo.UpdateAsync(summary);
+         _context.Summary.Update(summary);
+         await _context.SaveChangesAsync();
+         return summary;
     }
     
     
     public async Task<Summary> DeleteAsync(long id)
     {
-        var summary = await _repo.GetByIdAsync(id);
+        var summary = await _context.Summary.FindAsync(id);
         if (summary == null) throw new ApiException("Summary Not Found.");
         
-        return await _repo.DeleteAsync(summary);
+        _context.Summary.Remove(summary);
+        await _context.SaveChangesAsync();
+        return summary;
     }
 }

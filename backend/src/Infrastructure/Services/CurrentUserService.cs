@@ -1,5 +1,6 @@
 using System.Security.Claims;
-using Checklist.Application.Common.Interfaces.Services;
+using Checklist.Application.Common.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Checklist.Infrastructure.Services;
 

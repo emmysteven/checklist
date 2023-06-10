@@ -2,7 +2,7 @@ using Checklist.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Checklist.Infrastructure.Config;
+namespace Checklist.Infrastructure.Persistence.Config;
 
 public class SummaryConfig : IEntityTypeConfiguration<Summary>
 {

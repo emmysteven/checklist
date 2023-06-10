@@ -1,16 +1,22 @@
 using System.Reflection;
 using System.Text;
-using Checklist.Application.Common.Interfaces.Services;
+using Checklist.Application.Common.Interfaces;
 using Checklist.Application.Settings;
-using Checklist.Infrastructure.Repositories;
+using Checklist.Infrastructure.Persistence;
 using Checklist.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Checklist.Infrastructure;
 
-public static class ServiceExtension
+public static class ServiceRegister
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env)
     {
@@ -35,8 +41,7 @@ public static class ServiceExtension
         services.AddTransient<ICheckService, CheckService>();
         services.AddTransient<IEmailService, EmailService>();
         services.AddTransient<ISummaryService, SummaryService>();
-
-        services.AddSingleton<IHashids>(_ => new Hashids("Emmy", 8));
+        
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         

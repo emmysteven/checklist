@@ -1,10 +1,10 @@
 using System.Linq.Expressions;
-using Checklist.Application.Common.Interfaces.Repositories;
+using Checklist.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Checklist.Infrastructure.Repositories;
 
-public class BaseRepository<T> : IBaseRepository<T> where T : class
+public class BaseRepository<T> where T: class
 {
     private readonly DataContext _context;
     public BaseRepository(DataContext context)

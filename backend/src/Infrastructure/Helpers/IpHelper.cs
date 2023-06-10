@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 
@@ -12,5 +13,10 @@ public class IpHelper
             if (ip.AddressFamily == AddressFamily.InterNetwork)
                 return ip.ToString();
         return string.Empty;
+    }
+    
+    public static DateTime GetDate(string eodDate)
+    {
+        return DateTime.ParseExact(eodDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
     }
 }

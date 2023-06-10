@@ -1,15 +1,16 @@
 using Checklist.Application.Common.Exceptions;
-using Checklist.Application.Common.Interfaces.Services;
+using Checklist.Application.Common.Interfaces;
 using Checklist.Application.DTOs;
 using MimeKit;
 using Checklist.Application.Settings;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Logging;
 
 namespace Checklist.Infrastructure.Services;
 public class EmailService : IEmailService
 {
     private readonly MailSettings _mailSettings;
-    public ILogger<EmailService> Logger { get; }
+    private ILogger<EmailService> Logger { get; }
     public EmailService(MailSettings mailSettings, ILogger<EmailService> logger)
     {
         _mailSettings = mailSettings;
