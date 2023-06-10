@@ -1,8 +1,8 @@
-using Checklist.Application.Common.Interfaces.Services;
+using Checklist.Application.Common.Interfaces;
 using Checklist.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Checklist.WebAPI.Controllers;
+namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

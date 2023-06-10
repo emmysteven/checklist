@@ -1,22 +1,19 @@
-using Checklist.Application.Common.Interfaces.Services;
+using Checklist.Application.Common.Interfaces;
 using Checklist.Application.DTOs;
-using HashidsNet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Checklist.WebAPI.Controllers;
+namespace WebAPI.Controllers;
 
 [Authorize]
 public class CheckController : BaseController
 {
-    private readonly IHashids _hashids;
     private readonly ICheckService _checkService;
 
-    public CheckController(ILogger<CheckController> logger, ICheckService checkService, IHashids hashids) 
+    public CheckController(ILogger<CheckController> logger, ICheckService checkService) 
         : base(logger)
     {
         _checkService = checkService;
-        _hashids = hashids;
     }
         
     [HttpGet]

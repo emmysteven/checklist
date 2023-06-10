@@ -1,9 +1,9 @@
-using Checklist.Application.Common.Interfaces.Services;
+using Checklist.Application.Common.Interfaces;
 using Checklist.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Checklist.WebAPI.Controllers;
+namespace WebAPI.Controllers;
 
 public class SummaryController : BaseController
 {

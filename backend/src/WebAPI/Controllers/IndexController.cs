@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Checklist.WebAPI.Controllers;
+namespace WebAPI.Controllers;
 
 [Route("[controller]")]
 [ApiController]

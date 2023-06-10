@@ -1,3 +1,4 @@
+using Checklist.Application;
 using Checklist.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -18,6 +19,7 @@ builder.Host.UseSerilog((context, services, config) => config
     .Enrich.FromLogContext());
 
 // Add services to the container.
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(configuration, env);
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
