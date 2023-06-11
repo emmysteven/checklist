@@ -14,19 +14,21 @@ namespace Checklist.Infrastructure.Services;
 public class CheckService : ICheckService
 {
     private readonly IMapper _mapper;
-    private readonly DataContext _context;
+    private readonly DbSet<Check> _check;
+    private readonly ICurrentUserService _currentUser;
 
-    public CheckService(IMapper mapper, DataContext context)
+    public CheckService(IMapper mapper, DataContext context, ICurrentUserService currentUser)
     {
         _mapper = mapper;
-        _context = context;
+        _currentUser = currentUser;
+        _check = context.Set<Check>();
     }
     
 
     public async Task<Response<IEnumerable<CheckVm>>> GetAllAsync(string eodDate)
     {
         var dateValue = IpHelper.GetDate(eodDate);
-        var checks = await _context.Checks.FirstOrDefaultAsync(x => x.EodDate == dateValue);
+        var checks = await _check.Where(x => x.EodDate == dateValue).ToListAsync();
         var checkVm = _mapper.Map<IEnumerable<CheckVm>>(checks);
         
         return new Response<IEnumerable<CheckVm>>(checkVm);
@@ -35,7 +37,7 @@ public class CheckService : ICheckService
     
     public async Task<Check> GetByIdAsync(long id)
     {
-        var check = await _context.Checks.FindAsync(id);
+        var check = await _check.FindAsync(id);
         if (check == null) throw new ApiException("Item Not Found.");
         return check;
     }
@@ -44,7 +46,7 @@ public class CheckService : ICheckService
     public bool CheckDate(string eodDate)
     {
         var dateValue = IpHelper.GetDate(eodDate);
-        var isCheck = _context.Checks.Any(x => x.EodDate == dateValue);
+        var isCheck = _check.Any(x => x.EodDate == dateValue);
         return !isCheck;
     }
     
@@ -52,9 +54,8 @@ public class CheckService : ICheckService
     public async Task<Response<IEnumerable<long>>> CreateAsync(CheckDto request)
     {
         var checks = _mapper.Map<IEnumerable<Check>>(request.Checks).ToList();
-        await _context.BulkInsertAsync(checks);
-        await _context.BulkSaveChangesAsync();
-    
+        await _check.BulkInsertAsync(checks);
+
         var checkIds = checks.Select(i => i.Id);
         return new Response<IEnumerable<long>>(checkIds);
     }
@@ -66,8 +67,7 @@ public class CheckService : ICheckService
         // if (isCheck == null) throw new ApiException("Item Not Found.");
 
         var checks = _mapper.Map<Check>(checkDto);
-        _context.Checks.Update(checks);
-        await _context.SaveChangesAsync();
+        _check.Update(checks);
         return checks;
     }
     
@@ -75,12 +75,11 @@ public class CheckService : ICheckService
     public async Task<Check> DeleteAsync(string eodDate)
     {
         var dateValue = IpHelper.GetDate(eodDate);
-        var isCheck = await _context.Checks.FirstOrDefaultAsync(x => x.EodDate == dateValue);
+        var isCheck = await _check.FirstOrDefaultAsync(x => x.EodDate == dateValue);
         if (isCheck == null) throw new ApiException("Check Not Found.");
         
         var check = _mapper.Map<Check>(isCheck);
-        _context.Checks.Remove(check);
-        await _context.SaveChangesAsync();
+        _check.Remove(check);
         return check;
     }
     
