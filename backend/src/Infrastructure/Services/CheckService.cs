@@ -67,14 +67,17 @@ public class CheckService : ICheckService
     }
     
     
-    public Check Update(CheckDto checkDto)
+    public async Task<Check> UpdateAsync(CheckDto checkDto)
     {
-        // var isCheck = await _repo.GetByIdAsync(checkVm.Id);
-        // if (isCheck == null) throw new ApiException("Item Not Found.");
+        foreach (var check in checkDto.Checks)
+        {
+            var isCheck = await _check.FindAsync(check.EodDate);
+            if (isCheck == null) throw new ApiException("Item Not Found.");
 
-        var checks = _mapper.Map<Check>(checkDto);
-        _check.Update(checks);
-        return checks;
+            var updatedCheck = _mapper.Map<Check>(check);
+            _check.Update(updatedCheck);
+        }
+        return checkDto.Checks.FirstOrDefault()!;
     }
     
     
