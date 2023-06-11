@@ -61,7 +61,7 @@ public class CheckService : ICheckService
     }
     
     
-    public async Task<Check> UpdateAsync(CheckDto checkDto)
+    public Check Update(CheckDto checkDto)
     {
         // var isCheck = await _repo.GetByIdAsync(checkVm.Id);
         // if (isCheck == null) throw new ApiException("Item Not Found.");

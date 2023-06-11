@@ -44,9 +44,9 @@ public class CheckController : BaseController
     }
     
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] CheckDto checkDto)
+    public IActionResult Update([FromBody] CheckDto checkDto)
     {
-        return Ok(await _checkService.UpdateAsync(checkDto));
+        return Ok(_checkService.Update(checkDto));
     }
     
     [HttpDelete("{eodDate}")]
