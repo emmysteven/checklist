@@ -54,8 +54,14 @@ public class CheckService : ICheckService
     public async Task<Response<IEnumerable<long>>> CreateAsync(CheckDto request)
     {
         var checks = _mapper.Map<IEnumerable<Check>>(request.Checks).ToList();
+        
+        foreach (var check in checks)
+        {
+            check.MakerId = _currentUser.Username;
+        }
+        
         await _check.BulkInsertAsync(checks);
-
+        
         var checkIds = checks.Select(i => i.Id);
         return new Response<IEnumerable<long>>(checkIds);
     }
