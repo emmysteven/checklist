@@ -96,7 +96,7 @@ export class AddSummaryComponent implements OnInit {
           this.loading = false;
           resetFormData(this.form);
           this.alertService.success("Summary was added successfully");
-          setTimeout(() => { window.location.reload() }, 2000);
+          setTimeout(() => { window.location.reload() }, 500);
         },
         error: (error) => {
           this.loading = false;
