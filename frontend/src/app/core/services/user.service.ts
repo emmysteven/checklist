@@ -102,7 +102,6 @@ export class UserService {
 
   getUserRole(): string | null {
     const token = localStorage.getItem('token');
-    console.log(token);
 
     if (token) {
       const decodedToken = this.helper.decodeToken(token);
