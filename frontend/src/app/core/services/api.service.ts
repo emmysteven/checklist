@@ -46,4 +46,12 @@ export class ApiService {
         return response.data;
       }))
   }
+
+  authCheck(eodDate: string): Observable<CheckVm[]> {
+    return this.http.patch<CheckVm[]>(`${this.baseUrl}api/check`, eodDate)
+      .pipe(map((response: any) => {
+        return response.data;
+    }))
+  }
+  
 }
