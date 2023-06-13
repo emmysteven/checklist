@@ -10,5 +10,6 @@ public class CheckVm : IMapFrom<Check>
     public string StartTime { get; set; } = string.Empty;
     public string EndTime { get; set; } = string.Empty;
     public DateTime? EodDate { get; set; }
+    public bool? AuthStatus { get; set; } = false;
 }
 
