@@ -53,5 +53,12 @@ export class ApiService {
         return response.data;
     }))
   }
-  
+
+  authSummary(eodDate: string): Observable<Summary> {
+    return this.http.patch<Summary>(`${this.baseUrl}api/summary`, eodDate)
+      .pipe(map((response: any) => {
+        return response.data;
+      }))
+  }
+
 }
