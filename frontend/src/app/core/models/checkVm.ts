@@ -4,4 +4,5 @@ export interface CheckVm {
   endTime: string;
   totalTime?: string;
   remarks: string;
+  authStatus: boolean;
 }
