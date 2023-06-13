@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="col-md-2 px-5">
+  <div *ngIf="isChecker()" class="col-md-2 px-5">
     <button [disabled]="progress"
             (click)="authorize()"
             role="button"

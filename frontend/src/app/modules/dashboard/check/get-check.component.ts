@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertService, ApiService } from "@app/core/services";
+import {AlertService, ApiService, UserService} from "@app/core/services";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { faCheckDouble ,faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { duration } from "@app/core/utils";
@@ -20,6 +20,7 @@ export class GetCheckComponent implements OnInit {
   data: any;
   checks: any;
   eodDate: string = '';
+  userRole: string | null = '';
 
   faMagnifyingGlass = faMagnifyingGlass;
   faCheckDouble = faCheckDouble;
@@ -27,12 +28,14 @@ export class GetCheckComponent implements OnInit {
   loading = false;
   submitted = false;
 
+  buttonDisabled = false;
   progress = false;
   clicked = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private alertService: AlertService,
+    private userService: UserService,
     private apiService: ApiService
   ) { }
 
@@ -40,7 +43,10 @@ export class GetCheckComponent implements OnInit {
     this.form = this.formBuilder.group({
       eodDate: ['', Validators.required]
     });
+    this.userRole = this.userService.getUserRole();
   }
+
+  isChecker = ():boolean => this.userService.isChecker(this.userRole);
 
   get control() { return this.form.controls; }
 
@@ -78,7 +84,6 @@ export class GetCheckComponent implements OnInit {
       next: data => {
         this.loading = false
         this.checks = duration(data)
-        console.log(data);
       },
       error: err => {
         this.loading = false
