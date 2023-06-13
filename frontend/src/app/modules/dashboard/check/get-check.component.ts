@@ -50,12 +50,13 @@ export class GetCheckComponent implements OnInit {
 
     if (this.form.invalid) { return }
     this.progress = true;
-    console.log(this.form.value)
+    const eodDate = this.control['eodDate'].value;
 
     this.apiService.authCheck(this.form.value).subscribe({
       next: data => {
         this.progress = false
         this.checks = duration(data)
+        this.alertService.success(`Entries for ${eodDate} was authorized successfully`);
         console.log(data);
       },
       error: err => {
