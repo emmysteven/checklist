@@ -11,5 +11,6 @@ public interface ICheckService
     Task<Check> GetByIdAsync(long id);
     Task<Response<IEnumerable<long>>> CreateAsync(CheckDto checkDto);
     Task<Check> UpdateAsync(CheckDto checkDto);
+    Task<Response<IEnumerable<CheckVm>>> CheckedAsync(CheckedDto checkedDto);
     Task<Check> DeleteAsync(string eodDate);
 }
