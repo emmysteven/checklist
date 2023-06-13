@@ -8,7 +8,7 @@ import { UserService } from "@app/core/services";
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
       <div class="container">
         <a class="navbar-brand">
-          <img ngSrc="../../../assets/img/polaris_logo.png" height="55" width="55">
+          <img ngSrc="assets/img/polaris_logo.png" height="55" width="55">
           &nbsp;&nbsp;EOD Checklist
         </a>
         <button
