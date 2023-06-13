@@ -49,6 +49,12 @@ public class CheckController : BaseController
         return Ok(await _checkService.UpdateAsync(checkDto));
     }
     
+    [HttpPatch]
+    public async Task<IActionResult> CheckedAsync([FromBody] CheckedDto checkedDto)
+    {
+        return Ok(await _checkService.CheckedAsync(checkedDto));
+    }
+    
     [HttpDelete("{eodDate}")]
     public async Task<IActionResult> Delete([FromBody] string eodDate)
     {
