@@ -15,18 +15,20 @@ public class SummaryService : ISummaryService
 {
     private readonly IMapper _mapper;
     private readonly DataContext _context;
+    private readonly ICurrentUserService _currentUser;
 
-    public SummaryService(IMapper mapper, DataContext context)
+    public SummaryService(IMapper mapper, DataContext context, ICurrentUserService currentUser)
     {
         _mapper = mapper;
         _context = context;
+        _currentUser = currentUser;
     }
     
 
     public async Task<Response<IEnumerable<SummaryVm>>> GetAllAsync(string eodDate)
     {
         var dateValue = IpHelper.GetDate(eodDate);
-        var summary = await _context.Summary.FirstOrDefaultAsync(x => x.EodDate == dateValue);
+        var summary = await _context.Summary.Where(x => x.EodDate == dateValue).ToListAsync();
         var summaryVm = _mapper.Map<IEnumerable<SummaryVm>>(summary);
         
         return new Response<IEnumerable<SummaryVm>>(summaryVm);
@@ -49,8 +51,8 @@ public class SummaryService : ISummaryService
         
         return new Response<long>(summary.Id);
     }
-    
-    
+
+
     public async Task<Summary> UpdateAsync(long id, SummaryDto summaryDto)
     {
         var isSummary = await _context.Summary.FindAsync(id);
@@ -60,6 +62,21 @@ public class SummaryService : ISummaryService
          _context.Summary.Update(summary);
          await _context.SaveChangesAsync();
          return summary;
+    }
+    
+    public async Task<Response<SummaryVm>> CheckedAsync(CheckedDto checkedDto)
+    {
+        var dateValue = IpHelper.GetDate(checkedDto.EodDate);
+        var summary = await _context.Summary.FirstOrDefaultAsync(x => x.EodDate == dateValue);
+
+        if (summary == null) return new Response<SummaryVm>("No Summary found");
+
+        summary.CheckerId = _currentUser.Username!;
+        summary.AuthStatus = true;
+        var summaryVm = _mapper.Map<SummaryVm>(summary);
+        _context.Summary.Update(summary);
+        await _context.SaveChangesAsync();
+        return new Response<SummaryVm>(summaryVm);
     }
     
     
