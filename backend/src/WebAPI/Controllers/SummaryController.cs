@@ -43,6 +43,12 @@ public class SummaryController : BaseController
         return Ok(await _summaryService.UpdateAsync(id,summaryDto));
     }
     
+    [HttpPatch]
+    public async Task<IActionResult> CheckedAsync([FromBody] CheckedDto checkedDto)
+    {
+        return Ok(await _summaryService.CheckedAsync(checkedDto));
+    }
+    
     // DELETE api/<controller>/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(long id)
