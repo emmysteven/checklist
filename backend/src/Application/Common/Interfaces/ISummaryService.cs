@@ -11,5 +11,6 @@ public interface ISummaryService
     Task<Summary> GetByIdAsync(long id);
     Task<Response<long>> CreateAsync(SummaryDto summaryDto);
     Task<Summary> UpdateAsync(long id, SummaryDto summaryDto);
+    Task<Response<SummaryVm>> CheckedAsync(CheckedDto checkedDto);
     Task<Summary> DeleteAsync(long id);
 }
