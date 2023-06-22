@@ -8,4 +8,5 @@ export interface Summary {
   eodDate: string;
   txnCount: string;
   duration: string;
+  authStatus: boolean;
 }
