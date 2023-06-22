@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertService, ApiService, UserService} from "@app/core/services";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { faCheckDouble ,faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { AlertService, ApiService, UserService } from "@app/core/services";
 import { duration } from "@app/core/utils";
+import { faCheckDouble, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-get-item',
@@ -83,6 +83,9 @@ export class GetCheckComponent implements OnInit {
     this.apiService.getCheck(this.control['eodDate'].value).subscribe({
       next: data => {
         this.loading = false
+        if(Object.keys(data).length === 0){
+          this.alertService.warn(`No entry for ${this.control['eodDate'].value}`)
+        }
         this.checks = duration(data)
       },
       error: err => {
