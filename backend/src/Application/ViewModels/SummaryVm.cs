@@ -13,5 +13,6 @@ public class SummaryVm : IMapFrom<Summary>
     public string StartTime { get; set; } = string.Empty;
     public string EndTime { get; set; } = string.Empty;
     public string Duration { get; set; } = string.Empty;
-    public int? TxnCount { get; set; } 
+    public int? TxnCount { get; set; }
+    public bool? AuthStatus { get; set; } = false;
 }
