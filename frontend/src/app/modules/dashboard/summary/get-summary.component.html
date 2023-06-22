@@ -1,24 +1,33 @@
-<alert></alert>
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex">
+<alert class="pe-md-5"></alert>
+<form [formGroup]="form" class="d-flex">
   <div class="row align-items-center mb-4">
     <div class="col-md-4 pe-0">
       <label for="EodDate">EOD Date</label>
     </div>
     <div class="col-md-6">
       <input type="date" id="eodDate" formControlName="eodDate" class="form-control"
-             [ngClass]="{ 'is-invalid': submitted && control['eodDate'].errors }" />
+        [ngClass]="{ 'is-invalid': submitted && control['eodDate'].errors }" />
 
       <div *ngIf="submitted && control['eodDate'].errors" class="invalid-feedback">
         <div *ngIf="control['eodDate'].errors?.['required']">Eod Date is required</div>
       </div>
     </div>
     <div class="col-md-2">
-      <button [disabled]="loading" class="btn btn-primary">
+      <button (click)="search()" [disabled]="loading" role="button" class="btn btn-primary">
         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
         <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
       </button>
     </div>
   </div>
+
+  <div *ngIf="isChecker()" class="col-md-2 px-5">
+    <button [disabled]="progress" (click)="authorize()" role="button" class="btn btn-warning" data-toggle="tooltip"
+      data-placement="right" title="Authorize entries for this date">
+      <span *ngIf="progress" class="spinner-border spinner-border-sm mr-1"></span>
+      <fa-icon [icon]="faCheckDouble"></fa-icon>
+    </button>
+  </div>
+
 </form>
 
 <table class="table">
@@ -32,6 +41,7 @@
     <th class="text-nowrap">End Time</th>
     <th>Duration</th>
     <th>TxnCount</th>
+    <th class="text-nowrap">Authorized</th>
   </tr>
   </thead>
   <tbody>
@@ -44,6 +54,14 @@
     <td>{{ item.endTime }}</td>
     <td>{{ item.duration }}</td>
     <td>{{ item.txnCount }}</td>
+    <td>
+      <span class="badge" [ngClass]="{
+            'bg-success': item.authStatus,
+            'bg-danger': !item.authStatus
+            }">
+        {{ item.authStatus ? 'true' : 'false' }}
+      </span>
+    </td>
   </tr>
   </tbody>
 </table>
