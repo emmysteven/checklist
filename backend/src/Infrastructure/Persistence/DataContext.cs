@@ -24,7 +24,7 @@ public class DataContext : DbContext
     public virtual DbSet<User> Users => Set<User>();
     public virtual DbSet<Summary> Summary => Set<Summary>();
         
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<AuditEntity>())
         {
@@ -40,7 +40,7 @@ public class DataContext : DbContext
                     break;
             }
         }
-        return base.SaveChangesAsync(cancellationToken);
+        return await base.SaveChangesAsync(cancellationToken);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
