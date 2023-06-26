@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref": "/eodchecklist/",
             "outputPath": "../dist/eodchecklist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -116,5 +117,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
