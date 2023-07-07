@@ -21,7 +21,7 @@
     
     "Development": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:3000;https://localhost:3001",
       "environmentVariables": {
