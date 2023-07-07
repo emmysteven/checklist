@@ -80,6 +80,13 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseSerilogRequestLogging(options => {
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {   
+        diagnosticContext.Set("RemoteIpAddress", httpContext.Connection.RemoteIpAddress);          
+    };
+});
+
 app.UseRouting();
 app.UseCors("AllowSpecificOrigins");
 app.UseAuthentication();
