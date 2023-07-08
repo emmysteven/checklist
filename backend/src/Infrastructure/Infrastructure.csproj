@@ -24,7 +24,6 @@
         <PackageReference Include="Mnt.Microsoft.Exchange.WebServices.Data" Version="2.2.1.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
-        <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="6.22.2" />
     </ItemGroup>
 
     <ItemGroup>
