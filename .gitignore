@@ -396,6 +396,8 @@ VSIXCore/
 testem.log
 /typings
 
+**Logs/
+
 # System files
 *.DS_Store
 Thumbs.db
