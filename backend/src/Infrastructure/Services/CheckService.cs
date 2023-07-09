@@ -1,3 +1,4 @@
+using System.Data;
 using AutoMapper;
 using Checklist.Application.Common.Exceptions;
 using Checklist.Application.Common.Interfaces;
@@ -57,15 +58,40 @@ public class CheckService : ICheckService
     public async Task<Response<IEnumerable<long>>> CreateAsync(CheckDto request)
     {
         var checks = _mapper.Map<IEnumerable<Check>>(request.Checks).ToList();
-        
-        foreach (var check in checks)
+
+        using (var dataTable = new DataTable())
         {
-            check.MakerId = _currentUser.Username;
+            dataTable.Columns.Add("Id", typeof(long));
+            dataTable.Columns.Add("CheckName", typeof(string));
+            dataTable.Columns.Add("StartTime", typeof(string));
+            dataTable.Columns.Add("EndTime", typeof(string));
+            dataTable.Columns.Add("EodDate", typeof(DateTime));
+            dataTable.Columns.Add("Remark", typeof(string));
+            dataTable.Columns.Add("MakerId", typeof(string));
+            dataTable.Columns.Add("MakerDt", typeof(DateTime));
+        
+            foreach (var check in checks)
+            {
+                dataTable.Rows.Add(
+                    check.Id,
+                    check.CheckName,
+                    check.StartTime,
+                    check.EndTime,
+                    check.EodDate,
+                    check.Remark,
+                    _currentUser.Username!,
+                    DateTime.UtcNow
+                );
+            }
+        
+            using (var sqlBulkCopy = new SqlBulkCopy(_context.Database.GetDbConnection().ConnectionString))
+            {
+                sqlBulkCopy.DestinationTableName = "[corebanking].[dbo].[Chk_Check]";
+                await sqlBulkCopy.WriteToServerAsync(dataTable);
+            }
         }
         
-        await _check.BulkInsertAsync(checks);
-        
-        var checkIds = checks.Select(i => i.Id);
+        var checkIds = checks.Select(c => c.Id);
         return new Response<IEnumerable<long>>(checkIds);
     }
     
