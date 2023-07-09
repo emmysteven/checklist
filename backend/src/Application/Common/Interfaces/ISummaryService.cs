@@ -7,7 +7,7 @@ namespace Checklist.Application.Common.Interfaces;
 
 public interface ISummaryService
 {
-    Task<Response<IEnumerable<SummaryVm>>> GetAllAsync(string eodDate);
+    Task<Response<IEnumerable<SummaryVm>>> GetByDateAsync(string eodDate);
     Task<Summary> GetByIdAsync(long id);
     Task<Response<long>> CreateAsync(SummaryDto summaryDto);
     Task<Summary> UpdateAsync(long id, SummaryDto summaryDto);

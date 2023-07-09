@@ -25,7 +25,7 @@ public class SummaryService : ISummaryService
     }
     
 
-    public async Task<Response<IEnumerable<SummaryVm>>> GetAllAsync(string eodDate)
+    public async Task<Response<IEnumerable<SummaryVm>>> GetByDateAsync(string eodDate)
     {
         var dateValue = IpHelper.GetDate(eodDate);
         var summary = await _context.Summary.Where(x => x.EodDate == dateValue).ToListAsync();

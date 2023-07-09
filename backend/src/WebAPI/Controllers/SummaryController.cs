@@ -18,7 +18,7 @@ public class SummaryController : BaseController
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] string eodDate)
     {
-        var query = await _summaryService.GetAllAsync(eodDate);
+        var query = await _summaryService.GetByDateAsync(eodDate);
         return Ok(query);
     }
 
