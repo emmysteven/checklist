@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
+import { Todo } from "@app/core/models";
 import { AlertService, ApiService } from "@app/core/services";
 import { first } from "rxjs/operators";
-import { Todo } from "@app/core/models";
 
 @Component({
   selector: 'app-add-item',
@@ -119,7 +119,6 @@ export class AddCheckComponent implements OnInit {
 
     const body = { checks: Fields }
 
-    console.log(body);
     if (this.form.invalid) {
       this.alertService.error("Some fields are empty: ", { autoClose: false });
       return;
