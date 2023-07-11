@@ -12,7 +12,7 @@ import { faCheckDouble, faMagnifyingGlass } from '@fortawesome/free-solid-svg-ic
 export class GetSummaryComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
-  data: any;
+  id: number = 0;
   summary: any;
   eodDate: string = '';
   userRole: string | null = '';
@@ -85,6 +85,11 @@ export class GetSummaryComponent implements OnInit {
           this.alertService.warn(`No entry for ${eodDate}`)
         }
         this.summary = data
+        this.summary.forEach((obj: any) => {
+          console.log(obj.id);
+          // console.log(new Date(obj.eodDate).toISOString().split('T')[0])
+          this.id = obj.id;
+        });
       },
       error: err => {
         this.loading = false
