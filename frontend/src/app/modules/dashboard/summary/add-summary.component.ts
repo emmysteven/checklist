@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AlertService, ApiService } from "@app/core/services";
+import { resetFormData } from "@app/core/utils";
 import { faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import { first } from "rxjs/operators";
-import { resetFormData } from "@app/core/utils";
 
 @Component({
   selector: 'app-final-item',
