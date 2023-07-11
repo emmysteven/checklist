@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { CheckVm, Summary, Todo } from "@app/core/models";
 import { environment } from "@env/environment";
-import { Todo, Summary, CheckVm } from "@app/core/models";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -50,7 +50,6 @@ export class ApiService {
   getSummaryById(id: number): Observable<Summary> {
     return this.http.get<Summary>(`${this.baseUrl}api/summary/${id}`, httpOptions)
       .pipe(map((response: any) => {
-        console.log(response);
         return response.data;
       }))
   }
